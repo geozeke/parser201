@@ -3,9 +3,6 @@
 """Tests for `parser201` package."""
 
 import pytest, pickle, os
-
-from click.testing import CliRunner
-
 from parser201.parser201 import LogParser
 
 BENCH = os.path.join(os.path.dirname(__file__),'benchmark.bin')
