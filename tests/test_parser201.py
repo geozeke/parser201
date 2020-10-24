@@ -6,7 +6,7 @@ import pytest, pickle, os
 from parser201.parser201 import LogParser
 
 BENCH = os.path.join(os.path.dirname(__file__),'benchmark.bin')
-LOG   = os.path.join(os.path.dirname(__file__),'samplelog.log')
+LOG   = os.path.join(os.path.dirname(__file__),'samplelog.apa')
 
 # Constants - Indices in the tuple for the benchmark results.
 
