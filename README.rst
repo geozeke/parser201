@@ -36,7 +36,7 @@ Free software: MIT license
 Features
 --------
 
-The centerpiece of the parser201 module is the ``LogParser`` class, which takes a line from an Apache log file and extracts the individual fields into properties within an object.
+The centerpiece of the parser201 module is the ``LogParser`` class. The class initializer takes a line from an Apache log file and extracts the individual fields into properties within an object.
 
 * Parses entries (lines) from Apache log files into objects with a separate property for each field in the log entry.
 * Prints log objects as strings in a presentation format.

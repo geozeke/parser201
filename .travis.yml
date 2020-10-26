@@ -1,34 +1,22 @@
-# Config file for automatic testing at travis-ci.com
-
 language: python
-
 python:
-   - 3.8
-   - 3.7
-   - 3.6
-   - 3.5
-  
+- 3.8
+- 3.7
+- 3.6
+- 3.5
 cache:
-   - pip
-
+- pip
 install:
-   - pip install -U tox-travis
-
-# Command to run tests.
+- pip install -U tox-travis
 script:
-   - tox
-
-# Go to travis-ci.org, and look at settings, under the project in the dashboard.
-# Add the project-specific token as an environment variable
-# ($PYPI_PARSER201_TOKEN). This will allow travis to automatically deploy to
-# pypi if the build is successful.
-
-# deploy:
-#   provider: pypi
-#   distributions: sdist bdist_wheel
-#   user: __token__
-#   password: $PYPI_PARSER201_TOKEN
-#   on:
-#     tags: true
-#     repo: geozeke/parser201
-#     python: 3.8
+- tox
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: __token__
+  password:
+    secure: HIAYAL2OKnvqVZFVJ8RrkUuwFV4PdgD+81BKs8RDnUMarDW+khOsMDkLpDHbPq2/A2bBoqszABOqrkxTVfjFDMRZyd9IGsLNqWxOZRdPkeAy2QHFwsj/LTsfTivzjGIWUWcH5Co3bxgy+URvI+6IAc/vyeHDuME4RSNc++L/kmuTFyh9hwZjwwq7GaCfv9tMD2T8P2cyuN40tRbtfjxDA59tAl47tFo/I8tJ789soNgxkvw4bzoQSICOjVHZ4RYQrK5Nh3GDQCbcRU8FOR6DBBm0yyh3F3IfJdpChb6ipT2AAcrHZP+Li6fkplSdNK39ttqRLmPvSmVktmGw0wL7Te4C4nc/QW7Bdpxq4xO3lK/fz5sanLrqJS9za32/V5Z6kzZdBJxD2MKf4vYT1KUf8E7cIdHrj4lL5DwKIEmJNWplNoMdazLQzS9SRdIRqXyEBtmzDC69I0Bgo+UjHcrn0g5nnUS82rr2t7/W84VuzBzItrswGchMsVi4m6B84JnOGas6+QkB2vzabB43GFdp2u7DePdF/getWsGMgjHhI2B+Ifv++4GfzCWOHL5am/zsd09Y8sgD4SfmcnnaevSTDtdQThCG2k+LM5gWDs2tVfN22wTg11ZNzT+gtGzFqgBDYW54QF2TveTL0FHMbtFb2OhPwK+VbF5Bz2jKQKmHYuQ=
+  on:
+    tags: true
+    repo: geozeke/parser201
+    python: 3.8

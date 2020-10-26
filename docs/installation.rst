@@ -42,7 +42,7 @@ Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/geozeke/parser201/tarball/master
+    $ curl -OJL https://github.com/geozeke/parser201/tarball/main
 
 Once you have a copy of the source, you can install it with:
 
@@ -52,4 +52,4 @@ Once you have a copy of the source, you can install it with:
 
 
 .. _Github repo: https://github.com/geozeke/parser201
-.. _tarball: https://github.com/geozeke/parser201/tarball/master
+.. _tarball: https://github.com/geozeke/parser201/tarball/main
