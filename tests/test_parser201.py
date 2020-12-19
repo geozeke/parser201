@@ -109,6 +109,25 @@ def test_str(fileSetup):
    for line,benchmark in zip(fileSetup[0],fileSetup[1]):
       assert str(LogParser(line)) == benchmark[STRVER]
       
+# Verify initilizer behavior with an invalid input type. If any data type other
+# than str is passed to the initializer, it should return an object with all
+# fields set to None.
+
+def test_badInput():
+   
+   L  = [] # Non-str test for initializer
+   lp = LogParser(L)
+   
+   assert lp.ipaddress   == None
+   assert lp.userid      == None
+   assert lp.username    == None
+   assert lp.timestamp   == None
+   assert lp.requestline == None
+   assert lp.statuscode  == None
+   assert lp.datasize    == None
+   assert lp.referrer    == None
+   assert lp.useragent   == None
+   
 # For complete code coverage, exercise the setter methods.
 
 def test_setters():

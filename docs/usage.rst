@@ -12,9 +12,9 @@ The most common use-case will be importing individual lines from an Apache log f
 
    from parser201 import LogParser
 
-   f = open('apache.log','r')
-   for line in f:
-      lp = LogParser(line)
-      # Use lp as desired: add to List, Dictionary, etc.
-      ...
+   with open('apache.log','r') as f:
+      for line in f:
+         lp = LogParser(line)
+         # Use lp as desired: add to List, Dictionary, etc.
+         ...
 
