@@ -30,10 +30,19 @@ class LogParser:
       :param line: A single line from an Apache log file.
       :type line: str
       """
-      # Pre-processing. For some lines, an empty field is represented as two
-      # quotes back-to-back, like this: "". The regex to pull out agent strings
-      # between quotes will incorrectly ignore that field, rather than returning
-      # an empty string. Replace "" with "-" to prevent that.
+      
+      # Initial check. If the line passed to the initializer is not a string
+      # (type == str), then return an empty LogParser object.
+      
+      if type(line) != str:
+         self.__noneFields()
+         return
+      
+      # If a valid string is entered, then perform pre-processing. For some
+      # lines, an empty field is represented as two quotes back-to-back, like
+      # this: "". The regex to pull out agent strings between quotes will
+      # incorrectly ignore that field, rather than returning an empty string.
+      # Replace "" with "-" to prevent that.
       
       clean = line.replace('\"\"','\"-\"')
 

@@ -2,6 +2,12 @@
 History
 =======
 
+0.1.6 (2020-12-19)
+------------------
+
+* Addressed exception handling for initializer input not being a valid string data type.
+* Documentation cleanup.
+
 0.1.5 (2020-10-26)
 ------------------
 
