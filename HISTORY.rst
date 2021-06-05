@@ -2,6 +2,11 @@
 History
 =======
 
+0.1.7 (2021-06-05)
+------------------
+
+* Re-tooled testing scripts to use parametrized test data, and conduct more robust testing.
+
 0.1.6 (2020-12-19)
 ------------------
 
