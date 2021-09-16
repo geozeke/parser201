@@ -2,11 +2,16 @@
 History
 =======
 
-0.1.8 (2021-09-15)
+0.1.9 (2021-09-15)
 ------------------
 
 * Code cleanup for pep8 compliance.
 * Cleaned up Makefiles and scripts to remove references to python (meaning python2) and replace it with python3.
+
+0.1.8 (2021-09-15)
+------------------
+
+* Internal build.
 
 0.1.7 (2021-06-05)
 ------------------
