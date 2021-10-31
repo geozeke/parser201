@@ -2,6 +2,12 @@
 History
 =======
 
+0.2.0 (2021-10-31)
+------------------
+
+* Changed behavior to gracefully fail for any malformed input line. If an input line cannot be successfully parsed, all properties of the returned object are set to None and no messages are printed.
+* Added additional pytest cases to verify failure behavior.
+
 0.1.9 (2021-09-15)
 ------------------
 

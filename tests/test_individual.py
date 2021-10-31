@@ -13,9 +13,24 @@ from parser201.parser201 import LogParser
 # fields set to None.
 
 
-def test_badInput():
+def test_nonStringInput():
 
     L = {}  # Non-str test for initializer
+    lp = LogParser(L)
+
+    assert lp.ipaddress is None
+    assert lp.userid is None
+    assert lp.username is None
+    assert lp.timestamp is None
+    assert lp.requestline is None
+    assert lp.statuscode is None
+    assert lp.datasize is None
+    assert lp.referrer is None
+    assert lp.useragent is None
+
+def test_badStringInput():
+
+    L = "This is not an Apache line"  # bad string test for initializer
     lp = LogParser(L)
 
     assert lp.ipaddress is None

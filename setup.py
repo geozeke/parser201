@@ -19,7 +19,7 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Peter Nardi",
     author_email='pete@nardi.com',
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Education",
@@ -33,7 +33,6 @@ setup(
         "Topic :: System :: Logging",
         "Topic :: System :: Systems Administration",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
@@ -54,6 +53,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/geozeke/parser201',
-    version='0.1.9',
+    version='0.2.0',
     zip_safe=False,
 )

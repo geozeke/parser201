@@ -26,10 +26,10 @@ class LogParser:
         """
         LogParser Class initializer
 
-        Returns an object with the properties set as described below. In the
-        event a line from a log file cannot be parsed (for example, is
-        corrupted), then the object returned from the initializer will have all
-        properties set to ``None``.
+        Returns an object with the properties set as described below. In
+        the event a line from a log file cannot be parsed (for example, 
+        is corrupted), then the object returned from the initializer 
+        will have all properties set to ``None``.
 
         :param line: A single line from an Apache log file.
         :type line: str
@@ -75,8 +75,7 @@ class LogParser:
             # three fields (ipaddress; userid; username), each separated by
             # space.
             first3 = clean.split('[')[0].split()
-        except Exception as e:
-            print(str(e))
+        except Exception:
             self.__noneFields()
             return
 
@@ -94,8 +93,7 @@ class LogParser:
             self.__useragent = agentStrings[2]
             self.__statuscode = codeAndSize[0]
             self.__datasize = codeAndSize[1]
-        except Exception as e:
-            print(str(e))
+        except Exception:
             self.__noneFields()
 
         return
@@ -124,8 +122,8 @@ class LogParser:
 
     def __str__(self):
         """
-        Returns a string representation of a LogParser object. An example looks
-        like this:
+        Returns a string representation of a LogParser object. An
+        example looks like this:
 
         .. code-block:: console
 
@@ -137,7 +135,8 @@ class LogParser:
             statuscode: 304
               datasize: 2454
                referer: -
-             useragent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1;
+             useragent: Mozilla/4.0 (compatible; MSIE 7.0;
+                        Windows NT 5.1;
              GTB5; .NET CLR 1.1.4322)
         """
         labels = ['ipaddress', 'userid',
@@ -186,8 +185,8 @@ class LogParser:
     @property
     def userid(self):
         """
-        The identity of the user determined by ``identd`` (not usually used
-        since not reliable). If ``identd`` is not present,
+        The identity of the user determined by ``identd`` (not usually
+        used since not reliable). If ``identd`` is not present,
         :attr:`.LogParser.userid` == ``"-"``
 
         :type: str
@@ -204,8 +203,8 @@ class LogParser:
     @property
     def username(self):
         """
-        The user name determined by HTTP authentication. If no username is
-        present, :attr:`.LogParser.username` == ``"-"``
+        The user name determined by HTTP authentication. If no username
+        is present, :attr:`.LogParser.username` == ``"-"``
 
         :type: str
         """
@@ -225,12 +224,13 @@ class LogParser:
 
         [dd/MMM/YYYY:HH:MM:SS –hhmm]
 
-        NOTE: ``-hhmm`` is the time offset from Greenwich Mean Time (GMT).
-        Usually (but not always) ``mm == 00``. Negative offsets (``-hhmm``) are
-        West of Greenwich; positive offsets (``+hhmm``) are East of Greenwich.
-        The date/time component has a guaranteed length of 28 characters (which
-        includes the leading and training brackets). Every other component of a
-        log entry is variable length.
+        NOTE: ``-hhmm`` is the time offset from Greenwich Mean Time
+        (GMT). Usually (but not always) ``mm == 00``. Negative offsets 
+        (``-hhmm``) are West of Greenwich; positive offsets (``+hhmm``)
+        are East of Greenwich. The date/time component has a guaranteed
+        length of 28 characters (which includes the leading and training 
+        brackets). Every other component of a log entry is variable
+        length.
 
         :type: str
         """
@@ -262,8 +262,8 @@ class LogParser:
     @property
     def statuscode(self):
         """
-        The status code sent from the server to the client (``200``, ``404``,
-        etc.)
+        The status code sent from the server to the client
+        (``200``, ``404``, etc.)
 
         :type: int
         """
@@ -295,9 +295,9 @@ class LogParser:
     @property
     def referrer(self):
         """
-        The Referrer header of the HTTP request (containing the URL of the page
-        from which this request was initiated) if any is present, and ``"-"``
-        otherwise.
+        The Referrer header of the HTTP request (containing the URL of
+        the page from which this request was initiated) if any is
+        present, and ``"-"`` otherwise.
 
         :type: str
         """
@@ -334,7 +334,7 @@ if __name__ == '__main__':
 
 # MIT License
 #
-# Copyright (c) 2020 Peter Nardi
+# Copyright (c) 2020-2021 Peter Nardi
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
