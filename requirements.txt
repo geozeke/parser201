@@ -1,0 +1,8 @@
+wheel
+coverage
+setuptools
+twine
+build
+pytest
+bump2version
+autopep8
