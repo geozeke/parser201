@@ -55,23 +55,23 @@ requestline: GET /images/puce.gif HTTP/1.1
 * **datasize**  (type: *int*)
 
 	The size of the response to the client (in bytes).
-
+<br><br>
 * **ipaddress** (type: *str*)
 
 	The remote host (the client IP).
-
+<br><br>
 * **referrer** (type: *str*)
 
 	The referrer header of the HTTP request (containing the URL of the page from which this request was initiated) if any is present, and `"-"` otherwise.
-
+<br><br>
 * **requestline** (type: *str*)
 
 	The request line from the client. (e.g. `"GET / HTTP/1.0"`).
-
+<br><br>
 * **statuscode** (type: *int*)
 
 	The status code sent from the server to the client (`200`, `404`, etc.).
-
+<br><br>
 * **timestamp** (type: *str*)
 
 	The time of the request in the following format:
@@ -79,15 +79,15 @@ requestline: GET /images/puce.gif HTTP/1.1
 	`dd/MMM/YYYY:HH:MM:SS –hhmm`
 
 	NOTE: `-hhmm` is the time offset from Greenwich Mean Time (GMT). Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`) are east of Greenwich. The date/time component has a guaranteed length of 28 characters (which includes the leading and training brackets). Every other component of a log entry is variable length.
-
+<br><br>
 * **useragent** (type: *str*)
 
 	The browser identification string if any is present, and `"-"` otherwise.
-
+<br><br>
 * **userid** (type: *str*)
 
 	The identity of the user determined by `identd` (not usually used since not reliable). If `identd` is not present, `userid == "-"`.
-	
+	<br><br>
 * **username** (type: *str*)
 
 	The user name determined by HTTP authentication. If no username is present, `username == "-"`.
@@ -145,6 +145,8 @@ requestline: None
 
 ## Version History
 
+* 1.0.2 (2021-11-05)
+	* Documentation cleanup.<br><br>
 * 1.0.0 (2021-11-04)
 	* Stable production release.
 	* Migrated to a new development framework.
