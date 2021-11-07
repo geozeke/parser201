@@ -11,7 +11,7 @@
 
 ## Features
 
-The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache log file and extracts the individual fields into properties within an object.
+The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache access log file and extracts the individual fields into properties within an object.
 
 ## Installation
 
@@ -21,7 +21,7 @@ pip3 install parser201
 
 ## Usage
 
-The most common use-case for parser201 is importing individual lines from an Apache log file and creating LogParser objects, like this:
+The most common use-case for parser201 is importing individual lines from an Apache access log file and creating LogParser objects, like this:
 
 ```python
 from parser201 import LogParser
@@ -78,7 +78,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 
 	`dd/MMM/YYYY:HH:MM:SS –hhmm`
 
-	NOTE: `-hhmm` is the time offset from Greenwich Mean Time (GMT). Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`) are east of Greenwich. The date/time component has a guaranteed length of 28 characters (which includes the leading and training brackets). Every other component of a log entry is variable length.
+	NOTE: `-hhmm` is the time offset from Greenwich Mean Time (GMT). Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`) are east of Greenwich. The date/time component has a guaranteed length of 28 characters (which includes the leading and training brackets). Every other component of a access log entry is variable length.
 <br><br>
 * **useragent** (type: *str*)
 
@@ -102,7 +102,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 
 	Parameters:
 
-	* **line** (type: *str*) – A single line from an Apache log file.
+	* **line** (type: *str*) – A single line from an Apache access log file.
 
 
 * **`__str()__`**
@@ -127,7 +127,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 
 ### Exception Handling
 
-If a line from an Apache log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the properties set to `None`.
+If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the properties set to `None`.
 
 ```
   ipaddress: None

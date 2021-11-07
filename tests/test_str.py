@@ -7,6 +7,8 @@ import pickle
 import lzma
 from pathlib import Path
 from classes import LogParser
+from classes import FMT
+from classes import TZ
 
 TESTDATA = str(Path(__file__).resolve().parent) + '/' + 'data_parser201.bin'
 
@@ -24,10 +26,16 @@ def pytest_generate_tests(metafunc):
 
 def test_str(node):
     noneStr = str(LogParser('bad line'))
-    lp = LogParser(node['linein'])
+    lp = LogParser(node['linein'],
+                   timezone=node['timezone'],
+                   format=node['fmt'])
     testResult = str(lp)
     if lp.ipaddress is None:
         benchmark = noneStr
     else:
         benchmark = node['str']
+    print(f"timezone: {node['timezone']}")
+    print(f"  format: {node['fmt']}\n")
+    print(f"received:\n{testResult}\n")
+    print(f"expected:\n{node['str']}")
     assert testResult == benchmark

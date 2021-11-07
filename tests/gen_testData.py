@@ -22,29 +22,40 @@ sys.path.append(P)
 
 try:
     from classes import LogParser
+    from classes import TZ
+    from classes import FMT
 except Exception as e:
     print(e)
     sys.exit(1)
+
+# Globals
+
+ZONES = list(TZ)
+FORMATS = list(FMT)
 
 # --------------------------------------------------------------------------
 # Helper function to create data dictionaries
 
 
-def makeDict(dataIn):
+def makeDict(dataIn, options):
 
     D = {}
 
-    D['linein'] = dataIn[0]
-    D['ipaddress'] = dataIn[1]
-    D['userid'] = dataIn[2]
-    D['username'] = dataIn[3]
-    D['timestamp'] = dataIn[4]
-    D['requestline'] = dataIn[5]
-    D['statuscode'] = dataIn[6]
-    D['datasize'] = dataIn[7]
-    D['referrer'] = dataIn[8]
-    D['useragent'] = dataIn[9]
-    D['str'] = dataIn[10]
+    lp = LogParser(dataIn, timezone=options[0], format=options[1])
+
+    D['linein'] = dataIn
+    D['ipaddress'] = lp.ipaddress
+    D['userid'] = lp.userid
+    D['username'] = lp.username
+    D['timestamp'] = lp.timestamp
+    D['requestline'] = lp.requestline
+    D['statuscode'] = lp.statuscode
+    D['datasize'] = lp.datasize
+    D['referrer'] = lp.referrer
+    D['useragent'] = lp.useragent
+    D['str'] = str(lp)
+    D['timezone'] = options[0]
+    D['fmt'] = options[1]
 
     return D
 
@@ -59,30 +70,24 @@ def build(testData):
     L = []
 
     P = str(Path(__file__).resolve().parent) + '/datasources/'
-    with open(P + 'benchmarkdata.txt', 'r') as f:
+    with open(P + 'samplelog.txt', 'r') as f:
 
         for line in f:
-
-            # Add a str representation of the object to the end of the list.
-            if line.split() != '':
-                parts = line.strip().split('FIELDBREAK')
-                parts.append(str(LogParser(parts[0])))
-                L.append(makeDict(parts))
+            zone = random.choice(ZONES)
+            fmt = random.choice(FORMATS)
+            L.append(makeDict(line, (zone, fmt)))
 
     # Edge cases ------------------------------------------------------------
 
     # Inject a malformed line. This should cause all object properties to be
     # set to None
-    parts = ['This is a malformed line']
-    parts += [None] * 10
-    L.append(makeDict(parts))
+    line = 'This is a malformed line'
+    L.append(makeDict(line, (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
     # Empty line
-    parts = ['']
-    parts += [None] * 10
-    L.append(makeDict(parts))
+    L.append(makeDict('', (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
@@ -91,9 +96,15 @@ def build(testData):
     line = '175.156.126.209-- [31/Jan/2017:21:09:47 +0800] '
     line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
     line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
-    parts = [line]
-    parts += [None] * 10
-    L.append(makeDict(parts))
+    L.append(makeDict(line, (TZ.original, FMT.string)))
+
+    # -----------------------------------------------------------------------
+
+    # Bad date/time field (33rd of January).
+    line = '175.156.126.209 - - [33/Jan/2017:21:09:47 +0800] '
+    line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
+    line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
+    L.append(makeDict(line, (TZ.utc, FMT.dateobj)))
 
     # -----------------------------------------------------------------------
 

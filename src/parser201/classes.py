@@ -4,17 +4,32 @@
 
 # Title: parser201 - Apache Log Parser
 
-# imports
+# Imports
 
-# Heavy use of regular expressions
+import datetime as dt
 import re
+import time
+
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+
+
+class TZ(Enum):
+    original = 1
+    local = 2
+    utc = 3
+
+
+class FMT(Enum):
+    string = 1
+    dateobj = 2
 
 
 class LogParser:
 
     # ---------------------------------------------------------------------
 
-    def __init__(self, line):
+    def __init__(self, line, timezone=TZ.original, format=FMT.string):
 
         # Initial check. If the line passed to the initializer is not a string
         # (type == str), then return an empty LogParser object.
@@ -77,6 +92,53 @@ class LogParser:
         except Exception:
             self.__noneFields()
 
+        # Process date/time stamp and adjust timezone/format as indicated
+
+        if timezone == TZ.original and format == FMT.string:
+            return
+
+        try:
+            dateobj = datetime.strptime(self.__timestamp,
+                                        '%d/%b/%Y:%H:%M:%S %z')
+        except ValueError as e:
+            self.__noneFields()
+            return
+
+        sign, hh, mm = self.__decomposeTZ(self.__timestamp)
+
+        if timezone == TZ.original:
+            pass
+
+        elif timezone == TZ.local:
+            zoneString = time.strftime('%z')
+            # First convert to GMT
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            # Now convert to local time and replace tzinfo
+            sign, hh, mm = self.__decomposeTZ(zoneString)
+            zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
+            dateobj = dateobj + (sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        elif timezone == TZ.utc:
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            sign, hh, mm = self.__decomposeTZ('+0000')
+            zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        else:  # pragma no cover
+            pass
+
+        # ---------------------------------------
+
+        if format == FMT.string:
+            self.__timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
+
+        elif format == FMT.dateobj:
+            self.__timestamp = dateobj
+
+        else:  # pragma no cover
+            return
+
         return
 
     # ---------------------------------------------------------------------
@@ -84,7 +146,6 @@ class LogParser:
     # Method to set every field to None, in the event of a corrupted log line.
 
     def __noneFields(self):
-
         for property in [p for p in dir(self) if not p.startswith('_')]:
             setattr(self, property, None)
         return
@@ -94,7 +155,6 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-
         labels = ['ipaddress', 'userid', 'username', 'timestamp',
                   'requestline', 'statuscode', 'datasize', 'referrer',
                   'useragent']
@@ -106,6 +166,13 @@ class LogParser:
             L.append(f'{label:>{padding}}: {getattr(self, label)}')
 
         return '\n'.join(L)
+
+    # ---------------------------------------------------------------------
+
+    def __decomposeTZ(self, zone):
+        leader, hrs, mins = zone[-5], zone[-5:-3], zone[-2:]
+        sign = -1 if leader == '-' else 1
+        return sign, int(hrs), int(mins)
 
     # ---------------------------------------------------------------------
 

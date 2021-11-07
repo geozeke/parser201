@@ -23,7 +23,11 @@ def pytest_generate_tests(metafunc):
 
 
 def test_timestamp(node):
-    lp = LogParser(node['linein'])
+    lp = LogParser(node['linein'],
+                   timezone=node['timezone'],
+                   format=node['fmt'])
     testResult = lp.timestamp
     benchmark = node['timestamp']
+    print(f"timezone: {node['timezone']}")
+    print(f"  format: {node['fmt']}")
     assert testResult == benchmark
