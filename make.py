@@ -13,7 +13,6 @@
 
 import argparse
 import os
-import shutil
 import subprocess as sp
 import textwrap
 import webbrowser
@@ -152,24 +151,12 @@ def docs(basename):
     src = 'src/' + basename
     docs = 'docs/' + basename
 
-    # Preserve docs/md
     commands = []
-    command = 'find docs -mindepth 1 -maxdepth 1 -type d '
-    command += '! -name md -exec rm -rf {} ; -prune'
-    commands.append(command)
-    commands.append(f'find docs -mindepth 1 -maxdepth 1 -type f -delete')
+    commands.append(f'rm -rf {docs}')
     commands.append('pdoc --html --output-dir docs ' + src)
     for command in commands:
         print(command)
         sp.run(command.split())
-
-    # Move all the generated HTML to the root of docs so it can be
-    # automatically parsed by GitHub pages.
-    shutil.copytree(docs, 'docs', dirs_exist_ok=True)
-
-    # Delete the project subdirectory contained in docs since we just copied it
-    # to the root of docs
-    shutil.rmtree(docs)
 
     # Open documentation in the default browser.
     P = str(Path(__file__).resolve().parent) + '/docs/index.html'
