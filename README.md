@@ -24,7 +24,7 @@ pip3 install parser201
 The most common use-case for parser201 is importing individual lines from an Apache access log file and creating LogParser objects, like this:
 
 ```python
-from parser201 import LogParser
+from parser201 import LogParser, FMT, TZ
 
 with open('access.log', 'r') as f:
     for line in f:
@@ -32,119 +32,16 @@ with open('access.log', 'r') as f:
         # Use lp as desired: add to List, Dictionary, etc.
 ```
 
+## Documentation
 
-## Class Attributes
-
-### Properties
-
-Here's an example showing the properties of a LogParser class object:
-
-```
-  ipaddress: 81.48.51.130
-     userid: -
-   username: -
-  timestamp: 24/Mar/2009:18:07:16 +0100
-requestline: GET /images/puce.gif HTTP/1.1
- statuscode: 304
-   datasize: 2454
-    referer: -
-  useragent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1;
-```
-
-
-* **datasize**  (type: *int*)
-
-	The size of the response to the client (in bytes).
-<br><br>
-* **ipaddress** (type: *str*)
-
-	The remote host (the client IP).
-<br><br>
-* **referrer** (type: *str*)
-
-	The referrer header of the HTTP request (containing the URL of the page from which this request was initiated) if any is present, and `"-"` otherwise.
-<br><br>
-* **requestline** (type: *str*)
-
-	The request line from the client. (e.g. `"GET / HTTP/1.0"`).
-<br><br>
-* **statuscode** (type: *int*)
-
-	The status code sent from the server to the client (`200`, `404`, etc.).
-<br><br>
-* **timestamp** (type: *str*)
-
-	The time of the request in the following format:
-
-	`dd/MMM/YYYY:HH:MM:SS –hhmm`
-
-	NOTE: `-hhmm` is the time offset from Greenwich Mean Time (GMT). Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`) are east of Greenwich. The date/time component has a guaranteed length of 28 characters (which includes the leading and training brackets). Every other component of a access log entry is variable length.
-<br><br>
-* **useragent** (type: *str*)
-
-	The browser identification string if any is present, and `"-"` otherwise.
-<br><br>
-* **userid** (type: *str*)
-
-	The identity of the user determined by `identd` (not usually used since not reliable). If `identd` is not present, `userid == "-"`.
-	<br><br>
-* **username** (type: *str*)
-
-	The user name determined by HTTP authentication. If no username is present, `username == "-"`.
-
----
-
-### Methods
-
-* **`__init__(line)`**
-
-	LogParser class initializer. Returns an object with the properties set as described above.
-
-	Parameters:
-
-	* **line** (type: *str*) – A single line from an Apache access log file.
-
-
-* **`__str()__`**
-
-	Returns a string representation of a LogParser object. An example looks like this:
-
-	
-	```
-	  ipaddress: 81.48.51.130
-	     userid: -
-	   username: -
-	  timestamp: 24/Mar/2009:18:07:16 +0100
-	requestline: GET /images/puce.gif HTTP/1.1
-	 statuscode: 304
-	   datasize: 2454
-	    referer: -
-	  useragent: Mozilla/4.0 (compatible; MSIE 7.0;
-	             Windows NT 5.1;
-	```
-
----
-
-### Exception Handling
-
-If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the properties set to `None`.
-
-```
-  ipaddress: None
-     userid: None
-   username: None
-  timestamp: None
-requestline: None
- statuscode: None
-   datasize: None
-    referer: None
-  useragent: None
-```
-
----
+Available here: [https://geozeke.github.io/parser201/](https://geozeke.github.io/parser201/)
 
 ## Version History
 
+* 1.1.0 (2021-XX-XX)
+	* Implemented selectable timestamp conversion options {*original*, *local*, [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
+	* Implemented selectable formatting options for the timestamp  {*string*, *dateobj*}.
+	* Migrated API reference to GitHub pages.<br><br>
 * 1.0.2 (2021-11-05)
 	* Documentation cleanup.<br><br>
 * 1.0.0 (2021-11-04)
@@ -158,8 +55,6 @@ requestline: None
 * 0.1.9 (2021-09-15)
 	* Code cleanup for pep8 compliance.
 	* Cleaned up Makefiles and scripts to remove references to python (meaning python2) and replace it with python3.<br><br>
-* 0.1.8 (2021-09-15)
-	* Internal build.<br><br>
 * 0.1.7 (2021-06-05)
 	* Re-tooled testing scripts to use parameterized test data, and conduct more robust testing.<br><br>
 * 0.1.6 (2020-12-19)

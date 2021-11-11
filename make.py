@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Peter Nardi
-# Date: 11/02/21
+# Date: 11/09/21
 # License: (see MIT License at the end of this file)
 
 # Title: make
@@ -13,8 +13,8 @@
 
 import argparse
 import os
+import shutil
 import subprocess as sp
-import sys
 import textwrap
 import webbrowser
 
@@ -25,7 +25,7 @@ from pathlib import Path
 
 def clean():
 
-    # Directories to delete
+    # Whole directories to delete
     directories = []
     directories.append('__pycache__')
     directories.append('.pytest_cache')
@@ -70,6 +70,7 @@ def dist():
     commands.append('twine check dist/*')
 
     for command in commands:
+        print(command)
         sp.run(command.split())
 
     return
@@ -77,12 +78,13 @@ def dist():
 # -------------------------------------------------------------------
 
 
-def pubtest():
+def pushtest():
 
     dist()
 
     command = 'twine upload --repository-url https://test.pypi.org/legacy/ '
     command += 'dist/*'
+    print(command)
     sp.run(command.split())
 
     return
@@ -93,6 +95,7 @@ def pubtest():
 def test():
 
     command = 'pytest --tb=short'
+    print(command)
     sp.run(command.split())
 
     return
@@ -108,10 +111,10 @@ def coverage():
     commands.append('coverage html')
 
     for command in commands:
+        print(command)
         sp.run(command.split())
 
     P = str(Path(__file__).resolve().parent) + '/htmlcov/index.html'
-
     webbrowser.open('file://' + P, new=2)
 
     return
@@ -124,6 +127,7 @@ def release():
     dist()
 
     command = 'twine upload dist/*'
+    print(command)
     sp.run(command.split())
 
     return
@@ -134,7 +138,42 @@ def release():
 def bump(category):
 
     command = 'bump2version ' + category
+    print(command)
     sp.run(command.split())
+
+    return
+
+
+# -------------------------------------------------------------------
+
+
+def docs(basename):
+
+    src = 'src/' + basename
+    docs = 'docs/' + basename
+
+    # Preserve docs/md
+    commands = []
+    command = 'find docs -mindepth 1 -maxdepth 1 -type d '
+    command += '! -name md -exec rm -rf {} ; -prune'
+    commands.append(command)
+    commands.append(f'find docs -mindepth 1 -maxdepth 1 -type f -delete')
+    commands.append('pdoc --html --output-dir docs ' + src)
+    for command in commands:
+        print(command)
+        sp.run(command.split())
+
+    # Move all the generated HTML to the root of docs so it can be
+    # automatically parsed by GitHub pages.
+    shutil.copytree(docs, 'docs', dirs_exist_ok=True)
+
+    # Delete the project subdirectory contained in docs since we just copied it
+    # to the root of docs
+    shutil.rmtree(docs)
+
+    # Open documentation in the default browser.
+    P = str(Path(__file__).resolve().parent) + '/docs/index.html'
+    webbrowser.open('file://' + P, new=2)
 
     return
 
@@ -144,12 +183,15 @@ def bump(category):
 
 def performTask(args):
 
+    # This is the name of the project.
+    basename = 'parser201'
+
     if args.clean:
         clean()
     elif args.dist:
         dist()
-    elif args.pubtest:
-        pubtest()
+    elif args.pushtest:
+        pushtest()
     elif args.test:
         test()
     elif args.coverage:
@@ -158,6 +200,8 @@ def performTask(args):
         release()
     elif args.bump:
         bump(args.bump)
+    elif args.docs:
+        docs(basename)
     else:
         msg = "Please provide a task to perform. Use "
         msg += f"./{os.path.basename(__file__)} -h for help."
@@ -175,54 +219,60 @@ def main():
     msg = """Perform various utility operations for a pypi development
     project."""
 
-    epi = "Latest update: 02 Nov 2021"
+    epi = "Latest update: 09 Nov 2021"
 
     parser = argparse.ArgumentParser(description=msg, epilog=epi)
 
-    msg = """Remove cached build products."""
-    parser.add_argument('-c, --clean',
+    msg = """clean-up build products."""
+    parser.add_argument('-c', '--clean',
                         help=msg,
                         action='store_true',
                         dest='clean')
 
-    msg = """Create a distribution package ready for publication to pypi, but
-    do not actually publish. Good for checking the integrity of the build
-    before attempting to publish."""
+    msg = """create a distribution package ready for publication to pypi, but
+    do not actually publish. Good for installing locally and checking the
+    integrity of the build before release."""
     parser.add_argument('-d', '--dist',
                         help=msg,
                         action='store_true',
                         dest='dist')
 
-    msg = """Create and push a distribution package to test.pypi.org."""
-    parser.add_argument('-p', '--pubtest',
+    msg = """create and push a distribution package to test.pypi.org."""
+    parser.add_argument('-p', '--pushtest',
                         help=msg,
                         action='store_true',
-                        dest='pubtest')
+                        dest='pushtest')
 
-    msg = """Run pytest with the --tb=short option."""
+    msg = """run pytest with the --tb=short option."""
     parser.add_argument('-t', '--test',
                         help=msg,
                         action='store_true',
                         dest='test')
 
-    msg = """Generate an HTML version of a code coverage report and open it in
+    msg = """generate an HTML version of a code coverage report and open it in
     the default browser."""
     parser.add_argument('--coverage',
                         help=msg,
                         action='store_true',
                         dest='coverage')
 
-    msg = """Bump the version number of the project based on the provided
+    msg = """bump the version number of the project based on the provided
     choice: major, minor, patch."""
     parser.add_argument('-b', '--bump',
                         help=msg,
                         choices=['major', 'minor', 'patch'])
 
-    msg = """Generate a distribution package and publish it to pypi.org."""
+    msg = """generate a distribution package and release it to pypi.org."""
     parser.add_argument('-r', '--release',
                         help=msg,
                         action='store_true',
                         dest='release')
+
+    msg = """generate API documentation using pdoc3"""
+    parser.add_argument('--docs',
+                        help=msg,
+                        action='store_true',
+                        dest='docs')
 
     args = parser.parse_args()
 

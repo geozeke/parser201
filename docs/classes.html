@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>parser201.classes API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>parser201.classes</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Author: Peter Nardi
+# Date: 11/09/21
+# License: MIT (terms at the end of this file)
+
+# Title: parser201 - Apache Log Parser
+
+# Imports
+
+import datetime as dt
+import enum
+import re
+import time
+
+from datetime import datetime, timedelta, timezone
+from enum import Enum
+
+
+class TZ(Enum):
+    &#34;&#34;&#34;Enum to determine adjustment of the timestamp property of a
+    `LogParser` object.
+    &#34;&#34;&#34;
+    original = 1
+    local = 2
+    utc = 3
+
+
+class FMT(Enum):
+    &#34;&#34;&#34;
+    Enum to determine the format for the timestamp attribute of a
+    `LogParser` object.
+    &#34;&#34;&#34;
+    string = 1
+    dateobj = 2
+
+
+class LogParser:
+    &#34;&#34;&#34;The class initializer takes a single line (as a string) from an
+    Apache log file and extracts the individual fields into attributes
+    within an object.
+
+    Arguments
+    ---------
+    line : str
+        A single line from an Apache access log.
+    timezone : {TZ.original, TZ.utc, TZ.local}, optional
+        During parsing, adjust the timestamp of the `LogParser` object to
+        match a particular timezone. Default is *TZ.original*
+        (no adjustment). *TZ.local* adjusts the timestamp to the
+        timezone currently selected on the machine running the code.
+        *TZ.utc* adjusts the timestamp to
+        [UTC](https:\
+        //en.wikipedia.org/wiki/Coordinated_Universal_Time).
+    format : {FMT.string, FMT.dateobj}, optional
+        Set the format of the timestamp attribute of the `LogParser`
+        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        the timestamp attribute as a Python [datetime object](https:\
+        //docs.python.org/3/library/datetime.html).
+
+    Attributes
+    ----------
+    datasize : int
+        The size of the response to the client (in bytes).
+    ipaddress : str
+        The remote host (the client IP).
+    referrer : str
+        The referrer header of the HTTP request containing the URL of
+        the page from which this request was initiated. If not is
+        present, this attribute is set to `-` otherwise.
+    requestline : str
+        The request line from the client. (e.g. `&#34;GET / HTTP/1.0&#34;`).
+    statuscode : int
+        The status code sent from the server to the client (`200`,
+        `404`, etc.).
+    timestamp : str or datetime object
+        The time of the request in the following format:
+
+        dd/MMM/YYYY:HH:MM:SS –hhmm
+
+        NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
+        Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`)
+        are west of Greenwich; positive offsets (`+hhmm`) are east of
+        Greenwich.
+    useragent : str
+        The browser identification string if any is present, and `-`
+        otherwise.
+    userid : str
+        The identity of the user determined by `identd` (not usually
+        used since not reliable. If `identd` is not present, this
+        attribute is set to `-`.
+    username : str
+        The user name determined by HTTP authentication. If no username
+        is present, this attribute is set to `-`.
+
+    Examples
+    --------
+    Creating a `LogParser` object with default options. The timezone
+    attribute will not be adjusted, and will be stored as a string.
+    &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+    &gt;&gt;&gt; line = # a line from an Apache access log
+    &gt;&gt;&gt; lp = LogParser(line)
+
+    Creating a `LogParser` object with custom options. The timezone
+    attribute will adjusted to the timezone on the local machine, and
+    will be stored as a Python [datetime object](https:\
+    //docs.python.org/3/library/datetime.html).
+    &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+    &gt;&gt;&gt; line = # a line from an Apache access log
+    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
+    &#34;&#34;&#34;
+    # ---------------------------------------------------------------------
+
+    def __init__(self, line, timezone=TZ.original, format=FMT.string):
+
+        # Initialize attributes
+        self.ipaddress = &#39;&#39;
+        self.userid = &#39;&#39;
+        self.username = &#39;&#39;
+        self.timestamp = &#39;&#39;
+        self.requestline = &#39;&#39;
+        self.referrer = &#39;&#39;
+        self.useragent = &#39;&#39;
+        self.statuscode = 0
+        self.datasize = 0
+
+        # Initial check. If the line passed to the initializer is not a string
+        # (type == str), then return an empty LogParser object.
+
+        if type(line) != str:
+            self.__noneFields()
+            return
+
+        # If a valid string is entered, then perform pre-processing. For some
+        # lines, an empty field is represented as two quotes back-to-back, like
+        # this: &#34;&#34;. The regex to pull out agent strings between quotes will
+        # incorrectly ignore that field, rather than returning an empty string.
+        # Replace &#34;&#34; with &#34;-&#34; to prevent that.
+
+        clean = line.replace(&#39;\&#34;\&#34;&#39;, &#39;\&#34;-\&#34;&#39;)
+
+        # agentStrings: This part of the regex:(?&lt;!\\)\&#34; is a negative
+        # lookbehind assertion. It says, &#34;end with a quote mark, unless that
+        # quote mark is preceded by an escape character &#39;\&#39;&#34;
+
+        agentStrings = re.findall(r&#39;\&#34;(.+?)(?&lt;!\\)\&#34;&#39;, clean)
+
+        # The next one&#39;s tricky. We&#39;re looking to extract the statuscode and
+        # datasize fields. For some entires, the datasize field is &#39;-&#39;, but for
+        # all entries the returncode field is a reliable integer. If we split
+        # the log line on space, then the first purely isnumeric() item in the
+        # resulting list should be the returncode. If we capture the index of
+        # that code, and take that code and the one next to it from the list,
+        # we should have both fields. If the fields are valid integers, then
+        # cast to them int; else set them to 0. If any of this fails, then
+        # consider that we have a malformed log line and set all the properties
+        # to None.
+
+        try:
+            L = clean.split(&#39; &#39;)
+            i = [j for j in range(len(L)) if L[j].isnumeric()][0]
+            codeAndSize = [int(n) if n.isnumeric() else 0 for n in L[i:i+2]]
+            # Splitting on &#39;[&#39; returns a list where item [0] contains the first
+            # three fields (ipaddress; userid; username), each separated by
+            # space.
+            first3 = clean.split(&#39;[&#39;)[0].split()
+        except Exception:
+            self.__noneFields()
+            return
+
+        # Set properties. If any of these fail, then consider that we have a
+        # malformed log line and set all the properties to None.
+
+        try:
+            self.ipaddress = first3[0]
+            self.userid = first3[1]
+            self.username = first3[2]
+            self.timestamp = re.search(
+                r&#39;\[(.+?)\]&#39;, clean).group().strip(&#39;[]&#39;)
+            self.requestline = agentStrings[0]
+            self.referrer = agentStrings[1]
+            self.useragent = agentStrings[2]
+            self.statuscode = codeAndSize[0]
+            self.datasize = codeAndSize[1]
+        except Exception:
+            self.__noneFields()
+            return
+
+        # Process date/time stamp and adjust timezone/format as indicated
+
+        if timezone == TZ.original and format == FMT.string:
+            return
+
+        try:
+            dateobj = datetime.strptime(self.timestamp,
+                                        &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+        except ValueError as e:
+            self.__noneFields()
+            return
+
+        sign, hh, mm = self.__decomposeTZ(self.timestamp)
+
+        if timezone == TZ.original:
+            pass
+
+        elif timezone == TZ.local:
+            zoneString = time.strftime(&#39;%z&#39;)
+            # First convert to GMT
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            # Now convert to local time and replace tzinfo
+            sign, hh, mm = self.__decomposeTZ(zoneString)
+            zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
+            dateobj = dateobj + (sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        elif timezone == TZ.utc:
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            sign, hh, mm = self.__decomposeTZ(&#39;+0000&#39;)
+            zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        else:  # pragma no cover
+            pass
+
+        # ---------------------------------------
+
+        if format == FMT.string:
+            self.timestamp = dateobj.strftime(&#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+
+        elif format == FMT.dateobj:
+            self.timestamp = dateobj
+
+        else:  # pragma no cover
+            return
+
+        return
+
+    # ---------------------------------------------------------------------
+
+    # Method to set every field to None, in the event of a corrupted log line.
+
+    def __noneFields(self):
+        for property in [p for p in dir(self) if not p.startswith(&#39;_&#39;)]:
+            setattr(self, property, None)
+        return
+
+    # ---------------------------------------------------------------------
+
+    # Method for string rendering of a LogParser object
+
+    def __str__(self):
+        &#34;&#34;&#34;The parser201 class provides a `__str__` method which
+        renders a `LogParser` object as string suitable for display.
+
+        Examples
+        --------
+        Create a `LogParser` object like this:
+        
+        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+        &gt;&gt;&gt; line = # a line from an Apache access log
+        &gt;&gt;&gt; lp = LogParser(line)
+
+        When you print it, the following is displayed:
+
+        &gt;&gt;&gt; print(lp)
+          ipaddress: 81.48.51.130
+             userid: -
+           username: -
+          timestamp: 24/Mar/2009:18:07:16 +0100
+        requestline: GET /images/puce.gif HTTP/1.1
+         statuscode: 304
+           datasize: 2454
+            referer: -
+          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
+        &#34;&#34;&#34;
+        labels = [&#39;ipaddress&#39;, &#39;userid&#39;, &#39;username&#39;, &#39;timestamp&#39;,
+                  &#39;requestline&#39;, &#39;statuscode&#39;, &#39;datasize&#39;, &#39;referrer&#39;,
+                  &#39;useragent&#39;]
+        padding = len(max(labels, key=len))
+        L = []
+
+        # Build the string in the same order as the labels.
+        for label in labels:
+            L.append(f&#39;{label:&gt;{padding}}: {getattr(self, label)}&#39;)
+
+        return &#39;\n&#39;.join(L)
+
+    # ---------------------------------------------------------------------
+
+    def __decomposeTZ(self, zone):
+        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
+        sign = -1 if leader == &#39;-&#39; else 1
+        return sign, int(hrs), int(mins)
+
+
+# ---------------------------------------------------------------------
+
+
+if __name__ == &#39;__main__&#39;:  # pragma no cover
+
+    logline = &#39;198.0.200.105 - - [14/Jan/2014:09:36:50 -0800] &#34;GET /svds.com/ &#39;
+    logline += &#39;rockandroll HTTP/1.1&#34; 301 241 &#34;-&#34; &#34;Mozilla/5.0 (Macintosh; &#39;
+    logline += &#39;Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) &#39;
+    logline += &#39;Chrome/ 31.0.1650.63 Safari/537.36&#34;&#39;
+
+    lp = LogParser(logline)
+    print(lp.timestamp)
+    lp = LogParser(logline, timezone=TZ.utc)
+    print(lp.timestamp)
+    lp = LogParser(logline, timezone=TZ.local)
+    print(lp.timestamp)
+
+# ---------------------------------------------------------------------
+
+# MIT License
+#
+# Copyright (c) 2020-2021 Peter Nardi
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the &#34;Software&#34;), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions: # The above
+# copyright notice and this permission notice shall be included in all copies
+# or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="parser201.classes.LogParser"><code class="flex name class">
+<span>class <span class="ident">LogParser</span></span>
+<span>(</span><span>line, timezone=TZ.original, format=FMT.string)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The class initializer takes a single line (as a string) from an
+Apache log file and extracts the individual fields into attributes
+within an object.</p>
+<h2 id="arguments">Arguments</h2>
+<dl>
+<dt><strong><code>line</code></strong> :&ensp;<code>str</code></dt>
+<dd>A single line from an Apache access log.</dd>
+<dt><strong><code>timezone</code></strong> :&ensp;<code>{TZ.original, TZ.utc, TZ.local}</code>, optional</dt>
+<dd>During parsing, adjust the timestamp of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object to
+match a particular timezone. Default is <em>TZ.original</em>
+(no adjustment). <em>TZ.local</em> adjusts the timestamp to the
+timezone currently selected on the machine running the code.
+<em>TZ.utc</em> adjusts the timestamp to
+<a href="https:
+//en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>.</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>{FMT.string, FMT.dateobj}</code>, optional</dt>
+<dd>Set the format of the timestamp attribute of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code>
+object. Default is <em>FTM.string</em>. Using <em>FMT.dateobj</em> will return
+the timestamp attribute as a Python <a href="https:
+//docs.python.org/3/library/datetime.html">datetime object</a>.</dd>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>datasize</code></strong> :&ensp;<code>int</code></dt>
+<dd>The size of the response to the client (in bytes).</dd>
+<dt><strong><code>ipaddress</code></strong> :&ensp;<code>str</code></dt>
+<dd>The remote host (the client IP).</dd>
+<dt><strong><code>referrer</code></strong> :&ensp;<code>str</code></dt>
+<dd>The referrer header of the HTTP request containing the URL of
+the page from which this request was initiated. If not is
+present, this attribute is set to <code>-</code> otherwise.</dd>
+<dt><strong><code>requestline</code></strong> :&ensp;<code>str</code></dt>
+<dd>The request line from the client. (e.g. <code>"GET / HTTP/1.0"</code>).</dd>
+<dt><strong><code>statuscode</code></strong> :&ensp;<code>int</code></dt>
+<dd>The status code sent from the server to the client (<code>200</code>,
+<code>404</code>, etc.).</dd>
+<dt><strong><code>timestamp</code></strong> :&ensp;<code>str</code> or <code>datetime object</code></dt>
+<dd>
+<p>The time of the request in the following format:</p>
+<p>dd/MMM/YYYY:HH:MM:SS –hhmm</p>
+<p>NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
+Usually (but not always) <code>mm == 00</code>. Negative offsets (<code>-hhmm</code>)
+are west of Greenwich; positive offsets (<code>+hhmm</code>) are east of
+Greenwich.</p>
+</dd>
+<dt><strong><code>useragent</code></strong> :&ensp;<code>str</code></dt>
+<dd>The browser identification string if any is present, and <code>-</code>
+otherwise.</dd>
+<dt><strong><code>userid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The identity of the user determined by <code>identd</code> (not usually
+used since not reliable. If <code>identd</code> is not present, this
+attribute is set to <code>-</code>.</dd>
+<dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
+<dd>The user name determined by HTTP authentication. If no username
+is present, this attribute is set to <code>-</code>.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with default options. The timezone
+attribute will not be adjusted, and will be stored as a string.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+&gt;&gt;&gt; line = # a line from an Apache access log
+&gt;&gt;&gt; lp = LogParser(line)
+</code></pre>
+<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with custom options. The timezone
+attribute will adjusted to the timezone on the local machine, and
+will be stored as a Python <a href="https:
+//docs.python.org/3/library/datetime.html">datetime object</a>.</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+&gt;&gt;&gt; line = # a line from an Apache access log
+&gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LogParser:
+    &#34;&#34;&#34;The class initializer takes a single line (as a string) from an
+    Apache log file and extracts the individual fields into attributes
+    within an object.
+
+    Arguments
+    ---------
+    line : str
+        A single line from an Apache access log.
+    timezone : {TZ.original, TZ.utc, TZ.local}, optional
+        During parsing, adjust the timestamp of the `LogParser` object to
+        match a particular timezone. Default is *TZ.original*
+        (no adjustment). *TZ.local* adjusts the timestamp to the
+        timezone currently selected on the machine running the code.
+        *TZ.utc* adjusts the timestamp to
+        [UTC](https:\
+        //en.wikipedia.org/wiki/Coordinated_Universal_Time).
+    format : {FMT.string, FMT.dateobj}, optional
+        Set the format of the timestamp attribute of the `LogParser`
+        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        the timestamp attribute as a Python [datetime object](https:\
+        //docs.python.org/3/library/datetime.html).
+
+    Attributes
+    ----------
+    datasize : int
+        The size of the response to the client (in bytes).
+    ipaddress : str
+        The remote host (the client IP).
+    referrer : str
+        The referrer header of the HTTP request containing the URL of
+        the page from which this request was initiated. If not is
+        present, this attribute is set to `-` otherwise.
+    requestline : str
+        The request line from the client. (e.g. `&#34;GET / HTTP/1.0&#34;`).
+    statuscode : int
+        The status code sent from the server to the client (`200`,
+        `404`, etc.).
+    timestamp : str or datetime object
+        The time of the request in the following format:
+
+        dd/MMM/YYYY:HH:MM:SS –hhmm
+
+        NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
+        Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`)
+        are west of Greenwich; positive offsets (`+hhmm`) are east of
+        Greenwich.
+    useragent : str
+        The browser identification string if any is present, and `-`
+        otherwise.
+    userid : str
+        The identity of the user determined by `identd` (not usually
+        used since not reliable. If `identd` is not present, this
+        attribute is set to `-`.
+    username : str
+        The user name determined by HTTP authentication. If no username
+        is present, this attribute is set to `-`.
+
+    Examples
+    --------
+    Creating a `LogParser` object with default options. The timezone
+    attribute will not be adjusted, and will be stored as a string.
+    &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+    &gt;&gt;&gt; line = # a line from an Apache access log
+    &gt;&gt;&gt; lp = LogParser(line)
+
+    Creating a `LogParser` object with custom options. The timezone
+    attribute will adjusted to the timezone on the local machine, and
+    will be stored as a Python [datetime object](https:\
+    //docs.python.org/3/library/datetime.html).
+    &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+    &gt;&gt;&gt; line = # a line from an Apache access log
+    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
+    &#34;&#34;&#34;
+    # ---------------------------------------------------------------------
+
+    def __init__(self, line, timezone=TZ.original, format=FMT.string):
+
+        # Initialize attributes
+        self.ipaddress = &#39;&#39;
+        self.userid = &#39;&#39;
+        self.username = &#39;&#39;
+        self.timestamp = &#39;&#39;
+        self.requestline = &#39;&#39;
+        self.referrer = &#39;&#39;
+        self.useragent = &#39;&#39;
+        self.statuscode = 0
+        self.datasize = 0
+
+        # Initial check. If the line passed to the initializer is not a string
+        # (type == str), then return an empty LogParser object.
+
+        if type(line) != str:
+            self.__noneFields()
+            return
+
+        # If a valid string is entered, then perform pre-processing. For some
+        # lines, an empty field is represented as two quotes back-to-back, like
+        # this: &#34;&#34;. The regex to pull out agent strings between quotes will
+        # incorrectly ignore that field, rather than returning an empty string.
+        # Replace &#34;&#34; with &#34;-&#34; to prevent that.
+
+        clean = line.replace(&#39;\&#34;\&#34;&#39;, &#39;\&#34;-\&#34;&#39;)
+
+        # agentStrings: This part of the regex:(?&lt;!\\)\&#34; is a negative
+        # lookbehind assertion. It says, &#34;end with a quote mark, unless that
+        # quote mark is preceded by an escape character &#39;\&#39;&#34;
+
+        agentStrings = re.findall(r&#39;\&#34;(.+?)(?&lt;!\\)\&#34;&#39;, clean)
+
+        # The next one&#39;s tricky. We&#39;re looking to extract the statuscode and
+        # datasize fields. For some entires, the datasize field is &#39;-&#39;, but for
+        # all entries the returncode field is a reliable integer. If we split
+        # the log line on space, then the first purely isnumeric() item in the
+        # resulting list should be the returncode. If we capture the index of
+        # that code, and take that code and the one next to it from the list,
+        # we should have both fields. If the fields are valid integers, then
+        # cast to them int; else set them to 0. If any of this fails, then
+        # consider that we have a malformed log line and set all the properties
+        # to None.
+
+        try:
+            L = clean.split(&#39; &#39;)
+            i = [j for j in range(len(L)) if L[j].isnumeric()][0]
+            codeAndSize = [int(n) if n.isnumeric() else 0 for n in L[i:i+2]]
+            # Splitting on &#39;[&#39; returns a list where item [0] contains the first
+            # three fields (ipaddress; userid; username), each separated by
+            # space.
+            first3 = clean.split(&#39;[&#39;)[0].split()
+        except Exception:
+            self.__noneFields()
+            return
+
+        # Set properties. If any of these fail, then consider that we have a
+        # malformed log line and set all the properties to None.
+
+        try:
+            self.ipaddress = first3[0]
+            self.userid = first3[1]
+            self.username = first3[2]
+            self.timestamp = re.search(
+                r&#39;\[(.+?)\]&#39;, clean).group().strip(&#39;[]&#39;)
+            self.requestline = agentStrings[0]
+            self.referrer = agentStrings[1]
+            self.useragent = agentStrings[2]
+            self.statuscode = codeAndSize[0]
+            self.datasize = codeAndSize[1]
+        except Exception:
+            self.__noneFields()
+            return
+
+        # Process date/time stamp and adjust timezone/format as indicated
+
+        if timezone == TZ.original and format == FMT.string:
+            return
+
+        try:
+            dateobj = datetime.strptime(self.timestamp,
+                                        &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+        except ValueError as e:
+            self.__noneFields()
+            return
+
+        sign, hh, mm = self.__decomposeTZ(self.timestamp)
+
+        if timezone == TZ.original:
+            pass
+
+        elif timezone == TZ.local:
+            zoneString = time.strftime(&#39;%z&#39;)
+            # First convert to GMT
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            # Now convert to local time and replace tzinfo
+            sign, hh, mm = self.__decomposeTZ(zoneString)
+            zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
+            dateobj = dateobj + (sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        elif timezone == TZ.utc:
+            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            sign, hh, mm = self.__decomposeTZ(&#39;+0000&#39;)
+            zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
+            dateobj = dateobj.replace(tzinfo=zoneObject)
+
+        else:  # pragma no cover
+            pass
+
+        # ---------------------------------------
+
+        if format == FMT.string:
+            self.timestamp = dateobj.strftime(&#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+
+        elif format == FMT.dateobj:
+            self.timestamp = dateobj
+
+        else:  # pragma no cover
+            return
+
+        return
+
+    # ---------------------------------------------------------------------
+
+    # Method to set every field to None, in the event of a corrupted log line.
+
+    def __noneFields(self):
+        for property in [p for p in dir(self) if not p.startswith(&#39;_&#39;)]:
+            setattr(self, property, None)
+        return
+
+    # ---------------------------------------------------------------------
+
+    # Method for string rendering of a LogParser object
+
+    def __str__(self):
+        &#34;&#34;&#34;The parser201 class provides a `__str__` method which
+        renders a `LogParser` object as string suitable for display.
+
+        Examples
+        --------
+        Create a `LogParser` object like this:
+        
+        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+        &gt;&gt;&gt; line = # a line from an Apache access log
+        &gt;&gt;&gt; lp = LogParser(line)
+
+        When you print it, the following is displayed:
+
+        &gt;&gt;&gt; print(lp)
+          ipaddress: 81.48.51.130
+             userid: -
+           username: -
+          timestamp: 24/Mar/2009:18:07:16 +0100
+        requestline: GET /images/puce.gif HTTP/1.1
+         statuscode: 304
+           datasize: 2454
+            referer: -
+          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
+        &#34;&#34;&#34;
+        labels = [&#39;ipaddress&#39;, &#39;userid&#39;, &#39;username&#39;, &#39;timestamp&#39;,
+                  &#39;requestline&#39;, &#39;statuscode&#39;, &#39;datasize&#39;, &#39;referrer&#39;,
+                  &#39;useragent&#39;]
+        padding = len(max(labels, key=len))
+        L = []
+
+        # Build the string in the same order as the labels.
+        for label in labels:
+            L.append(f&#39;{label:&gt;{padding}}: {getattr(self, label)}&#39;)
+
+        return &#39;\n&#39;.join(L)
+
+    # ---------------------------------------------------------------------
+
+    def __decomposeTZ(self, zone):
+        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
+        sign = -1 if leader == &#39;-&#39; else 1
+        return sign, int(hrs), int(mins)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="parser201.classes.LogParser.__str__"><code class="name flex">
+<span>def <span class="ident">__str__</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The parser201 class provides a <code>__str__</code> method which
+renders a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object as string suitable for display.</p>
+<h2 id="examples">Examples</h2>
+<p>Create a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object like this:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+&gt;&gt;&gt; line = # a line from an Apache access log
+&gt;&gt;&gt; lp = LogParser(line)
+</code></pre>
+<p>When you print it, the following is displayed:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; print(lp)
+  ipaddress: 81.48.51.130
+     userid: -
+   username: -
+  timestamp: 24/Mar/2009:18:07:16 +0100
+requestline: GET /images/puce.gif HTTP/1.1
+ statuscode: 304
+   datasize: 2454
+    referer: -
+  useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __str__(self):
+    &#34;&#34;&#34;The parser201 class provides a `__str__` method which
+    renders a `LogParser` object as string suitable for display.
+
+    Examples
+    --------
+    Create a `LogParser` object like this:
+    
+    &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
+    &gt;&gt;&gt; line = # a line from an Apache access log
+    &gt;&gt;&gt; lp = LogParser(line)
+
+    When you print it, the following is displayed:
+
+    &gt;&gt;&gt; print(lp)
+      ipaddress: 81.48.51.130
+         userid: -
+       username: -
+      timestamp: 24/Mar/2009:18:07:16 +0100
+    requestline: GET /images/puce.gif HTTP/1.1
+     statuscode: 304
+       datasize: 2454
+        referer: -
+      useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
+    &#34;&#34;&#34;
+    labels = [&#39;ipaddress&#39;, &#39;userid&#39;, &#39;username&#39;, &#39;timestamp&#39;,
+              &#39;requestline&#39;, &#39;statuscode&#39;, &#39;datasize&#39;, &#39;referrer&#39;,
+              &#39;useragent&#39;]
+    padding = len(max(labels, key=len))
+    L = []
+
+    # Build the string in the same order as the labels.
+    for label in labels:
+        L.append(f&#39;{label:&gt;{padding}}: {getattr(self, label)}&#39;)
+
+    return &#39;\n&#39;.join(L)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="parser201" href="index.html">parser201</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code></h4>
+<ul class="">
+<li><code><a title="parser201.classes.LogParser.__str__" href="#parser201.classes.LogParser.__str__">__str__</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

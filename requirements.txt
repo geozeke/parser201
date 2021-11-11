@@ -6,3 +6,4 @@ build
 pytest
 bump2version
 autopep8
+pdoc3

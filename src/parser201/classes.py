@@ -1,5 +1,5 @@
 # Author: Peter Nardi
-# Date: 11/03/21
+# Date: 11/09/21
 # License: MIT (terms at the end of this file)
 
 # Title: parser201 - Apache Log Parser
@@ -7,6 +7,7 @@
 # Imports
 
 import datetime as dt
+import enum
 import re
 import time
 
@@ -15,21 +16,111 @@ from enum import Enum
 
 
 class TZ(Enum):
+    """Enum to determine adjustment of the timestamp property of a
+    `LogParser` object.
+    """
     original = 1
     local = 2
     utc = 3
 
 
 class FMT(Enum):
+    """
+    Enum to determine the format for the timestamp attribute of a
+    `LogParser` object.
+    """
     string = 1
     dateobj = 2
 
 
 class LogParser:
+    """The class initializer takes a single line (as a string) from an
+    Apache log file and extracts the individual fields into attributes
+    within an object.
 
+    Arguments
+    ---------
+    line : str
+        A single line from an Apache access log.
+    timezone : {TZ.original, TZ.utc, TZ.local}, optional
+        During parsing, adjust the timestamp of the `LogParser` object to
+        match a particular timezone. Default is *TZ.original*
+        (no adjustment). *TZ.local* adjusts the timestamp to the
+        timezone currently selected on the machine running the code.
+        *TZ.utc* adjusts the timestamp to
+        [UTC](https:\
+        //en.wikipedia.org/wiki/Coordinated_Universal_Time).
+    format : {FMT.string, FMT.dateobj}, optional
+        Set the format of the timestamp attribute of the `LogParser`
+        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        the timestamp attribute as a Python [datetime object](https:\
+        //docs.python.org/3/library/datetime.html).
+
+    Attributes
+    ----------
+    datasize : int
+        The size of the response to the client (in bytes).
+    ipaddress : str
+        The remote host (the client IP).
+    referrer : str
+        The referrer header of the HTTP request containing the URL of
+        the page from which this request was initiated. If not is
+        present, this attribute is set to `-` otherwise.
+    requestline : str
+        The request line from the client. (e.g. `"GET / HTTP/1.0"`).
+    statuscode : int
+        The status code sent from the server to the client (`200`,
+        `404`, etc.).
+    timestamp : str or datetime object
+        The time of the request in the following format:
+
+        dd/MMM/YYYY:HH:MM:SS –hhmm
+
+        NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
+        Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`)
+        are west of Greenwich; positive offsets (`+hhmm`) are east of
+        Greenwich.
+    useragent : str
+        The browser identification string if any is present, and `-`
+        otherwise.
+    userid : str
+        The identity of the user determined by `identd` (not usually
+        used since not reliable. If `identd` is not present, this
+        attribute is set to `-`.
+    username : str
+        The user name determined by HTTP authentication. If no username
+        is present, this attribute is set to `-`.
+
+    Examples
+    --------
+    Creating a `LogParser` object with default options. The timezone
+    attribute will not be adjusted, and will be stored as a string.
+    >>> from parser201 import LogParser, TZ, FMT
+    >>> line = # a line from an Apache access log
+    >>> lp = LogParser(line)
+
+    Creating a `LogParser` object with custom options. The timezone
+    attribute will adjusted to the timezone on the local machine, and
+    will be stored as a Python [datetime object](https:\
+    //docs.python.org/3/library/datetime.html).
+    >>> from parser201 import LogParser, TZ, FMT
+    >>> line = # a line from an Apache access log
+    >>> lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
+    """
     # ---------------------------------------------------------------------
 
     def __init__(self, line, timezone=TZ.original, format=FMT.string):
+
+        # Initialize attributes
+        self.ipaddress = ''
+        self.userid = ''
+        self.username = ''
+        self.timestamp = ''
+        self.requestline = ''
+        self.referrer = ''
+        self.useragent = ''
+        self.statuscode = 0
+        self.datasize = 0
 
         # Initial check. If the line passed to the initializer is not a string
         # (type == str), then return an empty LogParser object.
@@ -79,18 +170,19 @@ class LogParser:
         # malformed log line and set all the properties to None.
 
         try:
-            self.__ipaddress = first3[0]
-            self.__userid = first3[1]
-            self.__username = first3[2]
-            self.__timestamp = re.search(
+            self.ipaddress = first3[0]
+            self.userid = first3[1]
+            self.username = first3[2]
+            self.timestamp = re.search(
                 r'\[(.+?)\]', clean).group().strip('[]')
-            self.__requestline = agentStrings[0]
-            self.__referrer = agentStrings[1]
-            self.__useragent = agentStrings[2]
-            self.__statuscode = codeAndSize[0]
-            self.__datasize = codeAndSize[1]
+            self.requestline = agentStrings[0]
+            self.referrer = agentStrings[1]
+            self.useragent = agentStrings[2]
+            self.statuscode = codeAndSize[0]
+            self.datasize = codeAndSize[1]
         except Exception:
             self.__noneFields()
+            return
 
         # Process date/time stamp and adjust timezone/format as indicated
 
@@ -98,13 +190,13 @@ class LogParser:
             return
 
         try:
-            dateobj = datetime.strptime(self.__timestamp,
+            dateobj = datetime.strptime(self.timestamp,
                                         '%d/%b/%Y:%H:%M:%S %z')
         except ValueError as e:
             self.__noneFields()
             return
 
-        sign, hh, mm = self.__decomposeTZ(self.__timestamp)
+        sign, hh, mm = self.__decomposeTZ(self.timestamp)
 
         if timezone == TZ.original:
             pass
@@ -131,10 +223,10 @@ class LogParser:
         # ---------------------------------------
 
         if format == FMT.string:
-            self.__timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
+            self.timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
 
         elif format == FMT.dateobj:
-            self.__timestamp = dateobj
+            self.timestamp = dateobj
 
         else:  # pragma no cover
             return
@@ -155,6 +247,30 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
+        """The parser201 class provides a `__str__` method which
+        renders a `LogParser` object as string suitable for display.
+
+        Examples
+        --------
+        Create a `LogParser` object like this:
+        
+        >>> from parser201 import LogParser, TZ, FMT
+        >>> line = # a line from an Apache access log
+        >>> lp = LogParser(line)
+
+        When you print it, the following is displayed:
+
+        >>> print(lp)
+          ipaddress: 81.48.51.130
+             userid: -
+           username: -
+          timestamp: 24/Mar/2009:18:07:16 +0100
+        requestline: GET /images/puce.gif HTTP/1.1
+         statuscode: 304
+           datasize: 2454
+            referer: -
+          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
+        """
         labels = ['ipaddress', 'userid', 'username', 'timestamp',
                   'requestline', 'statuscode', 'datasize', 'referrer',
                   'useragent']
@@ -170,119 +286,27 @@ class LogParser:
     # ---------------------------------------------------------------------
 
     def __decomposeTZ(self, zone):
-        leader, hrs, mins = zone[-5], zone[-5:-3], zone[-2:]
+        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
         sign = -1 if leader == '-' else 1
         return sign, int(hrs), int(mins)
 
-    # ---------------------------------------------------------------------
-
-    # Setters and Getters. Might need to perform input validation at some point
-    # in the future.
-
-    # -------------------------------
-    # ipaddress property
-
-    @property
-    def ipaddress(self):
-        return self.__ipaddress
-
-    @ipaddress.setter
-    def ipaddress(self, value):
-        self.__ipaddress = value
-
-    # -------------------------------
-    # userid property
-
-    @property
-    def userid(self):
-        return self.__userid
-
-    @userid.setter
-    def userid(self, value):
-        self.__userid = value
-
-    # -------------------------------
-    # username property
-
-    @property
-    def username(self):
-        return self.__username
-
-    @username.setter
-    def username(self, value):
-        self.__username = value
-
-    # -------------------------------
-    # timestamp property
-
-    @property
-    def timestamp(self):
-        return self.__timestamp
-
-    @timestamp.setter
-    def timestamp(self, value):
-        self.__timestamp = value
-
-    # -------------------------------
-    # requestline property
-
-    @property
-    def requestline(self):
-        return self.__requestline
-
-    @requestline.setter
-    def requestline(self, value):
-        self.__requestline = value
-
-    # -------------------------------
-    # statuscode property
-
-    @property
-    def statuscode(self):
-        return self.__statuscode
-
-    @statuscode.setter
-    def statuscode(self, value):
-        self.__statuscode = value
-
-    # -------------------------------
-    # datasize property
-
-    @property
-    def datasize(self):
-        return self.__datasize
-
-    @datasize.setter
-    def datasize(self, value):
-        self.__datasize = value
-
-    # -------------------------------
-    # referrer property
-
-    @property
-    def referrer(self):
-        return self.__referrer
-
-    @referrer.setter
-    def referrer(self, value):
-        self.__referrer = value
-
-    # -------------------------------
-    # useragent property
-
-    @property
-    def useragent(self):
-        return self.__useragent
-
-    @useragent.setter
-    def useragent(self, value):
-        self.__useragent = value
 
 # ---------------------------------------------------------------------
 
 
 if __name__ == '__main__':  # pragma no cover
-    pass
+
+    logline = '198.0.200.105 - - [14/Jan/2014:09:36:50 -0800] "GET /svds.com/ '
+    logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
+    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+    logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
+
+    lp = LogParser(logline)
+    print(lp.timestamp)
+    lp = LogParser(logline, timezone=TZ.utc)
+    print(lp.timestamp)
+    lp = LogParser(logline, timezone=TZ.local)
+    print(lp.timestamp)
 
 # ---------------------------------------------------------------------
 
