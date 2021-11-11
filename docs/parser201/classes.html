@@ -80,7 +80,7 @@ class LogParser:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        object. Default is *FTM.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -122,13 +122,13 @@ class LogParser:
     Examples
     --------
     Creating a `LogParser` object with default options. The timezone
-    attribute will not be adjusted, and will be stored as a string.
+    attribute will not be adjusted and will be stored as a string.
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timezone
-    attribute will adjusted to the timezone on the local machine, and
+    attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
@@ -281,7 +281,7 @@ class LogParser:
         Examples
         --------
         Create a `LogParser` object like this:
-        
+
         &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
         &gt;&gt;&gt; line = # a line from an Apache access log
         &gt;&gt;&gt; lp = LogParser(line)
@@ -391,7 +391,7 @@ timezone currently selected on the machine running the code.
 //en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>.</dd>
 <dt><strong><code>format</code></strong> :&ensp;<code>{FMT.string, FMT.dateobj}</code>, optional</dt>
 <dd>Set the format of the timestamp attribute of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code>
-object. Default is <em>FTM.string</em>. Using <em>FMT.dateobj</em> will return
+object. Default is <em>FTM.string</em>. Using <em>FMT.dateobj</em> will store
 the timestamp attribute as a Python <a href="https:
 //docs.python.org/3/library/datetime.html">datetime object</a>.</dd>
 </dl>
@@ -432,13 +432,13 @@ is present, this attribute is set to <code>-</code>.</dd>
 </dl>
 <h2 id="examples">Examples</h2>
 <p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with default options. The timezone
-attribute will not be adjusted, and will be stored as a string.</p>
+attribute will not be adjusted and will be stored as a string.</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
 &gt;&gt;&gt; line = # a line from an Apache access log
 &gt;&gt;&gt; lp = LogParser(line)
 </code></pre>
 <p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with custom options. The timezone
-attribute will adjusted to the timezone on the local machine, and
+attribute will adjusted to the timezone on the local machine and
 will be stored as a Python <a href="https:
 //docs.python.org/3/library/datetime.html">datetime object</a>.</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
@@ -468,7 +468,7 @@ will be stored as a Python <a href="https:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        object. Default is *FTM.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -510,13 +510,13 @@ will be stored as a Python <a href="https:
     Examples
     --------
     Creating a `LogParser` object with default options. The timezone
-    attribute will not be adjusted, and will be stored as a string.
+    attribute will not be adjusted and will be stored as a string.
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timezone
-    attribute will adjusted to the timezone on the local machine, and
+    attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
@@ -669,7 +669,7 @@ will be stored as a Python <a href="https:
         Examples
         --------
         Create a `LogParser` object like this:
-        
+
         &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
         &gt;&gt;&gt; line = # a line from an Apache access log
         &gt;&gt;&gt; lp = LogParser(line)
@@ -743,7 +743,7 @@ requestline: GET /images/puce.gif HTTP/1.1
     Examples
     --------
     Create a `LogParser` object like this:
-    
+
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line)
@@ -780,6 +780,16 @@ requestline: GET /images/puce.gif HTTP/1.1
 </section>
 </article>
 <nav id="sidebar">
+<center>
+<a><img src="../zeke-256.png" width=100></a>
+<p>
+<h3>parser201</h3><br>
+Streamlined Apache Access Log Parsing<br>
+Peter Nardi<br>
+<a href="mailto:pete@nardi.com">pete@nardi.com</a><br>
+</p>
+<hr>
+</center>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

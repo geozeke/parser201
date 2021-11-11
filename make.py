@@ -152,8 +152,9 @@ def docs(basename):
     docs = 'docs/' + basename
 
     commands = []
-    commands.append(f'rm -rf {docs}')
-    commands.append('pdoc --html --output-dir docs ' + src)
+    command = 'pdoc3 --html --template-dir=docs --output-dir=docs '
+    command += src + ' --force'
+    commands.append(command)
     for command in commands:
         print(command)
         sp.run(command.split())

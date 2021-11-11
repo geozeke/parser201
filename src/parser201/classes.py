@@ -52,7 +52,7 @@ class LogParser:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will return
+        object. Default is *FTM.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -94,13 +94,13 @@ class LogParser:
     Examples
     --------
     Creating a `LogParser` object with default options. The timezone
-    attribute will not be adjusted, and will be stored as a string.
+    attribute will not be adjusted and will be stored as a string.
     >>> from parser201 import LogParser, TZ, FMT
     >>> line = # a line from an Apache access log
     >>> lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timezone
-    attribute will adjusted to the timezone on the local machine, and
+    attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     >>> from parser201 import LogParser, TZ, FMT
@@ -253,7 +253,7 @@ class LogParser:
         Examples
         --------
         Create a `LogParser` object like this:
-        
+
         >>> from parser201 import LogParser, TZ, FMT
         >>> line = # a line from an Apache access log
         >>> lp = LogParser(line)

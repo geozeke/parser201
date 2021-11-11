@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>parser201 API documentation</title>
-<meta name="description" content="Documentation …" />
+<meta name="description" content="Installation …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,12 +22,11 @@
 <h1 class="title">Package <code>parser201</code></h1>
 </header>
 <section id="section-intro">
-<h2 id="documentation">Documentation</h2>
-<h3 id="installation">Installation</h3>
+<h2 id="installation">Installation</h2>
 <p>parser201 is lightweight, with no third party dependencies. </p>
 <pre><code>pip3 install parser201
 </code></pre>
-<h3 id="usage-example">Usage Example</h3>
+<h2 id="usage-example">Usage Example</h2>
 <pre><code class="language-python">from parser201 import LogParser, FMT, TZ
 
 with open('access.log', 'r') as f:
@@ -35,8 +34,8 @@ with open('access.log', 'r') as f:
         lp = LogParser(line)
         # Use lp as desired: add to List, Dictionary, etc.
 </code></pre>
-<h3 id="logparser-attributes">LogParser Attributes</h3>
-<p>Detailed attribute information is available by clicking on the <code><a title="parser201.classes" href="classes.html">parser201.classes</a></code> link. Here's an example showing the attributes of a LogParser class object:</p>
+<h2 id="api-documentation">API Documentation</h2>
+<p>Detailed API information is available by clicking on the <code><a title="parser201.classes" href="classes.html">parser201.classes</a></code> link. <strong>TL/DR</strong>: Here's an example showing the attributes of a LogParser class object:</p>
 <pre><code>  ipaddress: 81.48.51.130
      userid: -
    username: -
@@ -47,7 +46,7 @@ requestline: GET /images/puce.gif HTTP/1.1
     referer: -
   useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
 </code></pre>
-<h3 id="exception-handling">Exception Handling</h3>
+<h2 id="exception-handling">Exception Handling</h2>
 <p>If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the properties set to <code>None</code>.</p>
 <pre><code>  ipaddress: None
      userid: None
@@ -98,16 +97,23 @@ __pdoc__[&#39;classes.LogParser.__str__&#39;] = True</code></pre>
 </section>
 </article>
 <nav id="sidebar">
+<center>
+<a><img src="../zeke-256.png" width=100></a>
+<p>
+<h3>parser201</h3><br>
+Streamlined Apache Access Log Parsing<br>
+Peter Nardi<br>
+<a href="mailto:pete@nardi.com">pete@nardi.com</a><br>
+</p>
+<hr>
+</center>
 <h1>Index</h1>
 <div class="toc">
 <ul>
-<li><a href="#documentation">Documentation</a><ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage-example">Usage Example</a></li>
-<li><a href="#logparser-attributes">LogParser Attributes</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
 <li><a href="#exception-handling">Exception Handling</a></li>
-</ul>
-</li>
 </ul>
 </div>
 <ul id="index">
