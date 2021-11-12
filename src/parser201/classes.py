@@ -1,5 +1,5 @@
 # Author: Peter Nardi
-# Date: 11/09/21
+# Date: 11/11/21
 # License: MIT (terms at the end of this file)
 
 # Title: parser201 - Apache Log Parser
@@ -52,7 +52,7 @@ class LogParser:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will store
+        object. Default is *FMT.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -64,15 +64,15 @@ class LogParser:
         The remote host (the client IP).
     referrer : str
         The referrer header of the HTTP request containing the URL of
-        the page from which this request was initiated. If not is
-        present, this attribute is set to `-` otherwise.
+        the page from which this request was initiated. If none is
+        present, this attribute is set to `-`.
     requestline : str
         The request line from the client. (e.g. `"GET / HTTP/1.0"`).
     statuscode : int
         The status code sent from the server to the client (`200`,
         `404`, etc.).
     timestamp : str or datetime object
-        The time of the request in the following format:
+        The date and time of the request in the following format:
 
         dd/MMM/YYYY:HH:MM:SS –hhmm
 
@@ -85,7 +85,7 @@ class LogParser:
         otherwise.
     userid : str
         The identity of the user determined by `identd` (not usually
-        used since not reliable. If `identd` is not present, this
+        used since not reliable). If `identd` is not present, this
         attribute is set to `-`.
     username : str
         The user name determined by HTTP authentication. If no username
@@ -93,13 +93,13 @@ class LogParser:
 
     Examples
     --------
-    Creating a `LogParser` object with default options. The timezone
+    Creating a `LogParser` object with default options. The timestamp
     attribute will not be adjusted and will be stored as a string.
     >>> from parser201 import LogParser, TZ, FMT
     >>> line = # a line from an Apache access log
     >>> lp = LogParser(line)
 
-    Creating a `LogParser` object with custom options. The timezone
+    Creating a `LogParser` object with custom options. The timestamp
     attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
@@ -247,8 +247,8 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        """The parser201 class provides a `__str__` method which
-        renders a `LogParser` object as string suitable for display.
+        """The class provides a `__str__` method which renders a
+        `LogParser` object as string suitable for display.
 
         Examples
         --------

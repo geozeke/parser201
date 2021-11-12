@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Peter Nardi
-# Date: 11/09/21
+# Date: 11/11/21
 # License: (see MIT License at the end of this file)
 
 # Title: make
@@ -148,12 +148,11 @@ def bump(category):
 
 def docs(basename):
 
-    src = 'src/' + basename
-    docs = 'docs/' + basename
+    gdocs = 'src/' + basename
 
     commands = []
     command = 'pdoc3 --html --template-dir=docs --output-dir=docs '
-    command += src + ' --force'
+    command += gdocs + ' --force'
     commands.append(command)
     for command in commands:
         print(command)
@@ -207,7 +206,7 @@ def main():
     msg = """Perform various utility operations for a pypi development
     project."""
 
-    epi = "Latest update: 09 Nov 2021"
+    epi = "Latest update: 11 Nov 2021"
 
     parser = argparse.ArgumentParser(description=msg, epilog=epi)
 

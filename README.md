@@ -11,7 +11,7 @@
 
 ## Features
 
-The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache access log file and extracts the individual fields into properties within an object.
+The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.
 
 ## Installation
 
@@ -34,7 +34,7 @@ with open('access.log', 'r') as f:
 
 ## Documentation
 
-Available here: [https://geozeke.github.io/parser201/](https://geozeke.github.io/parser201/)
+See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
@@ -50,7 +50,7 @@ Available here: [https://geozeke.github.io/parser201/](https://geozeke.github.io
 	* Implemented more robust and compartmentalized test cases.
 	* Code tuning.<br><br>
 * 0.2.0 (2021-10-31)
-	* Changed behavior to gracefully fail for any malformed input line. If an input line cannot be successfully parsed, all properties of the returned object are set to `None` and no messages are printed.
+	* Changed behavior to gracefully fail for any malformed input line. If an input line cannot be successfully parsed, all attributes of the returned object are set to `None` and no messages are printed.
 	* Added additional pytest cases to verify failure behavior.<br><br>
 * 0.1.9 (2021-09-15)
 	* Code cleanup for pep8 compliance.

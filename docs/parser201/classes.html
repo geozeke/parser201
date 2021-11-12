@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python"># Author: Peter Nardi
-# Date: 11/09/21
+# Date: 11/11/21
 # License: MIT (terms at the end of this file)
 
 # Title: parser201 - Apache Log Parser
@@ -80,7 +80,7 @@ class LogParser:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will store
+        object. Default is *FMT.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -92,15 +92,15 @@ class LogParser:
         The remote host (the client IP).
     referrer : str
         The referrer header of the HTTP request containing the URL of
-        the page from which this request was initiated. If not is
-        present, this attribute is set to `-` otherwise.
+        the page from which this request was initiated. If none is
+        present, this attribute is set to `-`.
     requestline : str
         The request line from the client. (e.g. `&#34;GET / HTTP/1.0&#34;`).
     statuscode : int
         The status code sent from the server to the client (`200`,
         `404`, etc.).
     timestamp : str or datetime object
-        The time of the request in the following format:
+        The date and time of the request in the following format:
 
         dd/MMM/YYYY:HH:MM:SS –hhmm
 
@@ -113,7 +113,7 @@ class LogParser:
         otherwise.
     userid : str
         The identity of the user determined by `identd` (not usually
-        used since not reliable. If `identd` is not present, this
+        used since not reliable). If `identd` is not present, this
         attribute is set to `-`.
     username : str
         The user name determined by HTTP authentication. If no username
@@ -121,13 +121,13 @@ class LogParser:
 
     Examples
     --------
-    Creating a `LogParser` object with default options. The timezone
+    Creating a `LogParser` object with default options. The timestamp
     attribute will not be adjusted and will be stored as a string.
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line)
 
-    Creating a `LogParser` object with custom options. The timezone
+    Creating a `LogParser` object with custom options. The timestamp
     attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
@@ -275,8 +275,8 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        &#34;&#34;&#34;The parser201 class provides a `__str__` method which
-        renders a `LogParser` object as string suitable for display.
+        &#34;&#34;&#34;The class provides a `__str__` method which renders a
+        `LogParser` object as string suitable for display.
 
         Examples
         --------
@@ -391,7 +391,7 @@ timezone currently selected on the machine running the code.
 //en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>.</dd>
 <dt><strong><code>format</code></strong> :&ensp;<code>{FMT.string, FMT.dateobj}</code>, optional</dt>
 <dd>Set the format of the timestamp attribute of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code>
-object. Default is <em>FTM.string</em>. Using <em>FMT.dateobj</em> will store
+object. Default is <em>FMT.string</em>. Using <em>FMT.dateobj</em> will store
 the timestamp attribute as a Python <a href="https:
 //docs.python.org/3/library/datetime.html">datetime object</a>.</dd>
 </dl>
@@ -403,8 +403,8 @@ the timestamp attribute as a Python <a href="https:
 <dd>The remote host (the client IP).</dd>
 <dt><strong><code>referrer</code></strong> :&ensp;<code>str</code></dt>
 <dd>The referrer header of the HTTP request containing the URL of
-the page from which this request was initiated. If not is
-present, this attribute is set to <code>-</code> otherwise.</dd>
+the page from which this request was initiated. If none is
+present, this attribute is set to <code>-</code>.</dd>
 <dt><strong><code>requestline</code></strong> :&ensp;<code>str</code></dt>
 <dd>The request line from the client. (e.g. <code>"GET / HTTP/1.0"</code>).</dd>
 <dt><strong><code>statuscode</code></strong> :&ensp;<code>int</code></dt>
@@ -412,7 +412,7 @@ present, this attribute is set to <code>-</code> otherwise.</dd>
 <code>404</code>, etc.).</dd>
 <dt><strong><code>timestamp</code></strong> :&ensp;<code>str</code> or <code>datetime object</code></dt>
 <dd>
-<p>The time of the request in the following format:</p>
+<p>The date and time of the request in the following format:</p>
 <p>dd/MMM/YYYY:HH:MM:SS –hhmm</p>
 <p>NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
 Usually (but not always) <code>mm == 00</code>. Negative offsets (<code>-hhmm</code>)
@@ -424,20 +424,20 @@ Greenwich.</p>
 otherwise.</dd>
 <dt><strong><code>userid</code></strong> :&ensp;<code>str</code></dt>
 <dd>The identity of the user determined by <code>identd</code> (not usually
-used since not reliable. If <code>identd</code> is not present, this
+used since not reliable). If <code>identd</code> is not present, this
 attribute is set to <code>-</code>.</dd>
 <dt><strong><code>username</code></strong> :&ensp;<code>str</code></dt>
 <dd>The user name determined by HTTP authentication. If no username
 is present, this attribute is set to <code>-</code>.</dd>
 </dl>
 <h2 id="examples">Examples</h2>
-<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with default options. The timezone
+<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with default options. The timestamp
 attribute will not be adjusted and will be stored as a string.</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
 &gt;&gt;&gt; line = # a line from an Apache access log
 &gt;&gt;&gt; lp = LogParser(line)
 </code></pre>
-<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with custom options. The timezone
+<p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with custom options. The timestamp
 attribute will adjusted to the timezone on the local machine and
 will be stored as a Python <a href="https:
 //docs.python.org/3/library/datetime.html">datetime object</a>.</p>
@@ -468,7 +468,7 @@ will be stored as a Python <a href="https:
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FTM.string*. Using *FMT.dateobj* will store
+        object. Default is *FMT.string*. Using *FMT.dateobj* will store
         the timestamp attribute as a Python [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
@@ -480,15 +480,15 @@ will be stored as a Python <a href="https:
         The remote host (the client IP).
     referrer : str
         The referrer header of the HTTP request containing the URL of
-        the page from which this request was initiated. If not is
-        present, this attribute is set to `-` otherwise.
+        the page from which this request was initiated. If none is
+        present, this attribute is set to `-`.
     requestline : str
         The request line from the client. (e.g. `&#34;GET / HTTP/1.0&#34;`).
     statuscode : int
         The status code sent from the server to the client (`200`,
         `404`, etc.).
     timestamp : str or datetime object
-        The time of the request in the following format:
+        The date and time of the request in the following format:
 
         dd/MMM/YYYY:HH:MM:SS –hhmm
 
@@ -501,7 +501,7 @@ will be stored as a Python <a href="https:
         otherwise.
     userid : str
         The identity of the user determined by `identd` (not usually
-        used since not reliable. If `identd` is not present, this
+        used since not reliable). If `identd` is not present, this
         attribute is set to `-`.
     username : str
         The user name determined by HTTP authentication. If no username
@@ -509,13 +509,13 @@ will be stored as a Python <a href="https:
 
     Examples
     --------
-    Creating a `LogParser` object with default options. The timezone
+    Creating a `LogParser` object with default options. The timestamp
     attribute will not be adjusted and will be stored as a string.
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line)
 
-    Creating a `LogParser` object with custom options. The timezone
+    Creating a `LogParser` object with custom options. The timestamp
     attribute will adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
@@ -663,8 +663,8 @@ will be stored as a Python <a href="https:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        &#34;&#34;&#34;The parser201 class provides a `__str__` method which
-        renders a `LogParser` object as string suitable for display.
+        &#34;&#34;&#34;The class provides a `__str__` method which renders a
+        `LogParser` object as string suitable for display.
 
         Examples
         --------
@@ -712,8 +712,8 @@ will be stored as a Python <a href="https:
 <span>def <span class="ident">__str__</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>The parser201 class provides a <code>__str__</code> method which
-renders a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object as string suitable for display.</p>
+<div class="desc"><p>The class provides a <code>__str__</code> method which renders a
+<code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object as string suitable for display.</p>
 <h2 id="examples">Examples</h2>
 <p>Create a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object like this:</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
@@ -737,8 +737,8 @@ requestline: GET /images/puce.gif HTTP/1.1
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def __str__(self):
-    &#34;&#34;&#34;The parser201 class provides a `__str__` method which
-    renders a `LogParser` object as string suitable for display.
+    &#34;&#34;&#34;The class provides a `__str__` method which renders a
+    `LogParser` object as string suitable for display.
 
     Examples
     --------
@@ -780,16 +780,19 @@ requestline: GET /images/puce.gif HTTP/1.1
 </section>
 </article>
 <nav id="sidebar">
-<center>
-<a><img src="../zeke-256.png" width=100></a>
-<p>
-<h3>parser201</h3><br>
+<table>
+<tr>
+<td><a><img src="../logo.png" width=125></a></td>
+<td><h2>parser201</h2></td>
+</tr>
+</table>
+Dino says: <i>Everything you need is in the box</i>
+<p><h4>
 Streamlined Apache Access Log Parsing<br>
 Peter Nardi<br>
 <a href="mailto:pete@nardi.com">pete@nardi.com</a><br>
-</p>
+</h4></p>
 <hr>
-</center>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

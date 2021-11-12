@@ -1,13 +1,14 @@
-<center>
+<table>
+  <tr>
+    <td><a><img src="../logo.png" width=125></a></td>
+    <td><h2>parser201</h2></td>
+  </tr>
+</table>
+Dino says: <i>Everything you need is in the box</i>
 
-<a><img src="../zeke-256.png" width=100></a>
-
-<p>
-<h3>parser201</h3><br>
+<p><h4>
 Streamlined Apache Access Log Parsing<br>
 Peter Nardi<br>
 <a href="mailto:pete@nardi.com">pete@nardi.com</a><br>
-</p>
+</h4></p>
 <hr>
-
-</center>
