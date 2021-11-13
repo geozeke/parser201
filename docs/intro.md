@@ -25,7 +25,7 @@ Detailed API information is available by clicking on the `parser201.classes` lin
 
 **TL/DR**: Here's an example showing the attributes of a LogParser class object:
 
-```
+```shell
   ipaddress: 81.48.51.130
      userid: -
    username: -
@@ -41,7 +41,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 
 If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the attributes set to `None`.
 
-```
+```shell
   ipaddress: None
      userid: None
    username: None

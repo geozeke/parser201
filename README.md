@@ -38,10 +38,11 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
-* 1.1.0 (2021-XX-XX)
+* 1.1.0 (2021-11-13)
 	* Implemented selectable timestamp conversion options {*original*, *local*, [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
-	* Implemented selectable formatting options for the timestamp  {*string*, *dateobj*}.
-	* Migrated API reference to GitHub pages.<br><br>
+	* Implemented selectable formatting options for timestamp attribute {*string*, *dateobj*}.
+	* Migrated API reference to GitHub pages.
+	* Code cleanup.<br><br>
 * 1.0.2 (2021-11-05)
 	* Documentation cleanup.<br><br>
 * 1.0.0 (2021-11-04)

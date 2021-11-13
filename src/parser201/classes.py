@@ -2,7 +2,7 @@
 # Date: 11/11/21
 # License: MIT (terms at the end of this file)
 
-# Title: parser201 - Apache Log Parser
+# Title: parser201 - Apache Access Log Parser
 
 # Imports
 
@@ -11,7 +11,6 @@ import enum
 import re
 import time
 
-from datetime import datetime, timedelta, timezone
 from enum import Enum
 
 
@@ -74,9 +73,9 @@ class LogParser:
     timestamp : str or datetime object
         The date and time of the request in the following format:
 
-        dd/MMM/YYYY:HH:MM:SS –hhmm
+        `dd/MMM/YYYY:HH:MM:SS –hhmm`
 
-        NOTE: -hhmm is the time offset from Greenwich Mean Time (GMT).
+        NOTE: `-hhmm` is the time offset from Greenwich Mean Time (GMT).
         Usually (but not always) `mm == 00`. Negative offsets (`-hhmm`)
         are west of Greenwich; positive offsets (`+hhmm`) are east of
         Greenwich.
@@ -190,8 +189,8 @@ class LogParser:
             return
 
         try:
-            dateobj = datetime.strptime(self.timestamp,
-                                        '%d/%b/%Y:%H:%M:%S %z')
+            dateobj = dt.datetime.strptime(self.timestamp,
+                                           '%d/%b/%Y:%H:%M:%S %z')
         except ValueError as e:
             self.__noneFields()
             return
@@ -204,15 +203,15 @@ class LogParser:
         elif timezone == TZ.local:
             zoneString = time.strftime('%z')
             # First convert to GMT
-            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             # Now convert to local time and replace tzinfo
             sign, hh, mm = self.__decomposeTZ(zoneString)
             zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
-            dateobj = dateobj + (sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj + (sign*dt.timedelta(hours=hh, minutes=mm))
             dateobj = dateobj.replace(tzinfo=zoneObject)
 
         elif timezone == TZ.utc:
-            dateobj = dateobj + (-1 * sign * timedelta(hours=hh, minutes=mm))
+            dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             sign, hh, mm = self.__decomposeTZ('+0000')
             zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
             dateobj = dateobj.replace(tzinfo=zoneObject)
@@ -295,18 +294,7 @@ class LogParser:
 
 
 if __name__ == '__main__':  # pragma no cover
-
-    logline = '198.0.200.105 - - [14/Jan/2014:09:36:50 -0800] "GET /svds.com/ '
-    logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
-    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
-    logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
-
-    lp = LogParser(logline)
-    print(lp.timestamp)
-    lp = LogParser(logline, timezone=TZ.utc)
-    print(lp.timestamp)
-    lp = LogParser(logline, timezone=TZ.local)
-    print(lp.timestamp)
+    pass
 
 # ---------------------------------------------------------------------
 

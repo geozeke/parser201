@@ -4,7 +4,7 @@
     <td><h2>parser201</h2></td>
   </tr>
 </table>
-Dino says: <i>Everything you need is in the box</i>
+<i>Everything you need is in the box</i>
 
 <p><h4>
 Streamlined Apache Access Log Parsing<br>

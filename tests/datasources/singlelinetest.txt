@@ -1,0 +1,11 @@
+logline = '198.0.200.105 - - [14/Jan/2014:09:36:50 -0800] "GET /svds.com/ '
+logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
+logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
+
+lp = LogParser(logline)
+print(lp.timestamp)
+lp = LogParser(logline, timezone=TZ.utc)
+print(lp.timestamp)
+lp = LogParser(logline, timezone=TZ.local)
+print(lp.timestamp)

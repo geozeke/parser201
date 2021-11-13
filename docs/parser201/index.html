@@ -38,7 +38,7 @@ with open('access.log', 'r') as f:
 <h2 id="api-documentation">API Documentation</h2>
 <p>Detailed API information is available by clicking on the <code><a title="parser201.classes" href="classes.html">parser201.classes</a></code> link.</p>
 <p><strong>TL/DR</strong>: Here's an example showing the attributes of a LogParser class object:</p>
-<pre><code>  ipaddress: 81.48.51.130
+<pre><code class="language-shell">  ipaddress: 81.48.51.130
      userid: -
    username: -
   timestamp: 24/Mar/2009:18:07:16 +0100
@@ -50,7 +50,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 </code></pre>
 <h2 id="exception-handling">Exception Handling</h2>
 <p>If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the attributes set to <code>None</code>.</p>
-<pre><code>  ipaddress: None
+<pre><code class="language-shell">  ipaddress: None
      userid: None
    username: None
   timestamp: None
@@ -68,7 +68,7 @@ requestline: None
 .. include:: ../../docs/intro.md
 &#34;&#34;&#34;
 
-__version__ = &#39;1.0.2&#39;
+__version__ = &#39;1.0.3&#39;
 
 from .classes import LogParser
 from .classes import TZ
@@ -105,7 +105,7 @@ __pdoc__[&#39;classes.LogParser.__str__&#39;] = True</code></pre>
 <td><h2>parser201</h2></td>
 </tr>
 </table>
-Dino says: <i>Everything you need is in the box</i>
+<i>Everything you need is in the box</i>
 <p><h4>
 Streamlined Apache Access Log Parsing<br>
 Peter Nardi<br>
