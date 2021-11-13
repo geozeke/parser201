@@ -23,7 +23,9 @@ def pytest_generate_tests(metafunc):
 
 
 def test_referrer(node):
-    lp = LogParser(node['linein'])
+    lp = LogParser(node['linein'],
+                   timezone=node['timezone'],
+                   format=node['fmt'])
     testResult = lp.referrer
     benchmark = node['referrer']
     assert testResult == benchmark

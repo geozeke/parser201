@@ -8,6 +8,7 @@ import lzma
 from pathlib import Path
 from classes import LogParser
 
+
 def test_nonStrInput():
     lp = LogParser(42)
     testResult = lp.ipaddress
