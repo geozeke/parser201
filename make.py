@@ -7,7 +7,7 @@
 # Title: make
 
 # This script performs various utility operations on a pypi development
-# project -- similiar to a makefile.
+# project -- similar to a makefile.
 
 # Imports
 
@@ -136,7 +136,10 @@ def release():
 
 def bump(category):
 
+    dry = input('Dry run (y/n)? ')[0].lower()
     command = 'bump2version ' + category
+    if dry != 'n':
+        command += ' --verbose -n'
     print(command)
     sp.run(command.split())
 
