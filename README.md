@@ -9,6 +9,10 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/geozeke/parser201)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/parser201)
 
+<br>
+
+<img src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=True" width="120"/>
+
 ## Features
 
 The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.
@@ -38,6 +42,10 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.1.3 (2021-12-19)
+	* Make file tuning.
+	* Documentation cleanup.
+	* Added site logo to README.md.<br><br>
 * 1.1.0 (2021-11-13)
 	* Implemented selectable timestamp conversion options {*original*, *local*, [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
 	* Implemented selectable formatting options for timestamp attribute {*string*, *dateobj*}.
