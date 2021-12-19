@@ -9,6 +9,8 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/geozeke/parser201)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/parser201)
 
+<br>
+
 <img src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=True" width="120"/>
 
 ## Features
@@ -40,7 +42,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
-* 1.1.2 (2021-12-19)
+* 1.1.3 (2021-12-19)
 	* Make file tuning.
 	* Documentation cleanup.
 	* Added site logo to README.md.<br><br>
