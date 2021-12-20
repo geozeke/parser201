@@ -3,7 +3,6 @@
 ![PyPI - Status](https://img.shields.io/pypi/status/parser201)
 ![GitHub last commit](https://img.shields.io/github/last-commit/geozeke/parser201)
 ![GitHub issues](https://img.shields.io/github/issues/geozeke/parser201)
-[![Downloads](https://pepy.tech/badge/parser201)](https://pepy.tech/project/parser201)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/parser201)
 ![GitHub repo size](https://img.shields.io/github/repo-size/geozeke/parser201)
 ![Lines of code](https://img.shields.io/tokei/lines/github/geozeke/parser201)
@@ -19,7 +18,7 @@ The centerpiece of the parser201 module is the LogParser class. The class initia
 
 ## Installation
 
-```shell
+```
 pip3 install parser201
 ```
 
@@ -42,6 +41,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.1.X (XXXX-XX-XX)
+	* Documentation cleanup.<br><br>
 * 1.1.3 (2021-12-19)
 	* Make file tuning.
 	* Documentation cleanup.
