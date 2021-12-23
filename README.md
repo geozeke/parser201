@@ -10,7 +10,7 @@
 
 <br>
 
-<img src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=True" width="120"/>
+<img src="https://drive.google.com/uc?export=view&id=1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc" width="120"/>
 
 ## Features
 
@@ -41,7 +41,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
-* 1.1.X (XXXX-XX-XX)
+* 1.1.4 (2021-12-23)
 	* Documentation cleanup.<br><br>
 * 1.1.3 (2021-12-19)
 	* Make file tuning.
