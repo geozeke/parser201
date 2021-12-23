@@ -2,7 +2,7 @@
 .. include:: ../../docs/intro.md
 """
 
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 
 from .classes import LogParser
 from .classes import TZ
