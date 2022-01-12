@@ -1,9 +1,21 @@
+# core
+
 wheel
+
+# testing
+
 coverage
+pytest
+
+# development
+
+autopep8
+flake8
+bump2version
+pdoc3
+
+# pypi
+
 setuptools
 twine
 build
-pytest
-bump2version
-autopep8
-pdoc3

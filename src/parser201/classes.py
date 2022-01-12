@@ -1,5 +1,5 @@
 # Author: Peter Nardi
-# Date: 11/11/21
+# Date: 01/12/22
 # License: MIT (terms at the end of this file)
 
 # Title: parser201 - Apache Access Log Parser
@@ -7,10 +7,8 @@
 # Imports
 
 import datetime as dt
-import enum
 import re
 import time
-
 from enum import Enum
 
 
@@ -42,12 +40,11 @@ class LogParser:
     line : str
         A single line from an Apache access log.
     timezone : {TZ.original, TZ.utc, TZ.local}, optional
-        During parsing, adjust the timestamp of the `LogParser` object to
-        match a particular timezone. Default is *TZ.original*
-        (no adjustment). *TZ.local* adjusts the timestamp to the
-        timezone currently selected on the machine running the code.
-        *TZ.utc* adjusts the timestamp to
-        [UTC](https:\
+        During parsing, adjust the timestamp of the `LogParser` object
+        to match a particular timezone. Default is *TZ.original* (no
+        adjustment). *TZ.local* adjusts the timestamp to the timezone
+        currently selected on the machine running the code. *TZ.utc*
+        adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
@@ -191,7 +188,7 @@ class LogParser:
         try:
             dateobj = dt.datetime.strptime(self.timestamp,
                                            '%d/%b/%Y:%H:%M:%S %z')
-        except ValueError as e:
+        except ValueError:
             self.__noneFields()
             return
 
@@ -300,16 +297,17 @@ if __name__ == '__main__':  # pragma no cover
 
 # MIT License
 #
-# Copyright (c) 2020-2021 Peter Nardi
+# Copyright (c) 2020-2022 Peter Nardi
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions: # The above
-# copyright notice and this permission notice shall be included in all copies
-# or substantial portions of the Software.
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

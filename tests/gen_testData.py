@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
 # MIT License
 
-# Copyright 2020-2021 Peter Nardi
+# Copyright 2020-2022 Peter Nardi
 
 # Terms of use for source code:
 

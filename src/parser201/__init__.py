@@ -4,9 +4,9 @@
 
 __version__ = '1.1.4'
 
-from .classes import LogParser
-from .classes import TZ
-from .classes import FMT
+from .classes import FMT  # noqa
+from .classes import TZ  # noqa
+from .classes import LogParser  # noqa
 
 # pdoc will look here to determine which members to leave out of the
 # documentation.

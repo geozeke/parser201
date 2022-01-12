@@ -27,7 +27,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python"># Author: Peter Nardi
-# Date: 11/11/21
+# Date: 01/12/22
 # License: MIT (terms at the end of this file)
 
 # Title: parser201 - Apache Access Log Parser
@@ -35,10 +35,8 @@
 # Imports
 
 import datetime as dt
-import enum
 import re
 import time
-
 from enum import Enum
 
 
@@ -70,12 +68,11 @@ class LogParser:
     line : str
         A single line from an Apache access log.
     timezone : {TZ.original, TZ.utc, TZ.local}, optional
-        During parsing, adjust the timestamp of the `LogParser` object to
-        match a particular timezone. Default is *TZ.original*
-        (no adjustment). *TZ.local* adjusts the timestamp to the
-        timezone currently selected on the machine running the code.
-        *TZ.utc* adjusts the timestamp to
-        [UTC](https:\
+        During parsing, adjust the timestamp of the `LogParser` object
+        to match a particular timezone. Default is *TZ.original* (no
+        adjustment). *TZ.local* adjusts the timestamp to the timezone
+        currently selected on the machine running the code. *TZ.utc*
+        adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
@@ -219,7 +216,7 @@ class LogParser:
         try:
             dateobj = dt.datetime.strptime(self.timestamp,
                                            &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
-        except ValueError as e:
+        except ValueError:
             self.__noneFields()
             return
 
@@ -328,16 +325,17 @@ if __name__ == &#39;__main__&#39;:  # pragma no cover
 
 # MIT License
 #
-# Copyright (c) 2020-2021 Peter Nardi
+# Copyright (c) 2020-2022 Peter Nardi
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the &#34;Software&#34;), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions: # The above
-# copyright notice and this permission notice shall be included in all copies
-# or substantial portions of the Software.
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
 #
 # THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -370,12 +368,11 @@ within an object.</p>
 <dt><strong><code>line</code></strong> :&ensp;<code>str</code></dt>
 <dd>A single line from an Apache access log.</dd>
 <dt><strong><code>timezone</code></strong> :&ensp;<code>{TZ.original, TZ.utc, TZ.local}</code>, optional</dt>
-<dd>During parsing, adjust the timestamp of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object to
-match a particular timezone. Default is <em>TZ.original</em>
-(no adjustment). <em>TZ.local</em> adjusts the timestamp to the
-timezone currently selected on the machine running the code.
-<em>TZ.utc</em> adjusts the timestamp to
-<a href="https:
+<dd>During parsing, adjust the timestamp of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object
+to match a particular timezone. Default is <em>TZ.original</em> (no
+adjustment). <em>TZ.local</em> adjusts the timestamp to the timezone
+currently selected on the machine running the code. <em>TZ.utc</em>
+adjusts the timestamp to <a href="https:
 //en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>.</dd>
 <dt><strong><code>format</code></strong> :&ensp;<code>{FMT.string, FMT.dateobj}</code>, optional</dt>
 <dd>Set the format of the timestamp attribute of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code>
@@ -447,12 +444,11 @@ will be stored as a Python <a href="https:
     line : str
         A single line from an Apache access log.
     timezone : {TZ.original, TZ.utc, TZ.local}, optional
-        During parsing, adjust the timestamp of the `LogParser` object to
-        match a particular timezone. Default is *TZ.original*
-        (no adjustment). *TZ.local* adjusts the timestamp to the
-        timezone currently selected on the machine running the code.
-        *TZ.utc* adjusts the timestamp to
-        [UTC](https:\
+        During parsing, adjust the timestamp of the `LogParser` object
+        to match a particular timezone. Default is *TZ.original* (no
+        adjustment). *TZ.local* adjusts the timestamp to the timezone
+        currently selected on the machine running the code. *TZ.utc*
+        adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
     format : {FMT.string, FMT.dateobj}, optional
         Set the format of the timestamp attribute of the `LogParser`
@@ -596,7 +592,7 @@ will be stored as a Python <a href="https:
         try:
             dateobj = dt.datetime.strptime(self.timestamp,
                                            &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
-        except ValueError as e:
+        except ValueError:
             self.__noneFields()
             return
 
