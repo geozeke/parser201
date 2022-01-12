@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Peter Nardi
-# Date: 11/11/21
+# Date: 01/12/22
 # License: (see MIT License at the end of this file)
 
 # Title: make
@@ -16,7 +16,6 @@ import os
 import subprocess as sp
 import textwrap
 import webbrowser
-
 from pathlib import Path
 
 # -------------------------------------------------------------------
