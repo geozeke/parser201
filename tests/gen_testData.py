@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Peter Nardi
-# Date: 11/03/21
+# Date: 01/16/22
 # License: (see MIT License at the end of this file)
 
 # Title: Test data generator for parser201
@@ -11,22 +11,15 @@
 import lzma
 import pickle
 import random
-import string
 import sys
 from pathlib import Path
 
-# Adjust path before importing local modules
-sources = '/src/parser201/'
-P = str(Path(__file__).resolve().parent.parent) + sources
-sys.path.append(P)
+import pathprep  # noqa
 
-try:
-    from classes import LogParser
-    from classes import TZ
+if True:
     from classes import FMT
-except Exception as e:
-    print(e)
-    sys.exit(1)
+    from classes import TZ
+    from classes import LogParser
 
 # Globals
 
