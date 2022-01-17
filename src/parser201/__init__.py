@@ -2,7 +2,7 @@
 .. include:: ../../docs/intro.md
 """
 
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
 from .classes import FMT  # noqa
 from .classes import TZ  # noqa

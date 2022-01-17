@@ -2,15 +2,16 @@
 
 # --------------------------------------------------------------------------
 
-import pytest
-import pickle
 import lzma
+import pickle
 from pathlib import Path
-from classes import LogParser
-from classes import FMT
-from classes import TZ
 
-TESTDATA = str(Path(__file__).resolve().parent) + '/' + 'data_parser201.bin'
+import pathprep  # noqa
+
+if True:
+    from classes import LogParser
+
+TESTDATA = Path(__file__).resolve().parent/'data_parser201.bin'
 
 # Use the pytest_generate_tests hook to create test cases from the data file.
 
