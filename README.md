@@ -41,6 +41,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.1.5 (2022-01-17)
+	* Code linting and cleanup.<br><br>
 * 1.1.4 (2021-12-23)
 	* Documentation cleanup.<br><br>
 * 1.1.3 (2021-12-19)

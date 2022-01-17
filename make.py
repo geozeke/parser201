@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Author: Peter Nardi
-# Date: 01/12/22
+# Date: 01/16/22
 # License: (see MIT License at the end of this file)
 
 # Title: make
@@ -112,8 +112,8 @@ def coverage():
         print(command)
         sp.run(command.split())
 
-    P = str(Path(__file__).resolve().parent) + '/htmlcov/index.html'
-    webbrowser.open('file://' + P, new=2)
+    p = Path(__file__).resolve().parent/'htmlcov/index.html'
+    webbrowser.open(f'file://{p}', new=2)
 
     return
 
@@ -161,8 +161,8 @@ def docs(basename):
         sp.run(command.split())
 
     # Open documentation in the default browser.
-    P = str(Path(__file__).resolve().parent) + '/docs/index.html'
-    webbrowser.open('file://' + P, new=2)
+    p = Path(__file__).resolve().parent/'docs/index.html'
+    webbrowser.open(f'file://{p}', new=2)
 
     return
 
@@ -208,7 +208,7 @@ def main():
     msg = """Perform various utility operations for a pypi development
     project."""
 
-    epi = "Latest update: 11 Nov 2021"
+    epi = "Latest update: 01/16/22"
 
     parser = argparse.ArgumentParser(description=msg, epilog=epi)
 
@@ -279,7 +279,7 @@ if __name__ == '__main__':
 
 # MIT License
 
-# Copyright 2019-2021 Peter Nardi
+# Copyright 2019-2022 Peter Nardi
 
 # Terms of use for source code:
 

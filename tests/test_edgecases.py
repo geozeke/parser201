@@ -2,11 +2,10 @@
 
 # --------------------------------------------------------------------------
 
-import pytest
-import pickle
-import lzma
-from pathlib import Path
-from classes import LogParser
+import pathprep  # noqa
+
+if True:
+    from classes import LogParser
 
 
 def test_nonStrInput():
