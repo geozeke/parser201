@@ -16,10 +16,9 @@ from pathlib import Path
 
 import pathprep  # noqa
 
-if True:
-    from classes import FMT
-    from classes import TZ
-    from classes import LogParser
+from classes import FMT  # isort: skip
+from classes import TZ  # isort: skip
+from classes import LogParser  # isort: skip
 
 # Globals
 
@@ -62,8 +61,8 @@ def build(testData):
     # List to hold test cases
     L = []
 
-    P = str(Path(__file__).resolve().parent) + '/datasources/'
-    with open(P + 'samplelog.txt', 'r') as f:
+    p = Path(__file__).resolve().parent/'datasources'
+    with open(p/'samplelog.txt', 'r') as f:
 
         for line in f:
             zone = random.choice(ZONES)
@@ -105,7 +104,7 @@ def build(testData):
     random.shuffle(L)
 
     # Pickle the List
-    fName = str(Path(__file__).resolve().parent) + '/' + testData
+    fName = Path(__file__).resolve().parent/testData
     with lzma.open(fName, 'wb') as f:
         pickle.dump(L, f)
 

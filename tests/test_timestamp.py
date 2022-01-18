@@ -8,8 +8,7 @@ from pathlib import Path
 
 import pathprep  # noqa
 
-if True:
-    from classes import LogParser
+from classes import LogParser  # isort: skip
 
 TESTDATA = Path(__file__).resolve().parent/'data_parser201.bin'
 
