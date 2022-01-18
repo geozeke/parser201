@@ -4,8 +4,7 @@
 
 import pathprep  # noqa
 
-if True:
-    from classes import LogParser
+from classes import LogParser  # isort: skip
 
 
 def test_nonStrInput():
