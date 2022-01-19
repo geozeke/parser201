@@ -2,7 +2,7 @@ The parser201 module takes a single line from an Apache access log file and extr
 
 ## Installation
 
-parser201 is lightweight, with no third party dependencies. 
+parser201 is lightweight, with no third party dependencies.
 
 ```shell
 pip3 install parser201
