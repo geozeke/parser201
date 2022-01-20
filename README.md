@@ -18,7 +18,7 @@ The centerpiece of the parser201 module is the LogParser class. The class initia
 
 ## Installation
 
-```shell
+```text
 pip3 install parser201
 ```
 
