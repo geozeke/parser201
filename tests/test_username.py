@@ -6,7 +6,7 @@ import lzma
 import pickle
 from pathlib import Path
 
-import pathprep  # noqa
+import pathprep
 
 from classes import LogParser  # isort: skip
 

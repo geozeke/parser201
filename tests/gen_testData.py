@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+"""Generate data for testing."""
 # Author: Peter Nardi
 # Date: 01/16/22
 # License: (see MIT License at the end of this file)
@@ -14,7 +15,7 @@ import random
 import sys
 from pathlib import Path
 
-import pathprep  # noqa
+import pathprep
 
 from classes import FMT  # isort: skip
 from classes import TZ  # isort: skip
@@ -30,7 +31,27 @@ FORMATS = list(FMT)
 
 
 def makeDict(dataIn, options):
+    """Make a dictionary from test data.
 
+    This function takes some generated test data, and stores it in a
+    dictionary for later pickling into a file. This pickled file will be
+    used for testing.
+
+    Parameters
+    ----------
+    dataIn : str
+        A line from an Apache log file. This will come from one of the
+        files in `datasources`.
+    options : (TZ, FMT)
+        Various combinations of timezone formats and datetime formats
+        are used when generating test data.
+
+    Returns
+    -------
+    dict
+        A dictionary with all the key/value pairs set to various
+        elements needed for testing.
+    """
     D = {}
 
     lp = LogParser(dataIn, timezone=options[0], format=options[1])
@@ -57,7 +78,13 @@ def makeDict(dataIn, options):
 
 
 def build(testData):
+    """Build a file of data for testing.
 
+    Parameters
+    ----------
+    testData : str
+        The name of the file where test data will be stored.
+    """
     # List to hold test cases
     L = []
 
@@ -117,7 +144,7 @@ def build(testData):
 
 
 def main():
-
+    """Initiate test data file creation."""
     build('data_parser201.bin')
 
     return
