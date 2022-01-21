@@ -2,7 +2,7 @@
 
 # --------------------------------------------------------------------------
 
-import pathprep  # noqa
+import pathprep
 
 from classes import LogParser  # isort: skip
 

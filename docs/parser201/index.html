@@ -25,7 +25,7 @@
 <p>The parser201 module takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.</p>
 <h2 id="installation">Installation</h2>
 <p>parser201 is lightweight, with no third party dependencies.</p>
-<pre><code class="language-shell">pip3 install parser201
+<pre><code class="language-text">pip3 install parser201
 </code></pre>
 <h2 id="usage-example">Usage Example</h2>
 <pre><code class="language-python">from parser201 import LogParser, FMT, TZ
@@ -38,7 +38,7 @@ with open('access.log', 'r') as f:
 <h2 id="api-documentation">API Documentation</h2>
 <p>Detailed API information is available by clicking on the <code><a title="parser201.classes" href="classes.html">parser201.classes</a></code> link.</p>
 <p><strong>TL/DR</strong>: Here's an example showing the attributes of a LogParser class object:</p>
-<pre><code class="language-shell">  ipaddress: 81.48.51.130
+<pre><code class="language-text">  ipaddress: 81.48.51.130
      userid: -
    username: -
   timestamp: 24/Mar/2009:18:07:16 +0100
@@ -50,7 +50,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 </code></pre>
 <h2 id="exception-handling">Exception Handling</h2>
 <p>If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the attributes set to <code>None</code>.</p>
-<pre><code class="language-shell">  ipaddress: None
+<pre><code class="language-text">  ipaddress: None
      userid: None
    username: None
   timestamp: None
@@ -70,9 +70,9 @@ requestline: None
 
 __version__ = &#39;1.1.5&#39;
 
-from .classes import FMT  # noqa
-from .classes import TZ  # noqa
-from .classes import LogParser  # noqa
+from .classes import FMT
+from .classes import TZ
+from .classes import LogParser
 
 # pdoc will look here to determine which members to leave out of the
 # documentation.
@@ -87,7 +87,7 @@ __pdoc__[&#39;classes.LogParser.__str__&#39;] = True</code></pre>
 <dl>
 <dt><code class="name"><a title="parser201.classes" href="classes.html">parser201.classes</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>LogParser Class.</p></div>
 </dd>
 </dl>
 </section>

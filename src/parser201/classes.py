@@ -1,3 +1,5 @@
+"""LogParser Class."""
+
 # Author: Peter Nardi
 # Date: 01/12/22
 # License: MIT (terms at the end of this file)
@@ -13,25 +15,32 @@ from enum import Enum
 
 
 class TZ(Enum):
-    """Enum to determine adjustment of the timestamp property of a
-    `LogParser` object.
+    """Timestamp adjustment enum.
+
+    Enum to determine the timezone adjustment of the timestamp property
+    of a `LogParser` object.
     """
+
     original = 1
     local = 2
     utc = 3
 
 
 class FMT(Enum):
-    """
+    """Format enum.
+
     Enum to determine the format for the timestamp attribute of a
     `LogParser` object.
     """
+
     string = 1
     dateobj = 2
 
 
 class LogParser:
-    """The class initializer takes a single line (as a string) from an
+    """The `LogParser` Class.
+
+    The class initializer takes a single line (as a string) from an
     Apache log file and extracts the individual fields into attributes
     within an object.
 
@@ -103,7 +112,6 @@ class LogParser:
     >>> line = # a line from an Apache access log
     >>> lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
     """
-    # ---------------------------------------------------------------------
 
     def __init__(self, line, timezone=TZ.original, format=FMT.string):
 
@@ -243,7 +251,9 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        """The class provides a `__str__` method which renders a
+        """`LogParser` class str method.
+
+        The class provides a `__str__` method which renders a
         `LogParser` object as string suitable for display.
 
         Examples

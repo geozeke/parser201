@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>parser201.classes API documentation</title>
-<meta name="description" content="" />
+<meta name="description" content="LogParser Class." />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,11 +22,14 @@
 <h1 class="title">Module <code>parser201.classes</code></h1>
 </header>
 <section id="section-intro">
+<p>LogParser Class.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python"># Author: Peter Nardi
+<pre><code class="python">&#34;&#34;&#34;LogParser Class.&#34;&#34;&#34;
+
+# Author: Peter Nardi
 # Date: 01/12/22
 # License: MIT (terms at the end of this file)
 
@@ -41,25 +44,32 @@ from enum import Enum
 
 
 class TZ(Enum):
-    &#34;&#34;&#34;Enum to determine adjustment of the timestamp property of a
-    `LogParser` object.
+    &#34;&#34;&#34;Timestamp adjustment enum.
+
+    Enum to determine the timezone adjustment of the timestamp property
+    of a `LogParser` object.
     &#34;&#34;&#34;
+
     original = 1
     local = 2
     utc = 3
 
 
 class FMT(Enum):
-    &#34;&#34;&#34;
+    &#34;&#34;&#34;Format enum.
+
     Enum to determine the format for the timestamp attribute of a
     `LogParser` object.
     &#34;&#34;&#34;
+
     string = 1
     dateobj = 2
 
 
 class LogParser:
-    &#34;&#34;&#34;The class initializer takes a single line (as a string) from an
+    &#34;&#34;&#34;The `LogParser` Class.
+
+    The class initializer takes a single line (as a string) from an
     Apache log file and extracts the individual fields into attributes
     within an object.
 
@@ -131,7 +141,6 @@ class LogParser:
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
     &#34;&#34;&#34;
-    # ---------------------------------------------------------------------
 
     def __init__(self, line, timezone=TZ.original, format=FMT.string):
 
@@ -271,7 +280,9 @@ class LogParser:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        &#34;&#34;&#34;The class provides a `__str__` method which renders a
+        &#34;&#34;&#34;`LogParser` class str method.
+
+        The class provides a `__str__` method which renders a
         `LogParser` object as string suitable for display.
 
         Examples
@@ -360,7 +371,8 @@ if __name__ == &#39;__main__&#39;:  # pragma no cover
 <span>(</span><span>line, timezone=TZ.original, format=FMT.string)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>The class initializer takes a single line (as a string) from an
+<div class="desc"><p>The <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> Class.</p>
+<p>The class initializer takes a single line (as a string) from an
 Apache log file and extracts the individual fields into attributes
 within an object.</p>
 <h2 id="arguments">Arguments</h2>
@@ -435,7 +447,9 @@ will be stored as a Python <a href="https:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LogParser:
-    &#34;&#34;&#34;The class initializer takes a single line (as a string) from an
+    &#34;&#34;&#34;The `LogParser` Class.
+
+    The class initializer takes a single line (as a string) from an
     Apache log file and extracts the individual fields into attributes
     within an object.
 
@@ -507,7 +521,6 @@ will be stored as a Python <a href="https:
     &gt;&gt;&gt; line = # a line from an Apache access log
     &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
     &#34;&#34;&#34;
-    # ---------------------------------------------------------------------
 
     def __init__(self, line, timezone=TZ.original, format=FMT.string):
 
@@ -647,7 +660,9 @@ will be stored as a Python <a href="https:
     # Method for string rendering of a LogParser object
 
     def __str__(self):
-        &#34;&#34;&#34;The class provides a `__str__` method which renders a
+        &#34;&#34;&#34;`LogParser` class str method.
+
+        The class provides a `__str__` method which renders a
         `LogParser` object as string suitable for display.
 
         Examples
@@ -696,7 +711,8 @@ will be stored as a Python <a href="https:
 <span>def <span class="ident">__str__</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>The class provides a <code>__str__</code> method which renders a
+<div class="desc"><p><code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> class str method.</p>
+<p>The class provides a <code>__str__</code> method which renders a
 <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object as string suitable for display.</p>
 <h2 id="examples">Examples</h2>
 <p>Create a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object like this:</p>
@@ -721,7 +737,9 @@ requestline: GET /images/puce.gif HTTP/1.1
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def __str__(self):
-    &#34;&#34;&#34;The class provides a `__str__` method which renders a
+    &#34;&#34;&#34;`LogParser` class str method.
+
+    The class provides a `__str__` method which renders a
     `LogParser` object as string suitable for display.
 
     Examples
