@@ -2,7 +2,7 @@
 .. include:: ../../docs/intro.md
 """
 
-__version__ = '1.1.5'
+__version__ = '1.2.0'
 
 
 from .classes import FMT
