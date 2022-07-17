@@ -64,8 +64,8 @@ class LogParser:
     """The `LogParser` Class.
 
     The class initializer takes a single line (as a string) from an
-    Apache log file and extracts the individual fields into attributes
-    within an object.
+    Apache access log file and extracts the individual fields into
+    attributes within an object.
 
     Arguments
     ---------
