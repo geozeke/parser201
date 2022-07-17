@@ -169,8 +169,6 @@ def performTask(args):
 
 def main():  # noqa
 
-    # Build a python argument parser
-
     msg = """Perform various utility operations for a pypi development
     project."""
 
