@@ -26,6 +26,21 @@ class TZ(Enum):
     local = auto()
     utc = auto()
 
+    def __eq__(self, other):
+        """Compare the values of two TZ Enums.
+
+        Parameters
+        ----------
+        other : Enum TZ
+            The right-hand side of the equality comparison.
+
+        Returns
+        -------
+        bool
+            True is two TZ Enums are equal, False otherwise.
+        """
+        return self.value == other.value
+
 
 class FMT(Enum):
     """Format enum.
@@ -34,8 +49,23 @@ class FMT(Enum):
     `LogParser` object.
     """
 
-    string = 1
-    dateobj = 2
+    string = auto()
+    dateobj = auto()
+
+    def __eq__(self, other):
+        """Compare the values of two FMT Enums.
+
+        Parameters
+        ----------
+        other : Enum FMT
+            The right-hand side of the equality comparison.
+
+        Returns
+        -------
+        bool
+            True is two FMT Enums are equal, False otherwise.
+        """
+        return self.value == other.value
 
 
 class LogParser:
