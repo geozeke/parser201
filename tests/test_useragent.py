@@ -25,7 +25,7 @@ def pytest_generate_tests(metafunc):
 
 
 def test_useragent(node):
-    """Test the useragent attribute.
+    """Test the useragent.
 
     Parameters
     ----------

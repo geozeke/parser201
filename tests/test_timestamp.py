@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test the timestamp attribute."""
+"""Test the timestamp."""
 
 import lzma
 import pickle

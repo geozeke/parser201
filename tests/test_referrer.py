@@ -25,7 +25,7 @@ def pytest_generate_tests(metafunc):
 
 
 def test_referrer(node):
-    """Test ipaddress.
+    """Test referrer.
 
     Parameters
     ----------

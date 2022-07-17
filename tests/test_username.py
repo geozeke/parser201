@@ -25,7 +25,7 @@ def pytest_generate_tests(metafunc):
 
 
 def test_username(node):
-    """Test the username attribute.
+    """Test the username.
 
     Parameters
     ----------
