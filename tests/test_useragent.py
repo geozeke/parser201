@@ -27,7 +27,7 @@ def pytest_generate_tests(metafunc):
 def test_useragent(node):
     lp = LogParser(node['linein'],
                    timezone=node['timezone'],
-                   format=node['fmt'])
+                   dtsformat=node['dtsformat'])
     testResult = lp.useragent
     benchmark = node['useragent']
     assert testResult == benchmark

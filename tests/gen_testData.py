@@ -1,33 +1,23 @@
 #!/usr/bin/env python3
-
 """Generate data for testing."""
-# Author: Peter Nardi
-# Date: 01/16/22
-# License: (see MIT License at the end of this file)
-
-# Title: Test data generator for parser201
-
-# Imports
 
 import lzma
 import pickle
 import random
 import sys
 from pathlib import Path
+from time import timezone
 
-import pathprep
+p = Path(__file__).resolve().parents
+sys.path.append(f'{p[1]}/src/parser201')
+TESTDATA = p[0]/'data_parser201.bin'
 
-from classes import FMT  # isort: skip
-from classes import TZ  # isort: skip
-from classes import LogParser  # isort: skip
+from classes import FMT  # type: ignore # noqa
+from classes import TZ  # type: ignore # noqa
+from classes import LogParser  # type: ignore # noqa
 
-# Globals
-
-ZONES = list(TZ)
-FORMATS = list(FMT)
-
-# --------------------------------------------------------------------------
-# Helper function to create data dictionaries
+ZONES = tuple(TZ)
+FORMATS = tuple(FMT)
 
 
 def makeDict(dataIn, options):
@@ -54,7 +44,8 @@ def makeDict(dataIn, options):
     """
     D = {}
 
-    lp = LogParser(dataIn, timezone=options[0], format=options[1])
+    # lp = LogParser(dataIn)
+    lp = LogParser(dataIn, timezone=options[0], dtsformat=options[1])
 
     D['linein'] = dataIn
     D['ipaddress'] = lp.ipaddress
@@ -68,16 +59,12 @@ def makeDict(dataIn, options):
     D['useragent'] = lp.useragent
     D['str'] = str(lp)
     D['timezone'] = options[0]
-    D['fmt'] = options[1]
+    D['dtsformat'] = options[1]
 
     return D
 
-# --------------------------------------------------------------------------
 
-# Build the test cases and save the result to the output file
-
-
-def build(testData):
+def build():
     """Build a file of data for testing.
 
     Parameters
@@ -93,8 +80,8 @@ def build(testData):
 
         for line in f:
             zone = random.choice(ZONES)
-            fmt = random.choice(FORMATS)
-            L.append(makeDict(line, (zone, fmt)))
+            dtsformat = random.choice(FORMATS)
+            L.append(makeDict(line, (zone, dtsformat)))
 
     # Edge cases ------------------------------------------------------------
 
@@ -131,8 +118,7 @@ def build(testData):
     random.shuffle(L)
 
     # Pickle the List
-    fName = Path(__file__).resolve().parent/testData
-    with lzma.open(fName, 'wb') as f:
+    with lzma.open(TESTDATA, 'wb') as f:
         pickle.dump(L, f)
 
     # Restore the system path
@@ -140,43 +126,11 @@ def build(testData):
 
     return
 
-# --------------------------------------------------------------------------
 
-
-def main():
-    """Initiate test data file creation."""
-    build('data_parser201.bin')
-
+def main():  # noqa
+    build()
     return
-
-# --------------------------------------------------------------------------
 
 
 if __name__ == '__main__':
     main()
-
-# ========================================================================
-
-# MIT License
-
-# Copyright 2020-2022 Peter Nardi
-
-# Terms of use for source code:
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.

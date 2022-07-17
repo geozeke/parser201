@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
+"""Wright is a makefile alternative written in pure Python.
 
-# Author: Peter Nardi
-# Date: 01/16/22
-# License: (see MIT License at the end of this file)
-
-# Title: make
-
-# This script performs various utility operations on a pypi development
-# project -- similar to a makefile.
-
-# Imports
+wright /rīt/, noun ARCHAIC: a person who makes or builds things,
+especially out of wood.
+"""
 
 import argparse
 import os
@@ -18,11 +12,11 @@ import textwrap
 import webbrowser
 from pathlib import Path
 
-# -------------------------------------------------------------------
+PROJNAME = 'parser201'
 
 
-def clean():
-
+def clean(*args):
+    """Clean the project build artifacts."""
     # Whole directories to delete
     directories = []
     directories.append('__pycache__')
@@ -36,7 +30,6 @@ def clean():
     # NOTE: If this command were being run on the command line, you'd need to
     # escape the semicolon (\;)
     command = 'find . -name DIR -type d -exec rm -rf {} ; -prune'
-
     for directory in directories:
         print(command.replace('DIR', directory))
         sp.run(command.replace('DIR', directory).split())
@@ -49,20 +42,16 @@ def clean():
     files.append('.coverage')
 
     command = 'find . -name FILE -type f -delete'
-
     for file in files:
         print(command.replace('FILE', file))
         sp.run(command.replace('FILE', file).split())
 
     return
 
-# -------------------------------------------------------------------
 
-
-def dist():
-
+def dist(*args):
+    """Build distribution products."""
     clean()
-
     commands = []
     commands.append('python3 -m build')
     commands.append('twine check dist/*')
@@ -73,36 +62,28 @@ def dist():
 
     return
 
-# -------------------------------------------------------------------
 
-
-def pushtest():
-
+def pushtest(*args):
+    """Push a distribution build to test.pypi.org."""
     dist()
-
-    command = 'twine upload --repository-url https://test.pypi.org/legacy/ '
-    command += 'dist/*'
+    command = f'twine upload dist/* --repository {PROJNAME}-test'
     print(command)
     sp.run(command.split())
 
     return
 
-# -------------------------------------------------------------------
 
-
-def test():
-
+def test(*args):
+    """Run pytest."""
     command = 'pytest --tb=short'
     print(command)
     sp.run(command.split())
 
     return
 
-# -------------------------------------------------------------------
 
-
-def coverage():
-
+def coverage(*args):
+    """Generate an HTML version of a test coverage report."""
     commands = []
     commands.append('coverage run -m pytest')
     commands.append('coverage report -m')
@@ -117,26 +98,28 @@ def coverage():
 
     return
 
-# -------------------------------------------------------------------
 
-
-def release():
-
+def release(*args):
+    """Build a distribution and release it to pypi.org."""
     dist()
-
-    command = 'twine upload dist/*'
+    command = f'twine upload dist/* --repository {PROJNAME}-release'
     print(command)
     sp.run(command.split())
 
     return
 
-# -------------------------------------------------------------------
 
+def bump(*args):
+    """Bump the version number of the project.
 
-def bump(category):
-
+    Parameters
+    ----------
+    *args : [Any]
+        0 or more arguments. In this case, it will be one of the
+        following bump categories: patch, minor, major.
+    """
     dry = input('Dry run (y/n)? ')[0].lower()
-    command = 'bump2version ' + category
+    command = 'bump2version ' + args[0]
     if dry != 'n':
         command += ' --verbose -n'
     print(command)
@@ -145,20 +128,13 @@ def bump(category):
     return
 
 
-# -------------------------------------------------------------------
-
-
-def docs(basename):
-
-    gdocs = 'src/' + basename
-
-    commands = []
-    command = 'pdoc3 --html --template-dir=docs --output-dir=docs '
-    command += gdocs + ' --force'
-    commands.append(command)
-    for command in commands:
-        print(command)
-        sp.run(command.split())
+def docs(*args):
+    """Generate API documentation."""
+    gdocs = f'src/{PROJNAME}'
+    gdir = '-dir=docs'
+    command = f'pdoc3 --html --template{gdir} --output{gdir} {gdocs} --force'
+    print(command)
+    sp.run(command.split())
 
     # Open documentation in the default browser.
     p = Path(__file__).resolve().parent/'docs/index.html'
@@ -167,48 +143,38 @@ def docs(basename):
     return
 
 
-# -------------------------------------------------------------------
-
-
 def performTask(args):
+    """Perform the selected task on the project.
 
-    # This is the name of the project.
-    basename = 'parser201'
+    Parameters
+    ----------
+    args : Namespace
+        A Namespace containing all the argparse-generated values. Since
+        the range of operations is mutually exclusive (only one will /
+        can be run at a time), iterate over the dictionary of the
+        Namespace object (`args`) until a valid operation is found. If
+        none is found, then print a status message and return.
+    """
+    for k, v in args.__dict__.items():
+        if v:
+            eval(f'{k}')(f'{v}')
+            return
 
-    if args.clean:
-        clean()
-    elif args.dist:
-        dist()
-    elif args.pushtest:
-        pushtest()
-    elif args.test:
-        test()
-    elif args.coverage:
-        coverage()
-    elif args.release:
-        release()
-    elif args.bump:
-        bump(args.bump)
-    elif args.docs:
-        docs(basename)
-    else:
-        msg = "Please provide a task to perform. Use "
-        msg += f"./{os.path.basename(__file__)} -h for help."
-        print('\n' + textwrap.fill(msg) + '\n')
+    msg = "Please provide a task to perform. Use "
+    msg += f"./{os.path.basename(__file__)} -h for help."
+    print('\n' + textwrap.fill(msg) + '\n')
 
     return
 
-# -------------------------------------------------------------------
 
-
-def main():
+def main():  # noqa
 
     # Build a python argument parser
 
     msg = """Perform various utility operations for a pypi development
     project."""
 
-    epi = "Latest update: 01/16/22"
+    epi = "Latest update: 07/16/22"
 
     parser = argparse.ArgumentParser(description=msg, epilog=epi)
 
@@ -217,9 +183,9 @@ def main():
                         help=msg,
                         action='store_true')
 
-    msg = """create a distribution package ready for publication to pypi, but
-    do not actually publish. Good for installing locally and checking the
-    integrity of the build before release."""
+    msg = """create a distribution package ready for publication to
+    pypi, but do not actually publish. Good for installing locally and
+    checking the integrity of the build before release."""
     parser.add_argument('-d', '--dist',
                         help=msg,
                         action='store_true')
@@ -240,13 +206,14 @@ def main():
                         help=msg,
                         action='store_true')
 
-    msg = """bump the version number of the project based on the provided
-    choice: major, minor, patch."""
+    msg = """bump the version number of the project based on the
+    provided choice: major, minor, patch."""
     parser.add_argument('-b', '--bump',
                         help=msg,
                         choices=['major', 'minor', 'patch'])
 
-    msg = """generate a distribution package and release it to pypi.org."""
+    msg = """generate a distribution package and release it to
+    pypi.org."""
     parser.add_argument('-r', '--release',
                         help=msg,
                         action='store_true')
@@ -257,39 +224,10 @@ def main():
                         action='store_true')
 
     args = parser.parse_args()
-
     performTask(args)
 
     return
 
-# -------------------------------------------------------------------
-
 
 if __name__ == '__main__':
     main()
-
-# ========================================================================
-
-# MIT License
-
-# Copyright 2019-2022 Peter Nardi
-
-# Terms of use for source code:
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.

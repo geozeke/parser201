@@ -12,6 +12,7 @@ import datetime as dt
 import re
 import time
 from enum import Enum
+from enum import auto
 
 
 class TZ(Enum):
@@ -21,9 +22,9 @@ class TZ(Enum):
     of a `LogParser` object.
     """
 
-    original = 1
-    local = 2
-    utc = 3
+    original = auto()
+    local = auto()
+    utc = auto()
 
 
 class FMT(Enum):
@@ -55,10 +56,11 @@ class LogParser:
         currently selected on the machine running the code. *TZ.utc*
         adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
-    format : {FMT.string, FMT.dateobj}, optional
-        Set the format of the timestamp attribute of the `LogParser`
-        object. Default is *FMT.string*. Using *FMT.dateobj* will store
-        the timestamp attribute as a Python [datetime object](https:\
+    dtsformat : {FMT.string, FMT.dateobj}, optional
+        Set the format of the date timestamp attribute of the
+        `LogParser` object. Default is *FMT.string*. Using *FMT.dateobj*
+        will store the timestamp attribute as a Python
+        [datetime object](https:\
         //docs.python.org/3/library/datetime.html).
 
     Attributes
@@ -76,7 +78,7 @@ class LogParser:
     statuscode : int
         The status code sent from the server to the client (`200`,
         `404`, etc.).
-    timestamp : str or datetime object
+    timestamp : (str | datetime object)
         The date and time of the request in the following format:
 
         `dd/MMM/YYYY:HH:MM:SS –hhmm`
@@ -105,17 +107,17 @@ class LogParser:
     >>> lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timestamp
-    attribute will adjusted to the timezone on the local machine and
+    attribute will be adjusted to the timezone on the local machine and
     will be stored as a Python [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     >>> from parser201 import LogParser, TZ, FMT
     >>> line = # a line from an Apache access log
-    >>> lp = LogParser(line, timezone=TZ.local, format=FMT.dateobj)
+    >>> lp = LogParser(line, timezone=TZ.local, dtsformat=FMT.dateobj)
     """
 
-    def __init__(self, line, timezone=TZ.original, format=FMT.string):
+    def __init__(self, line, timezone=TZ.original, dtsformat=FMT.string):
 
-        # Initialize attributes
+        # Establish attributes
         self.ipaddress = ''
         self.userid = ''
         self.username = ''
@@ -188,9 +190,9 @@ class LogParser:
             self.__noneFields()
             return
 
-        # Process date/time stamp and adjust timezone/format as indicated
+        # Process date/time stamp and adjust timezone/dtsformat as indicated
 
-        if timezone == TZ.original and format == FMT.string:
+        if timezone == TZ.original and dtsformat == FMT.string:
             return
 
         try:
@@ -215,25 +217,18 @@ class LogParser:
             dateobj = dateobj + (sign*dt.timedelta(hours=hh, minutes=mm))
             dateobj = dateobj.replace(tzinfo=zoneObject)
 
-        elif timezone == TZ.utc:
+        else:  # TZ == utc
             dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             sign, hh, mm = self.__decomposeTZ('+0000')
             zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
             dateobj = dateobj.replace(tzinfo=zoneObject)
 
-        else:  # pragma no cover
-            pass
-
         # ---------------------------------------
 
-        if format == FMT.string:
+        if dtsformat == FMT.string:
             self.timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
-
-        elif format == FMT.dateobj:
+        else:  # dtsformat == FMT.dateobj
             self.timestamp = dateobj
-
-        else:  # pragma no cover
-            return
 
         return
 
