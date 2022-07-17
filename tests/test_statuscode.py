@@ -21,7 +21,6 @@ def pytest_generate_tests(metafunc):
     """
     with lzma.open(TESTDATA, 'rb') as f:
         testCases = pickle.load(f)
-    testCases = [N for N in testCases]
     metafunc.parametrize('node', testCases)
 
 
