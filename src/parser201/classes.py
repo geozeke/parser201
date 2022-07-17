@@ -1,13 +1,5 @@
 """LogParser Class."""
 
-# Author: Peter Nardi
-# Date: 01/12/22
-# License: MIT (terms at the end of this file)
-
-# Title: parser201 - Apache Access Log Parser
-
-# Imports
-
 import datetime as dt
 import re
 import time
@@ -160,7 +152,6 @@ class LogParser:
 
         # Initial check. If the line passed to the initializer is not a string
         # (type == str), then return an empty LogParser object.
-
         if type(line) != str:
             self.__noneFields()
             return
@@ -170,13 +161,11 @@ class LogParser:
         # this: "". The regex to pull out agent strings between quotes will
         # incorrectly ignore that field, rather than returning an empty string.
         # Replace "" with "-" to prevent that.
-
         clean = line.replace('\"\"', '\"-\"')
 
         # agentStrings: This part of the regex:(?<!\\)\" is a negative
         # lookbehind assertion. It says, "end with a quote mark, unless that
         # quote mark is preceded by an escape character '\'"
-
         agentStrings = re.findall(r'\"(.+?)(?<!\\)\"', clean)
 
         # The next one's tricky. We're looking to extract the statuscode and
@@ -189,7 +178,6 @@ class LogParser:
         # cast to them int; else set them to 0. If any of this fails, then
         # consider that we have a malformed log line and set all the properties
         # to None.
-
         try:
             L = clean.split(' ')
             i = [j for j in range(len(L)) if L[j].isnumeric()][0]
@@ -204,7 +192,6 @@ class LogParser:
 
         # Set properties. If any of these fail, then consider that we have a
         # malformed log line and set all the properties to None.
-
         try:
             self.ipaddress = first3[0]
             self.userid = first3[1]
@@ -221,7 +208,6 @@ class LogParser:
             return
 
         # Process date/time stamp and adjust timezone/dtsformat as indicated
-
         if timezone == TZ.original and dtsformat == FMT.string:
             return
 
@@ -236,7 +222,6 @@ class LogParser:
 
         if timezone == TZ.original:
             pass
-
         elif timezone == TZ.local:
             zoneString = time.strftime('%z')
             # First convert to GMT
@@ -246,14 +231,11 @@ class LogParser:
             zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
             dateobj = dateobj + (sign*dt.timedelta(hours=hh, minutes=mm))
             dateobj = dateobj.replace(tzinfo=zoneObject)
-
         else:  # TZ == utc
             dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             sign, hh, mm = self.__decomposeTZ('+0000')
             zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
             dateobj = dateobj.replace(tzinfo=zoneObject)
-
-        # ---------------------------------------
 
         if dtsformat == FMT.string:
             self.timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
@@ -262,18 +244,11 @@ class LogParser:
 
         return
 
-    # ---------------------------------------------------------------------
-
-    # Method to set every field to None, in the event of a corrupted log line.
-
     def __noneFields(self):
+        """Set all properties to None."""
         for property in [p for p in dir(self) if not p.startswith('_')]:
             setattr(self, property, None)
         return
-
-    # ---------------------------------------------------------------------
-
-    # Method for string rendering of a LogParser object
 
     def __str__(self):
         """`LogParser` class str method.
@@ -314,40 +289,12 @@ class LogParser:
 
         return '\n'.join(L)
 
-    # ---------------------------------------------------------------------
-
     def __decomposeTZ(self, zone):
+        """Decompose a time zone into +/-, hrs, and mins."""
         leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
         sign = -1 if leader == '-' else 1
         return sign, int(hrs), int(mins)
 
 
-# ---------------------------------------------------------------------
-
-
 if __name__ == '__main__':  # pragma no cover
     pass
-
-# ---------------------------------------------------------------------
-
-# MIT License
-#
-# Copyright (c) 2020-2022 Peter Nardi
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.

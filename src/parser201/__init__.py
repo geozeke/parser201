@@ -5,9 +5,9 @@
 __version__ = '1.1.5'
 
 
-# from .classes import FMT
-# from .classes import TZ
-# from .classes import LogParser
+from .classes import FMT
+from .classes import TZ
+from .classes import LogParser
 
 # pdoc will look here to determine which members to leave out of the
 # documentation.
