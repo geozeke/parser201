@@ -40,8 +40,6 @@ def test_timestamp(node):
                    dtsformat=node['dtsformat'])
     testResult = lp.timestamp
     benchmark = node['timestamp']
-    print(type(lp.timestamp))
-    print(type(node['timestamp']))
     print(f" timezone: {node['timezone']}")
     print(f"dtsformat: {node['dtsformat']}")
     assert testResult == benchmark

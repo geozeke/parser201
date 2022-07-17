@@ -286,7 +286,6 @@ class LogParser:
         # Build the string in the same order as the labels.
         for label in labels:
             L.append(f'{label:>{padding}}: {getattr(self, label)}')
-
         return '\n'.join(L)
 
     def __decomposeTZ(self, zone):
