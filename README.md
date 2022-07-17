@@ -41,6 +41,11 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.2.0 (2022-07-17)
+  * Implemented `__eq__` magic methods in the `FMT` and `TZ` classes.
+  * Documentation cleanup.
+  * Testing improvements and pyproject.toml adjustments for better pytest compatability.
+  * Code linting and cleanup.<br><br>
 * 1.1.5 (2022-01-17)
   * Code linting and cleanup.<br><br>
 * 1.1.4 (2021-12-23)
