@@ -29,7 +29,7 @@ class TZ(Enum):
         Returns
         -------
         bool
-            True is two TZ Enums are equal, False otherwise.
+            `True` if two TZ Enums are equal, `False` otherwise.
         """
         return self.value == other.value
 
@@ -55,7 +55,7 @@ class FMT(Enum):
         Returns
         -------
         bool
-            True is two FMT Enums are equal, False otherwise.
+            `True` if two FMT Enums are equal, `False` otherwise.
         """
         return self.value == other.value
 
