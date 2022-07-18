@@ -274,7 +274,7 @@ class LogParser:
         requestline: GET /images/puce.gif HTTP/1.1
          statuscode: 304
            datasize: 2454
-            referer: -
+           referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
         labels = ['ipaddress', 'userid', 'username', 'timestamp',
