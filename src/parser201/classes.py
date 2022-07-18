@@ -71,14 +71,14 @@ class LogParser:
     ---------
     line : str
         A single line from an Apache access log.
-    timezone : {TZ.original, TZ.utc, TZ.local}, optional
+    timezone : {TZ.original | TZ.utc | TZ.local}, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
         adjustment). *TZ.local* adjusts the timestamp to the timezone
         currently selected on the machine running the code. *TZ.utc*
         adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
-    dtsformat : {FMT.string, FMT.dateobj}, optional
+    dtsformat : {FMT.string | FMT.dateobj}, optional
         Set the format of the date timestamp attribute of the
         `LogParser` object. Default is *FMT.string*. Using *FMT.dateobj*
         will store the timestamp attribute as a Python
