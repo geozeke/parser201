@@ -29,7 +29,7 @@ class TZ(Enum):
         Returns
         -------
         bool
-            True is two TZ Enums are equal, False otherwise.
+            `True` if two TZ Enums are equal, `False` otherwise.
         """
         return self.value == other.value
 
@@ -55,7 +55,7 @@ class FMT(Enum):
         Returns
         -------
         bool
-            True is two FMT Enums are equal, False otherwise.
+            `True` if two FMT Enums are equal, `False` otherwise.
         """
         return self.value == other.value
 
@@ -71,14 +71,14 @@ class LogParser:
     ---------
     line : str
         A single line from an Apache access log.
-    timezone : {TZ.original, TZ.utc, TZ.local}, optional
+    timezone : {TZ.original | TZ.utc | TZ.local}, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
         adjustment). *TZ.local* adjusts the timestamp to the timezone
         currently selected on the machine running the code. *TZ.utc*
         adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time).
-    dtsformat : {FMT.string, FMT.dateobj}, optional
+    dtsformat : {FMT.string | FMT.dateobj}, optional
         Set the format of the date timestamp attribute of the
         `LogParser` object. Default is *FMT.string*. Using *FMT.dateobj*
         will store the timestamp attribute as a Python
@@ -274,7 +274,7 @@ class LogParser:
         requestline: GET /images/puce.gif HTTP/1.1
          statuscode: 304
            datasize: 2454
-            referer: -
+           referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
         labels = ['ipaddress', 'userid', 'username', 'timestamp',

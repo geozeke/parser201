@@ -33,7 +33,7 @@ Detailed API information is available by clicking on the `parser201.classes` lin
 requestline: GET /images/puce.gif HTTP/1.1
  statuscode: 304
    datasize: 2454
-    referer: -
+   referrer: -
   useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
 ```
 
@@ -49,6 +49,6 @@ If a line from an Apache access log file cannot be parsed by the class initializ
 requestline: None
  statuscode: None
    datasize: None
-    referer: None
+   referrer: None
   useragent: None
 ```
