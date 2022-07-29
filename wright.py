@@ -49,39 +49,6 @@ def clean(*args):
     return
 
 
-def dist(*args):
-    """Build distribution products."""
-    clean()
-    commands = []
-    commands.append('python3 -m build')
-    commands.append('twine check dist/*')
-
-    for command in commands:
-        print(command)
-        sp.run(command.split())
-
-    return
-
-
-def pushtest(*args):
-    """Push a distribution build to test.pypi.org."""
-    dist()
-    command = f'twine upload dist/* --repository {PROJNAME}-test'
-    print(command)
-    sp.run(command.split())
-
-    return
-
-
-def test(*args):
-    """Run pytest."""
-    command = 'pytest --tb=short'
-    print(command)
-    sp.run(command.split())
-
-    return
-
-
 def coverage(*args):
     """Generate an HTML version of a test coverage report."""
     commands = []
@@ -99,10 +66,33 @@ def coverage(*args):
     return
 
 
-def release(*args):
-    """Build a distribution and release it to pypi.org."""
+def dist(*args):
+    """Build distribution products."""
+    clean()
+    commands = []
+    commands.append('python3 -m build')
+    commands.append('twine check dist/*')
+
+    for command in commands:
+        print(command)
+        sp.run(command.split())
+
+    return
+
+
+def test(*args):
+    """Run pytest."""
+    command = 'pytest --tb=short'
+    print(command)
+    sp.run(command.split())
+
+    return
+
+
+def pushtest(*args):
+    """Push a distribution build to test.pypi.org."""
     dist()
-    command = f'twine upload dist/* --repository {PROJNAME}-release'
+    command = f'twine upload dist/* --repository {PROJNAME}-test'
     print(command)
     sp.run(command.split())
 
@@ -128,17 +118,12 @@ def bump(*args):
     return
 
 
-def docs(*args):
-    """Generate API documentation."""
-    gdocs = f'src/{PROJNAME}'
-    gdir = '-dir=docs'
-    command = f'pdoc3 --html --template{gdir} --output{gdir} {gdocs} --force'
+def release(*args):
+    """Build a distribution and release it to pypi.org."""
+    dist()
+    command = f'twine upload dist/* --repository {PROJNAME}-release'
     print(command)
     sp.run(command.split())
-
-    # Open documentation in the default browser.
-    p = Path(__file__).resolve().parent/'docs/index.html'
-    webbrowser.open(f'file://{p}', new=2)
 
     return
 
@@ -169,15 +154,23 @@ def performTask(args):
 
 def main():  # noqa
 
+    # Build a python argument parser
+
     msg = """Perform various utility operations for a pypi development
     project."""
 
-    epi = "Latest update: 07/16/22"
+    epi = "Latest update: 07/29/22"
 
     parser = argparse.ArgumentParser(description=msg, epilog=epi)
 
     msg = """clean-up build products."""
     parser.add_argument('-c', '--clean',
+                        help=msg,
+                        action='store_true')
+
+    msg = """generate an HTML version of a code coverage report and open it in
+    the default browser."""
+    parser.add_argument('-C', '--coverage',
                         help=msg,
                         action='store_true')
 
@@ -188,19 +181,13 @@ def main():  # noqa
                         help=msg,
                         action='store_true')
 
-    msg = """create and push a distribution package to test.pypi.org."""
-    parser.add_argument('-p', '--pushtest',
-                        help=msg,
-                        action='store_true')
-
     msg = """run pytest with the --tb=short option."""
     parser.add_argument('-t', '--test',
                         help=msg,
                         action='store_true')
 
-    msg = """generate an HTML version of a code coverage report and open it in
-    the default browser."""
-    parser.add_argument('--coverage',
+    msg = """create and push a distribution package to test.pypi.org."""
+    parser.add_argument('-p', '--pushtest',
                         help=msg,
                         action='store_true')
 
@@ -213,11 +200,6 @@ def main():  # noqa
     msg = """generate a distribution package and release it to
     pypi.org."""
     parser.add_argument('-r', '--release',
-                        help=msg,
-                        action='store_true')
-
-    msg = """generate API documentation using pdoc3"""
-    parser.add_argument('--docs',
                         help=msg,
                         action='store_true')
 
