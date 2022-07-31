@@ -80,6 +80,21 @@ def dist(*args):
     return
 
 
+def docs(*args):
+    """Generate API documentation."""
+    gdocs = f'src/{PROJNAME}'
+    gdir = '-dir=docs'
+    command = f'pdoc3 --html --template{gdir} --output{gdir} {gdocs} --force'
+    print(command)
+    sp.run(command.split())
+
+    # Open documentation in the default browser.
+    p = Path(__file__).resolve().parent/'docs/index.html'
+    webbrowser.open(f'file://{p}', new=2)
+
+    return
+
+
 def test(*args):
     """Run pytest."""
     command = 'pytest --tb=short'
@@ -178,6 +193,11 @@ def main():  # noqa
     pypi, but do not actually publish. Good for installing locally and
     checking the integrity of the build before release."""
     parser.add_argument('-d', '--dist',
+                        help=msg,
+                        action='store_true')
+
+    msg = """generate API documentation using pdoc3."""
+    parser.add_argument('-D', '--docs',
                         help=msg,
                         action='store_true')
 
