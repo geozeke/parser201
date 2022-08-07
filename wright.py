@@ -6,9 +6,7 @@ especially out of wood.
 """
 
 import argparse
-import os
 import subprocess as sp
-import textwrap
 import webbrowser
 from pathlib import Path
 
@@ -125,9 +123,9 @@ def bump(*args):
         following bump categories: patch, minor, major.
     """
     dry = input('Dry run (y/n)? ')[0].lower()
-    command = 'bump2version ' + args[0]
+    command = f'bump2version {args[0]}'
     if dry != 'n':
-        command += ' --verbose -n'
+        command = f'{command} --verbose -n'
     print(command)
     sp.run(command.split())
 
@@ -160,11 +158,6 @@ def performTask(args):
         if v:
             eval(f'{k}')(f'{v}')
             return
-
-    msg = "Please provide a task to perform. Use "
-    msg += f"./{os.path.basename(__file__)} -h for help."
-    print('\n' + textwrap.fill(msg) + '\n')
-
     return
 
 
