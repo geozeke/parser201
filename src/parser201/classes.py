@@ -23,13 +23,13 @@ class TZ(Enum):
 
         Parameters
         ----------
-        other : Enum TZ
+        other : Any
             The right-hand side of the equality comparison.
 
         Returns
         -------
         bool
-            `True` if two TZ Enums are equal, `False` otherwise.
+            True if two TZ Enums are equal, False otherwise.
         """
         return self.value == other.value
 
@@ -42,20 +42,20 @@ class FMT(Enum):
     """
 
     string = auto()
-    dateobj = auto()
+    date_obj = auto()
 
     def __eq__(self, other):
         """Compare the values of two FMT Enums.
 
         Parameters
         ----------
-        other : Enum FMT
+        other : Any
             The right-hand side of the equality comparison.
 
         Returns
         -------
         bool
-            `True` if two FMT Enums are equal, `False` otherwise.
+            True if two FMT Enums are equal, False otherwise.
         """
         return self.value == other.value
 
@@ -71,19 +71,21 @@ class LogParser:
     ---------
     line : str
         A single line from an Apache access log.
-    timezone : {TZ.original | TZ.utc | TZ.local}, optional
+    timezone : TZ, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
         adjustment). *TZ.local* adjusts the timestamp to the timezone
         currently selected on the machine running the code. *TZ.utc*
         adjusts the timestamp to [UTC](https:\
-        //en.wikipedia.org/wiki/Coordinated_Universal_Time).
-    dtsformat : {FMT.string | FMT.dateobj}, optional
+        //en.wikipedia.org/wiki/Coordinated_Universal_Time), default is
+        TZ.original.
+    dts_format : FMT, optional
         Set the format of the date timestamp attribute of the
-        `LogParser` object. Default is *FMT.string*. Using *FMT.dateobj*
-        will store the timestamp attribute as a Python
+        `LogParser` object. Default is *FMT.string*. Using
+        *FMT.date_obj* will store the timestamp attribute as a Python
         [datetime object](https:\
-        //docs.python.org/3/library/datetime.html).
+        //docs.python.org/3/library/datetime.html), default is
+        FMT.string.
 
     Attributes
     ----------
@@ -100,7 +102,7 @@ class LogParser:
     statuscode : int
         The status code sent from the server to the client (`200`,
         `404`, etc.).
-    timestamp : (str | datetime object)
+    timestamp : str | dt.datetime
         The date and time of the request in the following format:
 
         `dd/MMM/YYYY:HH:MM:SS –hhmm`
@@ -124,7 +126,7 @@ class LogParser:
     --------
     Creating a `LogParser` object with default options. The timestamp
     attribute will not be adjusted and will be stored as a string.
-    >>> from parser201 import LogParser, TZ, FMT
+    >>> from parser201 import LogParser
     >>> line = # a line from an Apache access log
     >>> lp = LogParser(line)
 
@@ -134,10 +136,10 @@ class LogParser:
     //docs.python.org/3/library/datetime.html).
     >>> from parser201 import LogParser, TZ, FMT
     >>> line = # a line from an Apache access log
-    >>> lp = LogParser(line, timezone=TZ.local, dtsformat=FMT.dateobj)
+    >>> lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
     """
 
-    def __init__(self, line, timezone=TZ.original, dtsformat=FMT.string):
+    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
 
         # Establish attributes
         self.ipaddress = ''
@@ -153,7 +155,7 @@ class LogParser:
         # Initial check. If the line passed to the initializer is not a string
         # (type == str), then return an empty LogParser object.
         if type(line) != str:
-            self.__noneFields()
+            self.__none_fields()
             return
 
         # If a valid string is entered, then perform pre-processing. For some
@@ -163,10 +165,10 @@ class LogParser:
         # Replace "" with "-" to prevent that.
         clean = line.replace('\"\"', '\"-\"')
 
-        # agentStrings: This part of the regex:(?<!\\)\" is a negative
+        # agent_strings: This part of the regex:(?<!\\)\" is a negative
         # lookbehind assertion. It says, "end with a quote mark, unless that
         # quote mark is preceded by an escape character '\'"
-        agentStrings = re.findall(r'\"(.+?)(?<!\\)\"', clean)
+        agent_strings = re.findall(r'\"(.+?)(?<!\\)\"', clean)
 
         # The next one's tricky. We're looking to extract the statuscode and
         # datasize fields. For some entires, the datasize field is '-', but for
@@ -181,13 +183,13 @@ class LogParser:
         try:
             L = clean.split(' ')
             i = [j for j in range(len(L)) if L[j].isnumeric()][0]
-            codeAndSize = [int(n) if n.isnumeric() else 0 for n in L[i:i+2]]
+            code_and_size = [int(n) if n.isnumeric() else 0 for n in L[i:i+2]]
             # Splitting on '[' returns a list where item [0] contains the first
             # three fields (ipaddress; userid; username), each separated by
             # space.
             first3 = clean.split('[')[0].split()
         except Exception:
-            self.__noneFields()
+            self.__none_fields()
             return
 
         # Set properties. If any of these fail, then consider that we have a
@@ -198,24 +200,24 @@ class LogParser:
             self.username = first3[2]
             self.timestamp = re.search(
                 r'\[(.+?)\]', clean).group().strip('[]')
-            self.requestline = agentStrings[0]
-            self.referrer = agentStrings[1]
-            self.useragent = agentStrings[2]
-            self.statuscode = codeAndSize[0]
-            self.datasize = codeAndSize[1]
+            self.requestline = agent_strings[0]
+            self.referrer = agent_strings[1]
+            self.useragent = agent_strings[2]
+            self.statuscode = code_and_size[0]
+            self.datasize = code_and_size[1]
         except Exception:
-            self.__noneFields()
+            self.__none_fields()
             return
 
-        # Process date/time stamp and adjust timezone/dtsformat as indicated
-        if timezone == TZ.original and dtsformat == FMT.string:
+        # Process date/time stamp and adjust timezone/dts_format as indicated
+        if timezone == TZ.original and dts_format == FMT.string:
             return
 
         try:
-            dateobj = dt.datetime.strptime(self.timestamp,
-                                           '%d/%b/%Y:%H:%M:%S %z')
+            date_obj = dt.datetime.strptime(self.timestamp,
+                                            '%d/%b/%Y:%H:%M:%S %z')
         except ValueError:
-            self.__noneFields()
+            self.__none_fields()
             return
 
         sign, hh, mm = self.__decomposeTZ(self.timestamp)
@@ -223,31 +225,31 @@ class LogParser:
         if timezone == TZ.original:
             pass
         elif timezone == TZ.local:
-            zoneString = time.strftime('%z')
+            zone_str = time.strftime('%z')
             # First convert to GMT
-            dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
+            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             # Now convert to local time and replace tzinfo
-            sign, hh, mm = self.__decomposeTZ(zoneString)
-            zoneObject = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
-            dateobj = dateobj + (sign*dt.timedelta(hours=hh, minutes=mm))
-            dateobj = dateobj.replace(tzinfo=zoneObject)
+            sign, hh, mm = self.__decomposeTZ(zone_str)
+            zone_obj = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
+            date_obj = date_obj + (sign*dt.timedelta(hours=hh, minutes=mm))
+            date_obj = date_obj.replace(tzinfo=zone_obj)
         else:  # TZ == utc
-            dateobj = dateobj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
+            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
             sign, hh, mm = self.__decomposeTZ('+0000')
-            zoneObject = dt.timezone(dt.timedelta(hours=0, minutes=0))
-            dateobj = dateobj.replace(tzinfo=zoneObject)
+            zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
+            date_obj = date_obj.replace(tzinfo=zone_obj)
 
-        if dtsformat == FMT.string:
-            self.timestamp = dateobj.strftime('%d/%b/%Y:%H:%M:%S %z')
-        else:  # dtsformat == FMT.dateobj
-            self.timestamp = dateobj
+        if dts_format == FMT.string:
+            self.timestamp = date_obj.strftime('%d/%b/%Y:%H:%M:%S %z')
+        else:  # dts_format == FMT.date_obj
+            self.timestamp = date_obj
 
         return
 
-    def __noneFields(self):
+    def __none_fields(self):
         """Set all properties to None."""
-        for property in [p for p in dir(self) if not p.startswith('_')]:
-            setattr(self, property, None)
+        for prop in [p for p in dir(self) if not p.startswith('_')]:
+            setattr(self, prop, None)
         return
 
     def __str__(self):
@@ -260,7 +262,7 @@ class LogParser:
         --------
         Create a `LogParser` object like this:
 
-        >>> from parser201 import LogParser, TZ, FMT
+        >>> from parser201 import LogParser
         >>> line = # a line from an Apache access log
         >>> lp = LogParser(line)
 
@@ -280,13 +282,36 @@ class LogParser:
         labels = ['ipaddress', 'userid', 'username', 'timestamp',
                   'requestline', 'statuscode', 'datasize', 'referrer',
                   'useragent']
-        padding = len(max(labels, key=len))
+        pad = len(max(labels, key=len))
         L = []
 
         # Build the string in the same order as the labels.
         for label in labels:
-            L.append(f'{label:>{padding}}: {getattr(self, label)}')
+            L.append(f'{label:>{pad}}: {getattr(self, label)}')
         return '\n'.join(L)
+
+    def __eq__(self, other):
+        """Determine if two `LogParser` objects are equal.
+
+        The class provides a `__eq__` method to test for equality
+        between two `LogParser` objects.
+
+        Parameters
+        ----------
+        other : Any
+            An object used for comparison (the right-hand side of ==).
+
+        Returns
+        -------
+        bool
+            True it two `LogParser` objects are equal, False otherwise.
+        """
+        if type(self) != type(other):
+            return False
+        for prop in [p for p in dir(self) if not p.startswith('_')]:
+            if getattr(self, prop) != getattr(other, prop):
+                return False
+        return True
 
     def __decomposeTZ(self, zone):
         """Decompose a time zone into +/-, hrs, and mins."""

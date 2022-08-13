@@ -11,7 +11,7 @@ pip3 install parser201
 ## Usage Example
 
 ```python
-from parser201 import LogParser, FMT, TZ
+from parser201 import LogParser
 
 with open('access.log', 'r') as f:
     for line in f:

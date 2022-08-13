@@ -20,8 +20,8 @@ def pytest_generate_tests(metafunc):
         The python object that facilitates parametrization.
     """
     with lzma.open(TESTDATA, 'rb') as f:
-        testCases = pickle.load(f)
-    metafunc.parametrize('node', testCases)
+        test_cases = pickle.load(f)
+    metafunc.parametrize('node', test_cases)
 
 
 def test_str(node):
@@ -33,17 +33,17 @@ def test_str(node):
         A dictionary object containing a test string and expected
         results for various tests.
     """
-    noneStr = str(LogParser('bad line'))
+    none_str = str(LogParser('bad line'))
     lp = LogParser(node['linein'],
                    timezone=node['timezone'],
-                   dtsformat=node['dtsformat'])
-    testResult = str(lp)
+                   dts_format=node['dts_format'])
+    test_result = str(lp)
     if lp.ipaddress is None:
-        benchmark = noneStr
+        benchmark = none_str
     else:
         benchmark = node['str']
     print(f"timezone: {node['timezone']}")
-    print(f"  dtsformat: {node['dtsformat']}\n")
-    print(f"received:\n{testResult}\n")
+    print(f"  dts_format: {node['dts_format']}\n")
+    print(f"received:\n{test_result}\n")
     print(f"expected:\n{node['str']}")
-    assert testResult == benchmark
+    assert test_result == benchmark

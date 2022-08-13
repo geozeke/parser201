@@ -27,7 +27,7 @@ pip3 install parser201
 The most common use-case for parser201 is importing individual lines from an Apache access log file and creating LogParser objects, like this:
 
 ```python
-from parser201 import LogParser, FMT, TZ
+from parser201 import LogParser
 
 with open('access.log', 'r') as f:
     for line in f:
@@ -41,6 +41,13 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.3.0 (2022-08-13)
+  * Implemented `__eq__` magic method for the `LogParser` class. You can now
+    perform equality checks on two `LogParser` objects.
+  * Added test cases for `__eq__`
+  * Migrated task runner to `make`
+  * Documentation cleanup
+  * Code linting and cleanup<br><br>
 * 1.2.0 (2022-07-17)
   * Implemented `__eq__` magic methods in the `FMT` and `TZ` classes.
   * Documentation cleanup.
@@ -56,7 +63,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Added site logo to README.md.<br><br>
 * 1.1.0 (2021-11-13)
   * Implemented selectable timestamp conversion options {*original*, *local*, [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
-  * Implemented selectable formatting options for timestamp attribute {*string*, *dateobj*}.
+  * Implemented selectable formatting options for timestamp attribute {*string*, *date_obj*}.
   * Migrated API reference to GitHub pages.
   * Code cleanup.<br><br>
 * 1.0.2 (2021-11-05)

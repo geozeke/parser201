@@ -20,7 +20,7 @@ ZONES = tuple(TZ)
 FORMATS = tuple(FMT)
 
 
-def makeDict(dataIn, options):
+def make_dict(data_in, options):
     """Make a dictionary from test data.
 
     This function takes some generated test data, and stores it in a
@@ -29,7 +29,7 @@ def makeDict(dataIn, options):
 
     Parameters
     ----------
-    dataIn : str
+    data_in : str
         A line from an Apache log file. This will come from one of the
         files in `datasources`.
     options : (TZ, FMT)
@@ -44,10 +44,10 @@ def makeDict(dataIn, options):
     """
     D = {}
 
-    # lp = LogParser(dataIn)
-    lp = LogParser(dataIn, timezone=options[0], dtsformat=options[1])
+    # lp = LogParser(data_in)
+    lp = LogParser(data_in, timezone=options[0], dts_format=options[1])
 
-    D['linein'] = dataIn
+    D['linein'] = data_in
     D['ipaddress'] = lp.ipaddress
     D['userid'] = lp.userid
     D['username'] = lp.username
@@ -59,7 +59,7 @@ def makeDict(dataIn, options):
     D['useragent'] = lp.useragent
     D['str'] = str(lp)
     D['timezone'] = options[0]
-    D['dtsformat'] = options[1]
+    D['dts_format'] = options[1]
 
     return D
 
@@ -80,20 +80,20 @@ def build():
 
         for line in f:
             zone = random.choice(ZONES)
-            dtsformat = random.choice(FORMATS)
-            L.append(makeDict(line, (zone, dtsformat)))
+            dts_format = random.choice(FORMATS)
+            L.append(make_dict(line, (zone, dts_format)))
 
     # Edge cases ------------------------------------------------------------
 
     # Inject a malformed line. This should cause all object properties to be
     # set to None
     line = 'This is a malformed line'
-    L.append(makeDict(line, (TZ.original, FMT.string)))
+    L.append(make_dict(line, (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
     # Empty line
-    L.append(makeDict('', (TZ.original, FMT.string)))
+    L.append(make_dict('', (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ def build():
     line = '175.156.126.209-- [31/Jan/2017:21:09:47 +0800] '
     line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
     line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
-    L.append(makeDict(line, (TZ.original, FMT.string)))
+    L.append(make_dict(line, (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ def build():
     line = '175.156.126.209 - - [33/Jan/2017:21:09:47 +0800] '
     line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
     line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
-    L.append(makeDict(line, (TZ.utc, FMT.dateobj)))
+    L.append(make_dict(line, (TZ.utc, FMT.date_obj)))
 
     # -----------------------------------------------------------------------
 

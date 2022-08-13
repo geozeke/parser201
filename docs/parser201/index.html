@@ -28,7 +28,7 @@
 <pre><code class="language-text">pip3 install parser201
 </code></pre>
 <h2 id="usage-example">Usage Example</h2>
-<pre><code class="language-python">from parser201 import LogParser, FMT, TZ
+<pre><code class="language-python">from parser201 import LogParser
 
 with open('access.log', 'r') as f:
     for line in f:
@@ -80,7 +80,8 @@ from .classes import LogParser
 __pdoc__ = {}
 __pdoc__[&#39;classes.FMT&#39;] = False
 __pdoc__[&#39;classes.TZ&#39;] = False
-__pdoc__[&#39;classes.LogParser.__str__&#39;] = True</code></pre>
+__pdoc__[&#39;classes.LogParser.__str__&#39;] = True
+__pdoc__[&#39;classes.LogParser.__eq__&#39;] = True</code></pre>
 </details>
 </section>
 <section>
