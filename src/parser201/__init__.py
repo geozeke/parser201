@@ -15,3 +15,4 @@ __pdoc__ = {}
 __pdoc__['classes.FMT'] = False
 __pdoc__['classes.TZ'] = False
 __pdoc__['classes.LogParser.__str__'] = True
+__pdoc__['classes.LogParser.__eq__'] = True

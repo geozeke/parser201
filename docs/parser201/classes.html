@@ -58,7 +58,7 @@ class TZ(Enum):
         Returns
         -------
         bool
-            `True` if two TZ Enums are equal, `False` otherwise.
+            True if two TZ Enums are equal, False otherwise.
         &#34;&#34;&#34;
         return self.value == other.value
 
@@ -84,7 +84,7 @@ class FMT(Enum):
         Returns
         -------
         bool
-            `True` if two FMT Enums are equal, `False` otherwise.
+            True if two FMT Enums are equal, False otherwise.
         &#34;&#34;&#34;
         return self.value == other.value
 
@@ -318,6 +318,29 @@ class LogParser:
         for label in labels:
             L.append(f&#39;{label:&gt;{pad}}: {getattr(self, label)}&#39;)
         return &#39;\n&#39;.join(L)
+
+    def __eq__(self, other):
+        &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
+
+        The class provides a `__eq__` method to test for equality
+        between two `LogParser` objects.
+
+        Parameters
+        ----------
+        other : Any
+            An object used for comparison (the right-hand side of ==).
+
+        Returns
+        -------
+        bool
+            True it two `LogParser` objects are equal, False otherwise.
+        &#34;&#34;&#34;
+        if type(self) != type(other):
+            return False
+        for prop in [p for p in dir(self) if not p.startswith(&#39;_&#39;)]:
+            if getattr(self, prop) != getattr(other, prop):
+                return False
+        return True
 
     def __decomposeTZ(self, zone):
         &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
@@ -652,6 +675,29 @@ will be stored as a Python <a href="https:
             L.append(f&#39;{label:&gt;{pad}}: {getattr(self, label)}&#39;)
         return &#39;\n&#39;.join(L)
 
+    def __eq__(self, other):
+        &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
+
+        The class provides a `__eq__` method to test for equality
+        between two `LogParser` objects.
+
+        Parameters
+        ----------
+        other : Any
+            An object used for comparison (the right-hand side of ==).
+
+        Returns
+        -------
+        bool
+            True it two `LogParser` objects are equal, False otherwise.
+        &#34;&#34;&#34;
+        if type(self) != type(other):
+            return False
+        for prop in [p for p in dir(self) if not p.startswith(&#39;_&#39;)]:
+            if getattr(self, prop) != getattr(other, prop):
+                return False
+        return True
+
     def __decomposeTZ(self, zone):
         &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
         leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
@@ -660,6 +706,51 @@ will be stored as a Python <a href="https:
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="parser201.classes.LogParser.__eq__"><code class="name flex">
+<span>def <span class="ident">__eq__</span></span>(<span>self, other)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Determine if two <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> objects are equal.</p>
+<p>The class provides a <code>__eq__</code> method to test for equality
+between two <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> objects.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>other</code></strong> :&ensp;<code>Any</code></dt>
+<dd>An object used for comparison (the right-hand side of ==).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True it two <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> objects are equal, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __eq__(self, other):
+    &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
+
+    The class provides a `__eq__` method to test for equality
+    between two `LogParser` objects.
+
+    Parameters
+    ----------
+    other : Any
+        An object used for comparison (the right-hand side of ==).
+
+    Returns
+    -------
+    bool
+        True it two `LogParser` objects are equal, False otherwise.
+    &#34;&#34;&#34;
+    if type(self) != type(other):
+        return False
+    for prop in [p for p in dir(self) if not p.startswith(&#39;_&#39;)]:
+        if getattr(self, prop) != getattr(other, prop):
+            return False
+    return True</code></pre>
+</details>
+</dd>
 <dt id="parser201.classes.LogParser.__str__"><code class="name flex">
 <span>def <span class="ident">__str__</span></span>(<span>self)</span>
 </code></dt>
@@ -762,6 +853,7 @@ Peter Nardi<br>
 <li>
 <h4><code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code></h4>
 <ul class="">
+<li><code><a title="parser201.classes.LogParser.__eq__" href="#parser201.classes.LogParser.__eq__">__eq__</a></code></li>
 <li><code><a title="parser201.classes.LogParser.__str__" href="#parser201.classes.LogParser.__str__">__str__</a></code></li>
 </ul>
 </li>

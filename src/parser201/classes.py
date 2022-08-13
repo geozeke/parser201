@@ -29,7 +29,7 @@ class TZ(Enum):
         Returns
         -------
         bool
-            `True` if two TZ Enums are equal, `False` otherwise.
+            True if two TZ Enums are equal, False otherwise.
         """
         return self.value == other.value
 
@@ -55,7 +55,7 @@ class FMT(Enum):
         Returns
         -------
         bool
-            `True` if two FMT Enums are equal, `False` otherwise.
+            True if two FMT Enums are equal, False otherwise.
         """
         return self.value == other.value
 
@@ -289,6 +289,29 @@ class LogParser:
         for label in labels:
             L.append(f'{label:>{pad}}: {getattr(self, label)}')
         return '\n'.join(L)
+
+    def __eq__(self, other):
+        """Determine if two `LogParser` objects are equal.
+
+        The class provides a `__eq__` method to test for equality
+        between two `LogParser` objects.
+
+        Parameters
+        ----------
+        other : Any
+            An object used for comparison (the right-hand side of ==).
+
+        Returns
+        -------
+        bool
+            True it two `LogParser` objects are equal, False otherwise.
+        """
+        if type(self) != type(other):
+            return False
+        for prop in [p for p in dir(self) if not p.startswith('_')]:
+            if getattr(self, prop) != getattr(other, prop):
+                return False
+        return True
 
     def __decomposeTZ(self, zone):
         """Decompose a time zone into +/-, hrs, and mins."""

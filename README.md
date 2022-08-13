@@ -41,6 +41,13 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.3.0 (2022-08-13)
+  * Implemented `__eq__` magic method for the `LogParser` class. You can now
+    perform equality checks on two `LogParser` objects.
+  * Added test cases for `__eq__`
+  * Migrated task runner to `make`
+  * Documentation cleanup
+  * Code linting and cleanup<br><br>
 * 1.2.0 (2022-07-17)
   * Implemented `__eq__` magic methods in the `FMT` and `TZ` classes.
   * Documentation cleanup.
