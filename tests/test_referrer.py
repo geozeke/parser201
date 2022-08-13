@@ -20,8 +20,8 @@ def pytest_generate_tests(metafunc):
         The python object that facilitates parametrization.
     """
     with lzma.open(TESTDATA, 'rb') as f:
-        testCases = pickle.load(f)
-    metafunc.parametrize('node', testCases)
+        test_cases = pickle.load(f)
+    metafunc.parametrize('node', test_cases)
 
 
 def test_referrer(node):
@@ -35,7 +35,7 @@ def test_referrer(node):
     """
     lp = LogParser(node['linein'],
                    timezone=node['timezone'],
-                   dtsformat=node['dtsformat'])
-    testResult = lp.referrer
+                   dts_format=node['dts_format'])
+    test_result = lp.referrer
     benchmark = node['referrer']
-    assert testResult == benchmark
+    assert test_result == benchmark

@@ -22,7 +22,6 @@ define BROWSER_PYSCRIPT
 import webbrowser
 from pathlib import Path
 p = Path('.').resolve()/'${WEBPATH}'
-print (str(p))
 webbrowser.open(f'file://{p}', new=2)
 endef
 
@@ -38,9 +37,9 @@ all: help
 .PHONY: clean
 clean: ## Purge project build artifacts
 	@echo Cleaning project artifacts
+# @find . -type d -name .mypy_cache -exec rm -rf {} \; -prune
 	@find . -type d -name __pycache__ -exec rm -rf {} \; -prune
 	@find . -type d -name .pytest_cache -exec rm -rf {} \; -prune
-	@find . -type d -name .mypy_cache -exec rm -rf {} \; -prune
 	@find . -type d -name build -exec rm -rf {} \; -prune
 	@find . -type d -name dist -exec rm -rf {} \; -prune
 	@find . -type d -name .eggs -exec rm -rf {} \; -prune

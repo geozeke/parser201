@@ -20,8 +20,8 @@ def pytest_generate_tests(metafunc):
         The python object that facilitates parametrization.
     """
     with lzma.open(TESTDATA, 'rb') as f:
-        testCases = pickle.load(f)
-    metafunc.parametrize('node', testCases)
+        test_cases = pickle.load(f)
+    metafunc.parametrize('node', test_cases)
 
 
 def test_statuscode(node):
@@ -35,10 +35,10 @@ def test_statuscode(node):
     """
     lp = LogParser(node['linein'],
                    timezone=node['timezone'],
-                   dtsformat=node['dtsformat'])
-    testResult = lp.statuscode
+                   dts_format=node['dts_format'])
+    test_result = lp.statuscode
     try:
         benchmark = int(node['statuscode'])
     except TypeError:
         benchmark = node['statuscode']
-    assert testResult == benchmark
+    assert test_result == benchmark
