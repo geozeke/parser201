@@ -1,4 +1,5 @@
 PROJNAME=parser201
+VENV=venv/${PROJNAME}
 VER=patch
 DRY=y
 
@@ -34,14 +35,56 @@ all: help
 
 # --------------------------------------------
 
+.PHONY: setup
+setup: ## initialize the project and create python venv
+ifeq (,$(wildcard .init/setup))
+	@(which pip3 > /dev/null 2>&1) || \
+	(echo "pip3 missing, run: sudo apt install pip3"; exit 1)
+	@(python3 -m venv -h > /dev/null 2>&1) || \
+	(echo "python3-venv missing, run: sudo apt install python3-venv"; exit 1)
+	mkdir venv
+	mkdir .init
+	touch .init/setup
+	python3 -m venv ${VENV}
+	. ${VENV}/bin/activate; \
+	pip3 install pip -U; \
+	pip3 install -r requirements.txt -U
+else
+	@echo "Initial setup is already complete. If you are having issues, run:"
+	@echo
+	@echo "make reset"
+	@echo "make setup"
+	@echo
+endif
+
+# --------------------------------------------
+
+# Manually activate the python virtual enviornment just to ensure that no pip
+# packages are unintentionally installed if the user hasn't already activated
+# the venv.
+.PHONY: update
+update: .init/setup ## update pip packages in venv
+	. ${VENV}/bin/activate; \
+	pip3 install pip -U; \
+	pip3 install -r requirements.txt -U
+
+# --------------------------------------------
+
+.PHONY: reset
+reset: clean ## reinitialize the project
+	@echo Resetting project state
+	@rm -rf .mypy_cache
+	@rm -rf venv .init
+
+# -------------------------
+
 .PHONY: clean
 clean: ## Purge project build artifacts
-	@echo Cleaning project artifacts
-# @find . -type d -name .mypy_cache -exec rm -rf {} \; -prune
+	@echo Cleaning project build artifacts
+	@rm -rf build/
+	@rm -rf dist/
 	@find . -type d -name __pycache__ -exec rm -rf {} \; -prune
 	@find . -type d -name .pytest_cache -exec rm -rf {} \; -prune
-	@find . -type d -name build -exec rm -rf {} \; -prune
-	@find . -type d -name dist -exec rm -rf {} \; -prune
 	@find . -type d -name .eggs -exec rm -rf {} \; -prune
 	@find . -type d -name htmlcov -exec rm -rf {} \; -prune
 	@find . -type d -name *.egg-info -exec rm -rf {} \; -prune
@@ -49,7 +92,6 @@ clean: ## Purge project build artifacts
 	@find . -type f -name *.pyc -delete
 	@find . -type f -name *.pyo -delete
 	@find . -type f -name *.coverage -delete
-	@echo Cleaning complete
 
 # --------------------------------------------
 
