@@ -10,13 +10,14 @@ pytest
 # development
 
 autopep8
+bump2version
 flake8
 flake8-docstrings
-bump2version
+mypy
 pdoc3
 
 # pypi
 
+build
 setuptools
 twine
-build
