@@ -54,7 +54,7 @@ pdoc3 = "^0.10.0"
 
 [tool.pytest.ini_options]
 pythonpath = [
-    "src/parser201"
+    ".", "./src", "./src/parser201"
 ]
 
 [build-system]
