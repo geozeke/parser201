@@ -5,12 +5,11 @@
 ![GitHub issues](https://img.shields.io/github/issues/geozeke/parser201)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/parser201)
 ![GitHub repo size](https://img.shields.io/github/repo-size/geozeke/parser201)
-![Lines of code](https://img.shields.io/tokei/lines/github/geozeke/parser201)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/parser201)
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc" width="120"/>
+<img src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=true" width="120"/>
 
 ## Features
 
@@ -41,6 +40,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.3.1 (2022-10-22)
+  * Migrated dependency/build management to [poetry](https://python-poetry.org/).<br><br>
 * 1.3.0 (2022-08-13)
   * Implemented `__eq__` magic method for the `LogParser` class. You can now
     perform equality checks on two `LogParser` objects.

@@ -1,0 +1,5 @@
+[flake8]
+per-file-ignores = 
+	gen_testData.py:F401
+	tests/test_*:F401
+	__init__.py:D, F401
