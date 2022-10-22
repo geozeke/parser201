@@ -40,6 +40,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.3.1 (2022-10-22)
+  * Migrated dependency/build management to [poetry](https://python-poetry.org/).<br><br>
 * 1.3.0 (2022-08-13)
   * Implemented `__eq__` magic method for the `LogParser` class. You can now
     perform equality checks on two `LogParser` objects.

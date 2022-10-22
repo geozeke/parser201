@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "parser201"
-version = "1.3.0"
+version = "1.3.1"
 description = "Extract individual fields from lines in Apache access logs"
 authors = ["Peter Nardi <pete@nardi.com>"]
 maintainers = ["Peter Nardi <pete@nardi.com>"]
