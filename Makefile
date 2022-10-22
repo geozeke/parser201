@@ -1,13 +1,4 @@
 PROJNAME=parser201
-VENV=venv/${PROJNAME}
-VER=patch
-DRY=y
-
-ifeq (${DRY},n)
-	BUMPCMD?=bump2version ${VER}
-else
-	BUMPCMD?=bump2version ${VER} --dry-run --verbose
-endif
 
 ifeq (${MAKECMDGOALS},docs)
 	WEBPATH=docs/index.html
@@ -38,17 +29,11 @@ all: help
 .PHONY: setup
 setup: ## initialize the project and create python venv
 ifeq (,$(wildcard .init/setup))
-	@(which pip3 > /dev/null 2>&1) || \
-	(echo "pip3 missing, run: sudo apt install pip3"; exit 1)
-	@(python3 -m venv -h > /dev/null 2>&1) || \
-	(echo "python3-venv missing, run: sudo apt install python3-venv"; exit 1)
-	mkdir venv
+	@(which poetry > /dev/null 2>&1) || \
+	(echo "pymids requires poetry. See README for instructions."; exit 1)
 	mkdir .init
 	touch .init/setup
-	python3 -m venv ${VENV}
-	. ${VENV}/bin/activate; \
-	pip3 install pip -U; \
-	pip3 install -r requirements.txt -U
+	poetry install
 else
 	@echo "Initial setup is already complete. If you are having issues, run:"
 	@echo
@@ -74,7 +59,7 @@ update: .init/setup ## update pip packages in venv
 reset: clean ## reinitialize the project
 	@echo Resetting project state
 	@rm -rf .mypy_cache
-	@rm -rf venv .init
+	@rm -rf .venv .init
 
 # -------------------------
 
@@ -104,13 +89,6 @@ coverage: ## Generate an html code coverage report
 
 # --------------------------------------------
 
-.PHONY: dist
-dist: clean ## Build (but don't upload) distribution products
-	python3 -m build
-	twine check dist/*
-
-# --------------------------------------------
-
 .PHONY: docs
 docs: ## Generate project documentation
 	pdoc3 --html --template-dir=docs -o docs src/${PROJNAME} --force
@@ -124,24 +102,6 @@ test: ## Run pytest with --tb=short option
 
 # --------------------------------------------
 
-.PHONY: uptest
-uptest: dist ## Upload a build to test.pypi.org
-	twine upload dist/* --repository ${PROJNAME}-test
-
-# --------------------------------------------
-
-.PHONY: bump
-bump: ## Bump version. VER=major|minor|patch, DRY=Y|N
-	${BUMPCMD}
-
-# --------------------------------------------
-
-.PHONY: release
-release: dist ## Upload release version to pypi
-	twine upload dist/* --repository ${PROJNAME}-release
-
-
-# --------------------------------------------
 .PHONY: help
 help: ## Show help
 	@echo Please specify a target. Choices are:
