@@ -44,17 +44,6 @@ endif
 
 # --------------------------------------------
 
-# Manually activate the python virtual enviornment just to ensure that no pip
-# packages are unintentionally installed if the user hasn't already activated
-# the venv.
-.PHONY: update
-update: .init/setup ## update pip packages in venv
-	. ${VENV}/bin/activate; \
-	pip3 install pip -U; \
-	pip3 install -r requirements.txt -U
-
-# --------------------------------------------
-
 .PHONY: reset
 reset: clean ## reinitialize the project
 	@echo Resetting project state
