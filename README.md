@@ -13,7 +13,9 @@
 
 ## Features
 
-The centerpiece of the parser201 module is the LogParser class. The class initializer takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.
+The centerpiece of the parser201 module is the LogParser class. The class
+initializer takes a single line from an Apache access log file and extracts the
+individual fields into attributes within an object.
 
 ## Installation
 
@@ -23,7 +25,8 @@ pip3 install parser201
 
 ## Usage
 
-The most common use-case for parser201 is importing individual lines from an Apache access log file and creating LogParser objects, like this:
+The most common use-case for parser201 is importing individual lines from an
+Apache access log file and creating LogParser objects, like this:
 
 ```python
 from parser201 import LogParser
@@ -52,7 +55,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 * 1.2.0 (2022-07-17)
   * Implemented `__eq__` magic methods in the `FMT` and `TZ` classes.
   * Documentation cleanup.
-  * Testing improvements and pyproject.toml adjustments for better pytest compatability.
+  * Testing improvements and pyproject.toml adjustments for better pytest
+    compatability.
   * Code linting and cleanup.<br><br>
 * 1.1.5 (2022-01-17)
   * Code linting and cleanup.<br><br>
@@ -75,19 +79,26 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Implemented more robust and compartmentalized test cases.
   * Code tuning.<br><br>
 * 0.2.0 (2021-10-31)
-  * Changed behavior to gracefully fail for any malformed input line. If an input line cannot be successfully parsed, all attributes of the returned object are set to `None` and no messages are printed.
+  * Changed behavior to gracefully fail for any malformed input line. If an
+    input line cannot be successfully parsed, all attributes of the returned
+    object are set to `None` and no messages are printed.
   * Added additional pytest cases to verify failure behavior.<br><br>
 * 0.1.9 (2021-09-15)
   * Code cleanup for pep8 compliance.
-  * Cleaned up Makefiles and scripts to remove references to python (meaning python2) and replace it with python3.<br><br>
+  * Cleaned up Makefiles and scripts to remove references to python (meaning
+    python2) and replace it with python3.<br><br>
 * 0.1.7 (2021-06-05)
-  * Re-tooled testing scripts to use parameterized test data, and conduct more robust testing.<br><br>
+  * Re-tooled testing scripts to use parameterized test data, and conduct more
+    robust testing.<br><br>
 * 0.1.6 (2020-12-19)
-  * Addressed exception handling for initializer input not being a valid string data type.
+  * Addressed exception handling for initializer input not being a valid string
+    data type.
   * Documentation cleanup.<br><br>
 * 0.1.5 (2020-10-26)
-  * Enabled automatic deployment of tagged releases to pypi from travis using encrypted token.
-  * Converted references to the master branch in the git repository to main across the documentation set.
+  * Enabled automatic deployment of tagged releases to pypi from travis using
+    encrypted token.
+  * Converted references to the master branch in the git repository to main
+    across the documentation set.
   * Documentation cleanup.<br><br>
 * 0.1.4 (2020-10-24)
   * Initial pypi release.
