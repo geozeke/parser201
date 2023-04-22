@@ -43,6 +43,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.4.0 (2023-04-XX)
+  * Streamlined the class initializer with a robust regular expression.<br><br>
 * 1.3.1 (2022-10-22)
   * Migrated dependency/build management to [poetry](https://python-poetry.org/).<br><br>
 * 1.3.0 (2022-08-13)
