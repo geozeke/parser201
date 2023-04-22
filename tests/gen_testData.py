@@ -71,9 +71,9 @@ def build():
     ----------
     testData : str
         The name of the file where test data will be stored. Note: the
-        sample log file include several lines with various injection
-        attacks. This stresses the class initializer to handle a roboust
-        set of examples.
+        sample log file includes several lines with various injection
+        attacks. This stresses the class initializer to handle a more
+        roboust set of use cases.
     """
     # List to hold test cases
     L = []

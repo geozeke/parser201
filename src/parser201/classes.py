@@ -145,7 +145,7 @@ class LogParser:
         # ChatGPT: "Write a regular expression that recognizes a line from an
         # apache access log.", and the regex below is what I got. It cleaned up
         # my previous solution and replace several lines of code. I split the
-        # regex across two lines to keep the code clean.
+        # regex across two lines here to keep the code clean.
         regex = r'^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] "(\S+ \S+ \S+)"'
         regex += r' (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
 
