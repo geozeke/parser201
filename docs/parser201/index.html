@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>parser201 API documentation</title>
-<meta name="description" content="The parser201 module takes a single line from an Apache access log file and extracts the individual fields into attributes within an object …" />
+<meta name="description" content="The parser201 module takes a single line from an Apache access log file and
+extracts the individual fields into attributes within an object. parser201 …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,7 +23,10 @@
 <h1 class="title">Package <code>parser201</code></h1>
 </header>
 <section id="section-intro">
-<p>The parser201 module takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.</p>
+<p>The parser201 module takes a single line from an Apache access log file and
+extracts the individual fields into attributes within an object. parser201 is
+robust, and is able to handle Apache Access Log lines containing malicious
+code attacks like: Mambo, PHPBB, SQL Injection, etc.</p>
 <h2 id="installation">Installation</h2>
 <p>parser201 is lightweight, with no third party dependencies.</p>
 <pre><code class="language-text">pip3 install parser201
@@ -68,7 +72,7 @@ requestline: None
 .. include:: ../../docs/intro.md
 &#34;&#34;&#34;
 
-__version__ = &#39;1.3.1&#39;
+__version__ = &#39;1.4.0&#39;
 
 
 from .classes import FMT

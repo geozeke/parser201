@@ -1,4 +1,7 @@
-The parser201 module takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.
+The parser201 module takes a single line from an Apache access log file and
+extracts the individual fields into attributes within an object. parser201 is
+robust, and is able to handle Apache Access Log lines containing malicious
+code attacks like: Mambo, PHPBB, SQL Injection, etc.
 
 ## Installation
 
