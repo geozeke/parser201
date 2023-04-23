@@ -6,6 +6,16 @@ import time
 from enum import Enum
 from enum import auto
 
+# Globals
+# Behold the power of generative AI. I provide the following query to ChatGPT:
+# "Write a regular expression that recognizes a line from an apache access
+# log". A had to have a brief "conversation" with ChatGPT to refine the regex
+# with a few examples, but after a brief exchange, it produce what you see
+# below. This regex cleaned up my previous solution and replace several lines
+# of code. I split the regex across two lines here to keep the code clean.
+REGEX = r'^([^ ]+) (\S+) (\S+) \[([^\]]+)\] "(.*?)" (\d{3}) (\S+) "((?:[^"]|'
+REGEX += r'\")*?)" "((?:[^"]|\")*?|-)"'
+
 
 class TZ(Enum):
     """Timestamp adjustment enum.
@@ -141,17 +151,6 @@ class LogParser:
 
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
 
-        # Behold the power of generative AI. I provide the following query to
-        # ChatGPT: "Write a regular expression that recognizes a line from an
-        # apache access log.", and the regex below is what I got. It cleaned up
-        # my previous solution and replace several lines of code. I split the
-        # regex across two lines here to keep the code clean.
-        regex = r'^((?:\d{1,3}\.){3}\d{1,3}) (\S+) (\S+) \[([\w:\/]+\s[+\-]\d'
-        regex += r'{4})\] "(\S+ \S+ \S+)" (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
-
-        # regex = r'^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] "(\S+ \S+ \S+)"'
-        # regex += r' (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
-
         # Initialize data fields
         self.ipaddress: str = ''
         self.userid: str = ''
@@ -167,7 +166,7 @@ class LogParser:
             self.__none_fields()
             return
 
-        if (match := re.match(regex, line)):
+        if (match := re.match(REGEX, line)):
             self.ipaddress = match.group(1)
             self.userid = match.group(2)
             self.username = match.group(3)
@@ -177,17 +176,16 @@ class LogParser:
             try:
                 self.datasize = int(match.group(7))
             except ValueError:
-                self.datasize = match.group(7)
+                self.datasize = 0
             self.referrer = match.group(8)
             self.useragent = match.group(9)
         else:
             self.__none_fields()
             return
 
-        # Process date/time stamp and adjust timezone/dts_format as indicated
-        if timezone == TZ.original and dts_format == FMT.string:
-            return
-
+        # This takes the work of ensuring valid date-time stamps from the regex
+        # and guarantees things like "Feb 31" will be handled as an invalid
+        # date.
         try:
             date_obj = dt.datetime.strptime(self.timestamp,
                                             '%d/%b/%Y:%H:%M:%S %z')
@@ -195,8 +193,10 @@ class LogParser:
             self.__none_fields()
             return
 
+        # Process date/time stamp and adjust timezone/dts_format as indicated
+        if timezone == TZ.original and dts_format == FMT.string:
+            return
         sign, hh, mm = self.__decomposeTZ(self.timestamp)
-
         if timezone == TZ.original:
             pass
         elif timezone == TZ.local:
