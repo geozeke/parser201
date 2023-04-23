@@ -197,11 +197,10 @@ class LogParser:
             return
 
         # Process date/time stamp and adjust timezone/dts_format as indicated
-        if timezone == TZ.original and dts_format == FMT.string:
-            return
         sign, hh, mm = self.__decomposeTZ(self.timestamp)
         if timezone == TZ.original:
-            pass
+            if dts_format == FMT.string:
+                return
         elif timezone == TZ.local:
             zone_str = time.strftime('%z')
             # First convert to GMT
