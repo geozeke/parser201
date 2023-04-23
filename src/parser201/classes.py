@@ -146,8 +146,11 @@ class LogParser:
         # apache access log.", and the regex below is what I got. It cleaned up
         # my previous solution and replace several lines of code. I split the
         # regex across two lines here to keep the code clean.
-        regex = r'^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] "(\S+ \S+ \S+)"'
-        regex += r' (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
+        regex = r'^((?:\d{1,3}\.){3}\d{1,3}) (\S+) (\S+) \[([\w:\/]+\s[+\-]\d'
+        regex += r'{4})\] "(\S+ \S+ \S+)" (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
+
+        # regex = r'^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] "(\S+ \S+ \S+)"'
+        # regex += r' (\d{3}) (\d+|-) "([^"]*)" "([^"]*)"'
 
         # Initialize data fields
         self.ipaddress: str = ''
