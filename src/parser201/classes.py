@@ -172,7 +172,10 @@ class LogParser:
             self.username = match.group(3)
             self.timestamp = match.group(4)
             self.requestline = match.group(5)
-            self.statuscode = int(match.group(6))
+            try:
+                self.statuscode = int(match.group(6))
+            except ValueError:
+                self.statuscode = 0
             try:
                 self.datasize = int(match.group(7))
             except ValueError:
