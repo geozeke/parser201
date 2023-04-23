@@ -7,9 +7,9 @@ from enum import Enum
 from enum import auto
 
 # Globals
-# Behold the power of generative AI. I provide the following query to ChatGPT:
+# Behold the power of generative AI. I provided the following query to ChatGPT:
 # "Write a regular expression that recognizes a line from an apache access
-# log". A had to have a brief "conversation" with ChatGPT to refine the regex
+# log". I had to have a brief "conversation" with ChatGPT to refine the regex
 # with a few examples, but after a brief exchange, it produce what you see
 # below. This regex cleaned up my previous solution and replace several lines
 # of code. I split the regex across two lines here to keep the code clean.
@@ -166,22 +166,19 @@ class LogParser:
             self.__none_fields()
             return
 
-        if (match := re.match(REGEX, line)):
-            self.ipaddress = match.group(1)
-            self.userid = match.group(2)
-            self.username = match.group(3)
-            self.timestamp = match.group(4)
-            self.requestline = match.group(5)
+        if (groups := re.match(REGEX, line)):
+            self.ipaddress = groups.group(1)
+            self.userid = groups.group(2)
+            self.username = groups.group(3)
+            self.timestamp = groups.group(4)
+            self.requestline = groups.group(5)
+            self.statuscode = int(groups.group(6))
             try:
-                self.statuscode = int(match.group(6))
-            except ValueError:
-                self.statuscode = 0
-            try:
-                self.datasize = int(match.group(7))
+                self.datasize = int(groups.group(7))
             except ValueError:
                 self.datasize = 0
-            self.referrer = match.group(8)
-            self.useragent = match.group(9)
+            self.referrer = groups.group(8)
+            self.useragent = groups.group(9)
         else:
             self.__none_fields()
             return
@@ -256,9 +253,17 @@ class LogParser:
            referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
-        labels = ['ipaddress', 'userid', 'username', 'timestamp',
-                  'requestline', 'statuscode', 'datasize', 'referrer',
-                  'useragent']
+        labels = [
+            'ipaddress',
+            'userid',
+            'username',
+            'timestamp',
+            'requestline',
+            'statuscode',
+            'datasize',
+            'referrer',
+            'useragent'
+        ]
         pad = len(max(labels, key=len))
         L = []
 
