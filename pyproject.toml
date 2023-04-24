@@ -31,7 +31,6 @@ classifiers = [
 	"Topic :: Security",
 	"Topic :: System :: Logging",
 	"Topic :: System :: Systems Administration",
-	"Programming Language :: Python :: 3.7",
 	"Programming Language :: Python :: 3.8",
 	"Programming Language :: Python :: 3.9",
 	"Programming Language :: Python :: 3.10",
@@ -44,7 +43,7 @@ classifiers = [
 "Documentation" = "https://geozeke.github.io/parser201"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^6.5.0"
