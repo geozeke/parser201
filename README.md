@@ -44,7 +44,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 ## Version History
 
 * 1.4.0 (2023-04-XX)
-  * Strengthened regular expression parsing to handle access log lines that
+  * Strengthened regular expression parsing to handle log lines that
     contain a wider array of malicious attacks.
   * Added support for access logs that contain both IPv4 and IPv6
     addresses.
