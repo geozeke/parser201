@@ -7,6 +7,7 @@ from enum import Enum
 from enum import auto
 
 # Globals
+
 # Behold the power of generative AI. I provided the following query to ChatGPT:
 # "Write a regular expression that recognizes a line from an apache access
 # log". I had to have a brief "conversation" with ChatGPT to refine the regex
@@ -15,6 +16,11 @@ from enum import auto
 # of code. I split the regex across two lines here to keep the code clean.
 REGEX = r'^([^ ]+) (\S+) (\S+) \[([^\]]+)\] "(.*?)" (\d{3}) (\S+) "((?:[^"]|'
 REGEX += r'\")*?)" "((?:[^"]|\")*?|-)"'
+
+# This is the sort order of the indices for objects represented as a string. It
+# assumes you'll start with a list of object properties sorted in alphabetical
+# order.
+ORDER = [1, 7, 8, 5, 3, 4, 0, 2, 6]
 
 
 class TZ(Enum):
@@ -222,8 +228,8 @@ class LogParser:
 
     def __none_fields(self):
         """Set all properties to None."""
-        for prop in [p for p in dir(self) if not p.startswith('_')]:
-            setattr(self, prop, None)
+        for key in list(vars(self)):
+            setattr(self, key, None)
         return
 
     def __str__(self):
@@ -253,24 +259,13 @@ class LogParser:
            referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
-        labels = [
-            'ipaddress',
-            'userid',
-            'username',
-            'timestamp',
-            'requestline',
-            'statuscode',
-            'datasize',
-            'referrer',
-            'useragent'
-        ]
-        pad = len(max(labels, key=len))
-        L = []
-
-        # Build the string in the same order as the labels.
-        for label in labels:
-            L.append(f'{label:>{pad}}: {getattr(self, label)}')
-        return '\n'.join(L)
+        keys = sorted(list(vars(self)))
+        ordered_fields = [keys[i] for i in ORDER]
+        pad = len(max(ordered_fields, key=len))
+        str_object = []
+        for field in ordered_fields:
+            str_object.append(f'{field:>{pad}}: {getattr(self, field)}')
+        return '\n'.join(str_object)
 
     def __eq__(self, other):
         """Determine if two `LogParser` objects are equal.
@@ -290,8 +285,8 @@ class LogParser:
         """
         if type(self) != type(other):
             return False
-        for prop in [p for p in dir(self) if not p.startswith('_')]:
-            if getattr(self, prop) != getattr(other, prop):
+        for key in list(vars(self)):
+            if getattr(self, key) != getattr(other, key):
                 return False
         return True
 
