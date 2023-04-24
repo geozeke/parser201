@@ -47,7 +47,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Strengthened regular expression parsing to handle access log lines that
     contain a wider array of malicious attacks.
   * Added support for access logs that contain both IPv4 and IPv6
-    addresses.<br><br>
+    addresses.
+  * Minimum supported Python version is now 3.8 (^3.8).<br><br>
 * 1.3.1 (2022-10-22)
   * Migrated dependency/build management to
     [poetry](https://python-poetry.org/).<br><br>
