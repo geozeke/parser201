@@ -259,6 +259,10 @@ class LogParser:
            referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
+        # This __str__ method may look a little more complex than necessary,
+        # but by extracting the property labels directly from an object, it
+        # reduces coupling should I need to change property names, use property
+        # names in some other method, or add new property names in the future.
         keys = sorted(list(vars(self)))
         ordered_fields = [keys[i] for i in ORDER]
         pad = len(max(ordered_fields, key=len))
