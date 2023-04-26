@@ -6,22 +6,6 @@ import time
 from enum import Enum
 from enum import auto
 
-# Globals
-
-# Behold the power of generative AI. I provided the following query to ChatGPT:
-# "Write a regular expression that recognizes a line from an apache access
-# log". I had to have a "conversation" with ChatGPT to refine the regex with a
-# few examples, but after a brief exchange, it produce what you see below. This
-# regex cleaned up my previous solution and replace several lines of code. I
-# split the regex across two lines here to keep the code clean.
-REGEX = r'^([^ ]+) (\S+) (\S+) \[([^\]]+)\] "(.*?)" (\d{3}) (\S+) "((?:[^"]|'
-REGEX += r'\")*?)" "((?:[^"]|\")*?|-)"'
-
-# This is the sort order of the indices for objects represented as a list of
-# strings. It assumes you'll start with a list of object property names as
-# strings, sorted in alphabetical order.
-ORDER = [1, 7, 8, 5, 3, 4, 0, 2, 6]
-
 
 class TZ(Enum):
     """Timestamp adjustment enum.
@@ -155,6 +139,23 @@ class LogParser:
     >>> lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
     """
 
+    # Class variables
+
+    # Behold the power of generative AI. I provided the following query to
+    # ChatGPT: "Write a regular expression that recognizes a line from an
+    # apache access log". I had to have a "conversation" with ChatGPT to refine
+    # the regex with a few examples, but after a brief exchange, it produce
+    # what you see below. This regex cleaned up my previous solution and
+    # replace several lines of code. I split the regex across two lines here to
+    # keep the code clean.
+    REGEX = r'^([^ ]+) (\S+) (\S+) \[([^\]]+)\] "(.*?)" (\d{3}) (\S+) "('
+    REGEX += r'(?:[^"]|\")*?)" "((?:[^"]|\")*?|-)"'
+
+    # This is the sort order of the indices for objects represented as a list
+    # of strings. It assumes you'll start with a list of object property names
+    # as strings, sorted in alphabetical order.
+    ORDER = [1, 7, 8, 5, 3, 4, 0, 2, 6]
+
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
 
         # Initialize data fields
@@ -172,7 +173,7 @@ class LogParser:
             self.__none_fields()
             return
 
-        if (groups := re.match(REGEX, line)):
+        if (groups := re.match(LogParser.REGEX, line)):
             self.ipaddress = groups.group(1)
             self.userid = groups.group(2)
             self.username = groups.group(3)
@@ -264,7 +265,7 @@ class LogParser:
         # reduces coupling should I need to change property names, use property
         # names in some other method, or add new property names in the future.
         keys = sorted(list(vars(self)))
-        ordered_fields = [keys[i] for i in ORDER]
+        ordered_fields = [keys[i] for i in LogParser.ORDER]
         pad = len(max(ordered_fields, key=len))
         str_object = []
         for field in ordered_fields:

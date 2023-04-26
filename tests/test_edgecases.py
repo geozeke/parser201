@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Test LogParser edge cases."""
 
-from parser201.classes import ORDER, LogParser
+from parser201.classes import LogParser
 
 
 def test_non_str():
@@ -117,4 +117,4 @@ def test_property_quantity():
     check if I start adding or deleting properties in the class.
     """
     lp = LogParser('dummy')
-    assert len(vars(lp)) == len(ORDER)
+    assert len(vars(lp)) == len(LogParser.ORDER)
