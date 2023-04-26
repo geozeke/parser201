@@ -144,12 +144,20 @@ class LogParser:
     # Behold the power of generative AI. I provided the following query to
     # ChatGPT: "Write a regular expression that recognizes a line from an
     # apache access log". I had to have a "conversation" with ChatGPT to refine
-    # the regex with a few examples, but after a brief exchange, it produce
+    # the regex with a few examples, but after a brief exchange, it produced
     # what you see below. This regex cleaned up my previous solution and
-    # replace several lines of code. I split the regex across two lines here to
-    # keep the code clean.
-    REGEX = r'^([^ ]+) (\S+) (\S+) \[([^\]]+)\] "(.*?)" (\d{3}) (\S+) "('
-    REGEX += r'(?:[^"]|\")*?)" "((?:[^"]|\")*?|-)"'
+    # replace several lines of code. I split the regex into individual groups
+    # here to make it easier to follow.
+    _ip = r'^([^ ]+)'
+    _ui = r'(\S+)'
+    _un = r'(\S+)'
+    _ts = r'\[([^\]]+)\]'
+    _rl = r'"(.*?)"'
+    _sc = r'(\d{3})'
+    _ds = r'(\S+)'
+    _re = r'"((?:[^"]|\")*?)"'
+    _ua = r'"((?:[^"]|\")*?|-)"'
+    REGEX = fr'{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}'
 
     # This is the sort order of the indices for objects represented as a list
     # of strings. It assumes you'll start with a list of object property names
