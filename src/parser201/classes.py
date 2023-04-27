@@ -237,7 +237,7 @@ class LogParser:
 
     def __none_fields(self):
         """Set all properties to None."""
-        for key in list(vars(self)):
+        for key in vars(self):
             setattr(self, key, None)
         return
 
@@ -275,10 +275,10 @@ class LogParser:
         keys = sorted(list(vars(self)))
         ordered_fields = [keys[i] for i in LogParser.ORDER]
         pad = len(max(ordered_fields, key=len))
-        str_object = []
+        str_version = []
         for field in ordered_fields:
-            str_object.append(f'{field:>{pad}}: {getattr(self, field)}')
-        return '\n'.join(str_object)
+            str_version.append(f'{field:>{pad}}: {getattr(self, field)}')
+        return '\n'.join(str_version)
 
     def __eq__(self, other):
         """Determine if two `LogParser` objects are equal.
@@ -298,10 +298,7 @@ class LogParser:
         """
         if type(self) != type(other):
             return False
-        for key in list(vars(self)):
-            if getattr(self, key) != getattr(other, key):
-                return False
-        return True
+        return vars(self) == vars(other)
 
     def __decomposeTZ(self, zone):
         """Decompose a time zone into +/-, hrs, and mins."""
