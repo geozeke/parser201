@@ -146,8 +146,8 @@ class LogParser:
     # apache access log". I had to have a "conversation" with ChatGPT to refine
     # the regex with a few examples, but after a brief exchange, it produced
     # what you see below. This regex cleaned up my previous solution and
-    # replace several lines of code. I split the regex into individual groups
-    # here to make it easier to follow.
+    # replace several lines of code. I split the regex into individual match
+    # groups here to make it easier to follow.
     _ip = r'^([^ ]+)'
     _ui = r'(\S+)'
     _un = r'(\S+)'
