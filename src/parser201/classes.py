@@ -159,9 +159,9 @@ class LogParser:
     _ua = r'"((?:[^"]|\")*?|-)"'
     REGEX = fr'{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}'
 
-    # This is the sort order of the indices for objects represented as a list
-    # of strings. It assumes you'll start with a list of object property names
-    # as strings, sorted in alphabetical order.
+    # This is the sort order of the indices for a list of the property names of
+    # LogParser objects. It assumes you'll start with a list of object property
+    # names as strings, sorted in alphabetical order.
     ORDER = [1, 7, 8, 5, 3, 4, 0, 2, 6]
 
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
