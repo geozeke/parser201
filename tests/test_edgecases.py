@@ -112,9 +112,9 @@ def test_assign_uagent():
 def test_property_quantity():
     """Check the number of properties.
 
-    This test ensures that the length of the ORDER list matches the
+    This test ensures that the length of the list of labels matches the
     number of properties in a LogParser object. This is just a sanity
     check if I start adding or deleting properties in the class.
     """
     lp = LogParser('dummy')
-    assert len(vars(lp)) == len(LogParser.ORDER)
+    assert len(vars(lp)) == len(LogParser._labels)

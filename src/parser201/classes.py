@@ -157,12 +157,23 @@ class LogParser:
     _ds = r'(\S+)'
     _re = r'"((?:[^"]|\")*?)"'
     _ua = r'"((?:[^"]|\")*?|-)"'
-    REGEX = fr'{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}'
+    _regex = fr'{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}'
 
-    # This is the sort order of the indices for a list of the property names of
-    # LogParser objects. It assumes you'll start with a list of object property
-    # names as strings, sorted in alphabetical order.
-    ORDER = [1, 7, 8, 5, 3, 4, 0, 2, 6]
+    # A list of labels (in the correct order) used to render string
+    # representations of LogParser objects. Also calculate the length of the
+    # longest label so we can use f-strings to right-justify all the labels.
+    _labels = [
+        'ipaddress',
+        'userid',
+        'username',
+        'timestamp',
+        'requestline',
+        'statuscode',
+        'datasize',
+        'referrer',
+        'useragent'
+    ]
+    _pad = len(max(_labels, key=len))
 
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
 
@@ -181,7 +192,7 @@ class LogParser:
             self.__none_fields()
             return
 
-        if (groups := re.match(LogParser.REGEX, line)):
+        if (groups := re.match(LogParser._regex, line)):
             self.ipaddress = groups.group(1)
             self.userid = groups.group(2)
             self.username = groups.group(3)
@@ -268,17 +279,10 @@ class LogParser:
            referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
-        # This __str__ method may look a little more complex than necessary,
-        # but by extracting the property labels directly from an object, it
-        # reduces coupling should I need to change property names, use property
-        # names in some other method, or add new property names in the future.
-        keys = sorted(list(vars(self)))
-        ordered_fields = [keys[i] for i in LogParser.ORDER]
-        pad = len(max(ordered_fields, key=len))
-        str_version = []
-        for field in ordered_fields:
-            str_version.append(f'{field:>{pad}}: {getattr(self, field)}')
-        return '\n'.join(str_version)
+        lp_str = []
+        for label in LogParser._labels:
+            lp_str.append(f'{label:>{LogParser._pad}}: {getattr(self, label)}')
+        return '\n'.join(lp_str)
 
     def __eq__(self, other):
         """Determine if two `LogParser` objects are equal.
