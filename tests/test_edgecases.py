@@ -12,9 +12,35 @@ def test_non_str():
     assert test_result == benchmark
 
 
-def test_mangled_field():
-    """Test malformed input."""
-    lp = LogParser(42)
+def test_mangled_field1():
+    """Test malformed input.
+
+    Checks to see if a line containing mangled input can be recognized.
+    In this case, I removed the space between userid and user name, so
+    it becomes '--' instead of '- -'
+    """
+    logline = '198.0.200.105 -- [14/Jan/2014:09:36:50 -0800] "GET /svds.com/ '
+    logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
+    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+    logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
+    lp = LogParser(logline)
+    test_result = lp.ipaddress
+    benchmark = None
+    assert test_result == benchmark
+
+
+def test_mangled_field2():
+    """Test malformed input.
+
+    Checks to see if a line containing mangled input can be recognized.
+    In this case, I removed a quote mark from the beginning of the
+    request line.
+    """
+    logline = '198.0.200.105 -- [14/Jan/2014:09:36:50 -0800] GET /svds.com/ '
+    logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
+    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+    logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
+    lp = LogParser(logline)
     test_result = lp.ipaddress
     benchmark = None
     assert test_result == benchmark
@@ -81,3 +107,14 @@ def test_assign_uagent():
     lp = LogParser(42)
     lp.useragent = 'Mozilla/4.0'
     assert lp.useragent == 'Mozilla/4.0'
+
+
+def test_property_quantity():
+    """Check the number of properties.
+
+    This test ensures that the length of the list of labels matches the
+    number of properties in a LogParser object. This is just a sanity
+    check if I start adding or deleting properties in the class.
+    """
+    lp = LogParser('dummy')
+    assert len(vars(lp)) == len(LogParser._labels)

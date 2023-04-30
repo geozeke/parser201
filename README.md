@@ -43,8 +43,16 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.4.0 (2023-04-30)
+  * Strengthened regular expression parsing to handle log lines that
+    contain a wider array of malicious attacks.
+  * Added support for access logs that contain both IPv4 and IPv6
+    addresses.
+  * Minimum supported Python version is now 3.8 (^3.8).
+  * Miscellaneous optimizations.<br><br>
 * 1.3.1 (2022-10-22)
-  * Migrated dependency/build management to [poetry](https://python-poetry.org/).<br><br>
+  * Migrated dependency/build management to
+    [poetry](https://python-poetry.org/).<br><br>
 * 1.3.0 (2022-08-13)
   * Implemented `__eq__` magic method for the `LogParser` class. You can now
     perform equality checks on two `LogParser` objects.
@@ -67,8 +75,10 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Documentation cleanup.
   * Added site logo to README.md.<br><br>
 * 1.1.0 (2021-11-13)
-  * Implemented selectable timestamp conversion options {*original*, *local*, [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
-  * Implemented selectable formatting options for timestamp attribute {*string*, *date_obj*}.
+  * Implemented selectable timestamp conversion options {*original*, *local*,
+    [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
+  * Implemented selectable formatting options for timestamp attribute
+    {*string*, *date_obj*}.
   * Migrated API reference to GitHub pages.
   * Code cleanup.<br><br>
 * 1.0.2 (2021-11-05)

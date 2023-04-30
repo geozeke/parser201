@@ -139,80 +139,79 @@ class LogParser:
     >>> lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
     """
 
+    # Class variables
+
+    # Behold the power of generative AI. I provided the following query to
+    # ChatGPT: "Write a regular expression that recognizes a line from an
+    # apache access log". I had to have a "conversation" with ChatGPT to refine
+    # the regex with a few examples, but after a brief exchange, it produced
+    # what you see below. This regex cleaned up my previous solution and
+    # replace several lines of code. I split the regex into individual match
+    # groups here to make it easier to follow.
+    _ip = r'^([^ ]+)'
+    _ui = r'(\S+)'
+    _un = r'(\S+)'
+    _ts = r'\[([^\]]+)\]'
+    _rl = r'"(.*?)"'
+    _sc = r'(\d{3})'
+    _ds = r'(\S+)'
+    _re = r'"((?:[^"]|\")*?)"'
+    _ua = r'"((?:[^"]|\")*?|-)"'
+    _regex = fr'{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}'
+
+    # A list of labels (in the correct order) used to render string
+    # representations of LogParser objects. Also calculate the length of the
+    # longest label so we can use f-strings to right-justify all the labels.
+    _labels = [
+        'ipaddress',
+        'userid',
+        'username',
+        'timestamp',
+        'requestline',
+        'statuscode',
+        'datasize',
+        'referrer',
+        'useragent'
+    ]
+    _pad = len(max(_labels, key=len))
+
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
 
-        # Establish attributes
-        self.ipaddress = ''
-        self.userid = ''
-        self.username = ''
-        self.timestamp = ''
-        self.requestline = ''
-        self.referrer = ''
-        self.useragent = ''
-        self.statuscode = 0
-        self.datasize = 0
+        # Initialize data fields
+        self.ipaddress: str = ''
+        self.userid: str = ''
+        self.username: str = ''
+        self.timestamp: str = ''
+        self.requestline: str = ''
+        self.statuscode: int = 0
+        self.datasize: int = 0
+        self.referrer: str = ''
+        self.useragent: str = ''
 
-        # Initial check. If the line passed to the initializer is not a string
-        # (type == str), then return an empty LogParser object.
         if type(line) != str:
             self.__none_fields()
             return
 
-        # If a valid string is entered, then perform pre-processing. For some
-        # lines, an empty field is represented as two quotes back-to-back, like
-        # this: "". The regex to pull out agent strings between quotes will
-        # incorrectly ignore that field, rather than returning an empty string.
-        # Replace "" with "-" to prevent that.
-        clean = line.replace('\"\"', '\"-\"')
-
-        # agent_strings: This part of the regex:(?<!\\)\" is a negative
-        # lookbehind assertion. It says, "end with a quote mark, unless that
-        # quote mark is preceded by an escape character '\'"
-        agent_strings = re.findall(r'\"(.+?)(?<!\\)\"', clean)
-
-        # The next one's tricky. We're looking to extract the statuscode and
-        # datasize fields. For some entires, the datasize field is '-', but for
-        # all entries the returncode field is a reliable integer. If we split
-        # the log line on space, then the first purely isnumeric() item in the
-        # resulting list should be the returncode. If we capture the index of
-        # that code, and take that code and the one next to it from the list,
-        # we should have both fields. If the fields are valid integers, then
-        # cast to them int; else set them to 0. If any of this fails, then
-        # consider that we have a malformed log line and set all the properties
-        # to None.
-        try:
-            L = clean.split(' ')
-            i = [j for j in range(len(L)) if L[j].isnumeric()][0]
-            code_and_size = [int(n) if n.isnumeric() else 0 for n in L[i:i+2]]
-            # Splitting on '[' returns a list where item [0] contains the first
-            # three fields (ipaddress; userid; username), each separated by
-            # space.
-            first3 = clean.split('[')[0].split()
-        except Exception:
+        if (groups := re.match(LogParser._regex, line)):
+            self.ipaddress = groups.group(1)
+            self.userid = groups.group(2)
+            self.username = groups.group(3)
+            self.timestamp = groups.group(4)
+            self.requestline = groups.group(5)
+            self.statuscode = int(groups.group(6))
+            try:
+                self.datasize = int(groups.group(7))
+            except ValueError:
+                self.datasize = 0
+            self.referrer = groups.group(8)
+            self.useragent = groups.group(9)
+        else:
             self.__none_fields()
             return
 
-        # Set properties. If any of these fail, then consider that we have a
-        # malformed log line and set all the properties to None.
-        try:
-            self.ipaddress = first3[0]
-            self.userid = first3[1]
-            self.username = first3[2]
-            self.timestamp = re.search(
-                r'\[(.+?)\]', clean).group().strip('[]')
-            self.requestline = agent_strings[0]
-            self.referrer = agent_strings[1]
-            self.useragent = agent_strings[2]
-            self.statuscode = code_and_size[0]
-            self.datasize = code_and_size[1]
-        except Exception:
-            self.__none_fields()
-            return
-
-        # Process date/time stamp and adjust timezone/dts_format as indicated
-        if timezone == TZ.original and dts_format == FMT.string:
-            return
-
+        # This takes the work of ensuring valid date-time stamps from the regex
+        # and guarantees things like "Feb 31" will be handled as an invalid
+        # date.
         try:
             date_obj = dt.datetime.strptime(self.timestamp,
                                             '%d/%b/%Y:%H:%M:%S %z')
@@ -220,10 +219,11 @@ class LogParser:
             self.__none_fields()
             return
 
+        # Process date/time stamp and adjust timezone/dts_format as indicated
         sign, hh, mm = self.__decomposeTZ(self.timestamp)
-
         if timezone == TZ.original:
-            pass
+            if dts_format == FMT.string:
+                return
         elif timezone == TZ.local:
             zone_str = time.strftime('%z')
             # First convert to GMT
@@ -248,8 +248,8 @@ class LogParser:
 
     def __none_fields(self):
         """Set all properties to None."""
-        for prop in [p for p in dir(self) if not p.startswith('_')]:
-            setattr(self, prop, None)
+        for key in vars(self):
+            setattr(self, key, None)
         return
 
     def __str__(self):
@@ -279,16 +279,10 @@ class LogParser:
            referrer: -
           useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;
         """
-        labels = ['ipaddress', 'userid', 'username', 'timestamp',
-                  'requestline', 'statuscode', 'datasize', 'referrer',
-                  'useragent']
-        pad = len(max(labels, key=len))
-        L = []
-
-        # Build the string in the same order as the labels.
-        for label in labels:
-            L.append(f'{label:>{pad}}: {getattr(self, label)}')
-        return '\n'.join(L)
+        lp_str = []
+        for label in LogParser._labels:
+            lp_str.append(f'{label:>{LogParser._pad}}: {getattr(self, label)}')
+        return '\n'.join(lp_str)
 
     def __eq__(self, other):
         """Determine if two `LogParser` objects are equal.
@@ -308,10 +302,7 @@ class LogParser:
         """
         if type(self) != type(other):
             return False
-        for prop in [p for p in dir(self) if not p.startswith('_')]:
-            if getattr(self, prop) != getattr(other, prop):
-                return False
-        return True
+        return vars(self) == vars(other)
 
     def __decomposeTZ(self, zone):
         """Decompose a time zone into +/-, hrs, and mins."""

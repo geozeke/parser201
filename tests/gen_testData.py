@@ -70,7 +70,10 @@ def build():
     Parameters
     ----------
     testData : str
-        The name of the file where test data will be stored.
+        The name of the file where test data will be stored. Note: the
+        sample log file includes several lines with various injection
+        attacks. This stresses the class initializer to handle a more
+        roboust set of use cases.
     """
     # List to hold test cases
     L = []

@@ -4,6 +4,7 @@
 import lzma
 import pickle
 from pathlib import Path
+from typing import Type
 
 from parser201.classes import LogParser
 
@@ -39,6 +40,7 @@ def test_datasize(node):
     test_result = lp.datasize
     try:
         benchmark = int(node['datasize'])
-    except TypeError:
+    except (TypeError, ValueError):
         benchmark = node['datasize']
     assert test_result == benchmark
+    print(lp)

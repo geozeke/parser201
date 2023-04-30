@@ -1,4 +1,8 @@
-The parser201 module takes a single line from an Apache access log file and extracts the individual fields into attributes within an object.
+The parser201 module takes a single line from an Apache access log file and
+extracts the individual fields into attributes within an object. parser201 is
+robust, with support for both IPv4 and IPv6 addresses, and well as being able
+handle Apache Access Log lines containing malicious code attacks like: Mambo,
+PHPBB, SQL Injection, etc.
 
 ## Installation
 
@@ -21,9 +25,11 @@ with open('access.log', 'r') as f:
 
 ## API Documentation
 
-Detailed API information is available by clicking on the `parser201.classes` link.
+Detailed API information is available by clicking on the `parser201.classes`
+link.
 
-**TL/DR**: Here's an example showing the attributes of a LogParser class object:
+**TL/DR**: Here's an example showing the attributes of a LogParser class
+object:
 
 ```text
   ipaddress: 81.48.51.130
@@ -39,7 +45,9 @@ requestline: GET /images/puce.gif HTTP/1.1
 
 ## Exception Handling
 
-If a line from an Apache access log file cannot be parsed by the class initializer (is corrupted for some reason) the initializer returns an object with all the attributes set to `None`.
+If a line from an Apache access log file cannot be parsed by the class
+initializer (is corrupted for some reason) the initializer returns an object
+with all the attributes set to `None`.
 
 ```text
   ipaddress: None
