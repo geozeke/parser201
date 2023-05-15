@@ -27,13 +27,13 @@ all: help
 # --------------------------------------------
 
 .PHONY: setup
-setup: ## initialize the project and create python venv
+setup: ## setup project with runtime dependencies
 ifeq (,$(wildcard .init/setup))
 	@(which poetry > /dev/null 2>&1) || \
-	(echo "pymids requires poetry. See README for instructions."; exit 1)
+	(echo "parser201 requires poetry. See README for instructions."; exit 1)
 	mkdir .init
 	touch .init/setup
-	poetry install
+	poetry install --only=main
 else
 	@echo "Initial setup is already complete. If you are having issues, run:"
 	@echo
@@ -44,16 +44,38 @@ endif
 
 # --------------------------------------------
 
+.PHONY: dev
+dev: ## add development dependencies (run make setup first)
+ifneq (,$(wildcard .init/setup))
+	poetry install
+	@touch .init/dev
+else
+	@echo "Please run \"make setup\" first"
+endif
+
+# --------------------------------------------
+
+.PHONY: update
+update: ## update dependencies
+	@echo Updating dependencies
+ifeq (,$(wildcard .init/dev))
+	poetry update --only=main
+else
+	poetry update
+endif
+
+# --------------------------------------------
+
 .PHONY: reset
 reset: clean ## reinitialize the project
 	@echo Resetting project state
 	@rm -rf .mypy_cache
 	@rm -rf .venv .init
 
-# -------------------------
+# --------------------------------------------
 
 .PHONY: clean
-clean: ## Purge project build artifacts
+clean: ## Purge build artifacts
 	@echo Cleaning project build artifacts
 	@rm -rf build/
 	@rm -rf dist/
