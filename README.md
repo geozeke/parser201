@@ -43,6 +43,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.4.1 (2023-06-22)
+  * Migrated code formatter to *black*.<br><br>
 * 1.4.0 (2023-04-30)
   * Strengthened regular expression parsing to handle log lines that
     contain a wider array of malicious attacks.

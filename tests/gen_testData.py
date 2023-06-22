@@ -9,8 +9,8 @@ from pathlib import Path
 from time import timezone
 
 p = Path(__file__).resolve().parents
-sys.path.append(f'{p[1]}/src/parser201')
-TESTDATA = p[0]/'data_parser201.bin'
+sys.path.append(f"{p[1]}/src/parser201")
+TESTDATA = p[0] / "data_parser201.bin"
 
 from classes import FMT  # type: ignore # noqa
 from classes import TZ  # type: ignore # noqa
@@ -47,19 +47,19 @@ def make_dict(data_in, options):
     # lp = LogParser(data_in)
     lp = LogParser(data_in, timezone=options[0], dts_format=options[1])
 
-    D['linein'] = data_in
-    D['ipaddress'] = lp.ipaddress
-    D['userid'] = lp.userid
-    D['username'] = lp.username
-    D['timestamp'] = lp.timestamp
-    D['requestline'] = lp.requestline
-    D['statuscode'] = lp.statuscode
-    D['datasize'] = lp.datasize
-    D['referrer'] = lp.referrer
-    D['useragent'] = lp.useragent
-    D['str'] = str(lp)
-    D['timezone'] = options[0]
-    D['dts_format'] = options[1]
+    D["linein"] = data_in
+    D["ipaddress"] = lp.ipaddress
+    D["userid"] = lp.userid
+    D["username"] = lp.username
+    D["timestamp"] = lp.timestamp
+    D["requestline"] = lp.requestline
+    D["statuscode"] = lp.statuscode
+    D["datasize"] = lp.datasize
+    D["referrer"] = lp.referrer
+    D["useragent"] = lp.useragent
+    D["str"] = str(lp)
+    D["timezone"] = options[0]
+    D["dts_format"] = options[1]
 
     return D
 
@@ -78,9 +78,8 @@ def build():
     # List to hold test cases
     L = []
 
-    p = Path(__file__).resolve().parent/'datasources'
-    with open(p/'samplelog.txt', 'r') as f:
-
+    p = Path(__file__).resolve().parent / "datasources"
+    with open(p / "samplelog.txt", "r") as f:
         for line in f:
             zone = random.choice(ZONES)
             dts_format = random.choice(FORMATS)
@@ -90,19 +89,19 @@ def build():
 
     # Inject a malformed line. This should cause all object properties to be
     # set to None
-    line = 'This is a malformed line'
+    line = "This is a malformed line"
     L.append(make_dict(line, (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
     # Empty line
-    L.append(make_dict('', (TZ.original, FMT.string)))
+    L.append(make_dict("", (TZ.original, FMT.string)))
 
     # -----------------------------------------------------------------------
 
     # Input that fails somewhere in the middle. In this case, intentionally
     # remove the spaces between ipaddress, userid and username.
-    line = '175.156.126.209-- [31/Jan/2017:21:09:47 +0800] '
+    line = "175.156.126.209-- [31/Jan/2017:21:09:47 +0800] "
     line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
     line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
     L.append(make_dict(line, (TZ.original, FMT.string)))
@@ -110,7 +109,7 @@ def build():
     # -----------------------------------------------------------------------
 
     # Bad date/time field (33rd of January).
-    line = '175.156.126.209 - - [33/Jan/2017:21:09:47 +0800] '
+    line = "175.156.126.209 - - [33/Jan/2017:21:09:47 +0800] "
     line += '"GET / HTTP/1.1" 403 4897 "-" "Mozilla/5.0 (Windows NT 10.0; '
     line += 'WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"'
     L.append(make_dict(line, (TZ.utc, FMT.date_obj)))
@@ -121,7 +120,7 @@ def build():
     random.shuffle(L)
 
     # Pickle the List
-    with lzma.open(TESTDATA, 'wb') as f:
+    with lzma.open(TESTDATA, "wb") as f:
         pickle.dump(L, f)
 
     # Restore the system path
@@ -135,5 +134,5 @@ def main():  # noqa
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

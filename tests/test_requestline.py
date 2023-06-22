@@ -8,7 +8,7 @@ from pathlib import Path
 from parser201.classes import LogParser
 
 p = Path(__file__).resolve().parent
-TESTDATA = p/'data_parser201.bin'
+TESTDATA = p / "data_parser201.bin"
 
 
 def pytest_generate_tests(metafunc):
@@ -19,9 +19,9 @@ def pytest_generate_tests(metafunc):
     metafunc : obj
         The python object that facilitates parametrization.
     """
-    with lzma.open(TESTDATA, 'rb') as f:
+    with lzma.open(TESTDATA, "rb") as f:
         test_cases = pickle.load(f)
-    metafunc.parametrize('node', test_cases)
+    metafunc.parametrize("node", test_cases)
 
 
 def test_requestline(node):
@@ -33,9 +33,9 @@ def test_requestline(node):
         A dictionary object containing a test string and expected
         results for various tests.
     """
-    lp = LogParser(node['linein'],
-                   timezone=node['timezone'],
-                   dts_format=node['dts_format'])
+    lp = LogParser(
+        node["linein"], timezone=node["timezone"], dts_format=node["dts_format"]
+    )
     test_result = lp.requestline
-    benchmark = node['requestline']
+    benchmark = node["requestline"]
     assert test_result == benchmark

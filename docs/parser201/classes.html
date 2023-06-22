@@ -177,51 +177,50 @@ class LogParser:
     # what you see below. This regex cleaned up my previous solution and
     # replace several lines of code. I split the regex into individual match
     # groups here to make it easier to follow.
-    _ip = r&#39;^([^ ]+)&#39;
-    _ui = r&#39;(\S+)&#39;
-    _un = r&#39;(\S+)&#39;
-    _ts = r&#39;\[([^\]]+)\]&#39;
+    _ip = r&#34;^([^ ]+)&#34;
+    _ui = r&#34;(\S+)&#34;
+    _un = r&#34;(\S+)&#34;
+    _ts = r&#34;\[([^\]]+)\]&#34;
     _rl = r&#39;&#34;(.*?)&#34;&#39;
-    _sc = r&#39;(\d{3})&#39;
-    _ds = r&#39;(\S+)&#39;
+    _sc = r&#34;(\d{3})&#34;
+    _ds = r&#34;(\S+)&#34;
     _re = r&#39;&#34;((?:[^&#34;]|\&#34;)*?)&#34;&#39;
     _ua = r&#39;&#34;((?:[^&#34;]|\&#34;)*?|-)&#34;&#39;
-    _regex = fr&#39;{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}&#39;
+    _regex = rf&#34;{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}&#34;
 
     # A list of labels (in the correct order) used to render string
     # representations of LogParser objects. Also calculate the length of the
     # longest label so we can use f-strings to right-justify all the labels.
     _labels = [
-        &#39;ipaddress&#39;,
-        &#39;userid&#39;,
-        &#39;username&#39;,
-        &#39;timestamp&#39;,
-        &#39;requestline&#39;,
-        &#39;statuscode&#39;,
-        &#39;datasize&#39;,
-        &#39;referrer&#39;,
-        &#39;useragent&#39;
+        &#34;ipaddress&#34;,
+        &#34;userid&#34;,
+        &#34;username&#34;,
+        &#34;timestamp&#34;,
+        &#34;requestline&#34;,
+        &#34;statuscode&#34;,
+        &#34;datasize&#34;,
+        &#34;referrer&#34;,
+        &#34;useragent&#34;,
     ]
     _pad = len(max(_labels, key=len))
 
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
-
         # Initialize data fields
-        self.ipaddress: str = &#39;&#39;
-        self.userid: str = &#39;&#39;
-        self.username: str = &#39;&#39;
-        self.timestamp: str = &#39;&#39;
-        self.requestline: str = &#39;&#39;
+        self.ipaddress: str = &#34;&#34;
+        self.userid: str = &#34;&#34;
+        self.username: str = &#34;&#34;
+        self.timestamp: str = &#34;&#34;
+        self.requestline: str = &#34;&#34;
         self.statuscode: int = 0
         self.datasize: int = 0
-        self.referrer: str = &#39;&#39;
-        self.useragent: str = &#39;&#39;
+        self.referrer: str = &#34;&#34;
+        self.useragent: str = &#34;&#34;
 
         if type(line) != str:
             self.__none_fields()
             return
 
-        if (groups := re.match(LogParser._regex, line)):
+        if groups := re.match(LogParser._regex, line):
             self.ipaddress = groups.group(1)
             self.userid = groups.group(2)
             self.username = groups.group(3)
@@ -242,8 +241,7 @@ class LogParser:
         # and guarantees things like &#34;Feb 31&#34; will be handled as an invalid
         # date.
         try:
-            date_obj = dt.datetime.strptime(self.timestamp,
-                                            &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+            date_obj = dt.datetime.strptime(self.timestamp, &#34;%d/%b/%Y:%H:%M:%S %z&#34;)
         except ValueError:
             self.__none_fields()
             return
@@ -254,22 +252,22 @@ class LogParser:
             if dts_format == FMT.string:
                 return
         elif timezone == TZ.local:
-            zone_str = time.strftime(&#39;%z&#39;)
+            zone_str = time.strftime(&#34;%z&#34;)
             # First convert to GMT
-            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
+            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
             # Now convert to local time and replace tzinfo
             sign, hh, mm = self.__decomposeTZ(zone_str)
-            zone_obj = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
-            date_obj = date_obj + (sign*dt.timedelta(hours=hh, minutes=mm))
+            zone_obj = dt.timezone(dt.timedelta(hours=hh * sign, minutes=mm))
+            date_obj = date_obj + (sign * dt.timedelta(hours=hh, minutes=mm))
             date_obj = date_obj.replace(tzinfo=zone_obj)
         else:  # TZ == utc
-            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
-            sign, hh, mm = self.__decomposeTZ(&#39;+0000&#39;)
+            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
+            sign, hh, mm = self.__decomposeTZ(&#34;+0000&#34;)
             zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
             date_obj = date_obj.replace(tzinfo=zone_obj)
 
         if dts_format == FMT.string:
-            self.timestamp = date_obj.strftime(&#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+            self.timestamp = date_obj.strftime(&#34;%d/%b/%Y:%H:%M:%S %z&#34;)
         else:  # dts_format == FMT.date_obj
             self.timestamp = date_obj
 
@@ -310,8 +308,8 @@ class LogParser:
         &#34;&#34;&#34;
         lp_str = []
         for label in LogParser._labels:
-            lp_str.append(f&#39;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#39;)
-        return &#39;\n&#39;.join(lp_str)
+            lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)
+        return &#34;\n&#34;.join(lp_str)
 
     def __eq__(self, other):
         &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
@@ -336,11 +334,11 @@ class LogParser:
     def __decomposeTZ(self, zone):
         &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
         leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
-        sign = -1 if leader == &#39;-&#39; else 1
+        sign = -1 if leader == &#34;-&#34; else 1
         return sign, int(hrs), int(mins)
 
 
-if __name__ == &#39;__main__&#39;:  # pragma no cover
+if __name__ == &#34;__main__&#34;:  # pragma no cover
     pass</code></pre>
 </details>
 </section>
@@ -524,51 +522,50 @@ will be stored as a Python <a href="https:
     # what you see below. This regex cleaned up my previous solution and
     # replace several lines of code. I split the regex into individual match
     # groups here to make it easier to follow.
-    _ip = r&#39;^([^ ]+)&#39;
-    _ui = r&#39;(\S+)&#39;
-    _un = r&#39;(\S+)&#39;
-    _ts = r&#39;\[([^\]]+)\]&#39;
+    _ip = r&#34;^([^ ]+)&#34;
+    _ui = r&#34;(\S+)&#34;
+    _un = r&#34;(\S+)&#34;
+    _ts = r&#34;\[([^\]]+)\]&#34;
     _rl = r&#39;&#34;(.*?)&#34;&#39;
-    _sc = r&#39;(\d{3})&#39;
-    _ds = r&#39;(\S+)&#39;
+    _sc = r&#34;(\d{3})&#34;
+    _ds = r&#34;(\S+)&#34;
     _re = r&#39;&#34;((?:[^&#34;]|\&#34;)*?)&#34;&#39;
     _ua = r&#39;&#34;((?:[^&#34;]|\&#34;)*?|-)&#34;&#39;
-    _regex = fr&#39;{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}&#39;
+    _regex = rf&#34;{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}&#34;
 
     # A list of labels (in the correct order) used to render string
     # representations of LogParser objects. Also calculate the length of the
     # longest label so we can use f-strings to right-justify all the labels.
     _labels = [
-        &#39;ipaddress&#39;,
-        &#39;userid&#39;,
-        &#39;username&#39;,
-        &#39;timestamp&#39;,
-        &#39;requestline&#39;,
-        &#39;statuscode&#39;,
-        &#39;datasize&#39;,
-        &#39;referrer&#39;,
-        &#39;useragent&#39;
+        &#34;ipaddress&#34;,
+        &#34;userid&#34;,
+        &#34;username&#34;,
+        &#34;timestamp&#34;,
+        &#34;requestline&#34;,
+        &#34;statuscode&#34;,
+        &#34;datasize&#34;,
+        &#34;referrer&#34;,
+        &#34;useragent&#34;,
     ]
     _pad = len(max(_labels, key=len))
 
     def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
-
         # Initialize data fields
-        self.ipaddress: str = &#39;&#39;
-        self.userid: str = &#39;&#39;
-        self.username: str = &#39;&#39;
-        self.timestamp: str = &#39;&#39;
-        self.requestline: str = &#39;&#39;
+        self.ipaddress: str = &#34;&#34;
+        self.userid: str = &#34;&#34;
+        self.username: str = &#34;&#34;
+        self.timestamp: str = &#34;&#34;
+        self.requestline: str = &#34;&#34;
         self.statuscode: int = 0
         self.datasize: int = 0
-        self.referrer: str = &#39;&#39;
-        self.useragent: str = &#39;&#39;
+        self.referrer: str = &#34;&#34;
+        self.useragent: str = &#34;&#34;
 
         if type(line) != str:
             self.__none_fields()
             return
 
-        if (groups := re.match(LogParser._regex, line)):
+        if groups := re.match(LogParser._regex, line):
             self.ipaddress = groups.group(1)
             self.userid = groups.group(2)
             self.username = groups.group(3)
@@ -589,8 +586,7 @@ will be stored as a Python <a href="https:
         # and guarantees things like &#34;Feb 31&#34; will be handled as an invalid
         # date.
         try:
-            date_obj = dt.datetime.strptime(self.timestamp,
-                                            &#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+            date_obj = dt.datetime.strptime(self.timestamp, &#34;%d/%b/%Y:%H:%M:%S %z&#34;)
         except ValueError:
             self.__none_fields()
             return
@@ -601,22 +597,22 @@ will be stored as a Python <a href="https:
             if dts_format == FMT.string:
                 return
         elif timezone == TZ.local:
-            zone_str = time.strftime(&#39;%z&#39;)
+            zone_str = time.strftime(&#34;%z&#34;)
             # First convert to GMT
-            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
+            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
             # Now convert to local time and replace tzinfo
             sign, hh, mm = self.__decomposeTZ(zone_str)
-            zone_obj = dt.timezone(dt.timedelta(hours=hh*sign, minutes=mm))
-            date_obj = date_obj + (sign*dt.timedelta(hours=hh, minutes=mm))
+            zone_obj = dt.timezone(dt.timedelta(hours=hh * sign, minutes=mm))
+            date_obj = date_obj + (sign * dt.timedelta(hours=hh, minutes=mm))
             date_obj = date_obj.replace(tzinfo=zone_obj)
         else:  # TZ == utc
-            date_obj = date_obj + (-1*sign*dt.timedelta(hours=hh, minutes=mm))
-            sign, hh, mm = self.__decomposeTZ(&#39;+0000&#39;)
+            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
+            sign, hh, mm = self.__decomposeTZ(&#34;+0000&#34;)
             zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
             date_obj = date_obj.replace(tzinfo=zone_obj)
 
         if dts_format == FMT.string:
-            self.timestamp = date_obj.strftime(&#39;%d/%b/%Y:%H:%M:%S %z&#39;)
+            self.timestamp = date_obj.strftime(&#34;%d/%b/%Y:%H:%M:%S %z&#34;)
         else:  # dts_format == FMT.date_obj
             self.timestamp = date_obj
 
@@ -657,8 +653,8 @@ will be stored as a Python <a href="https:
         &#34;&#34;&#34;
         lp_str = []
         for label in LogParser._labels:
-            lp_str.append(f&#39;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#39;)
-        return &#39;\n&#39;.join(lp_str)
+            lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)
+        return &#34;\n&#34;.join(lp_str)
 
     def __eq__(self, other):
         &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
@@ -683,7 +679,7 @@ will be stored as a Python <a href="https:
     def __decomposeTZ(self, zone):
         &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
         leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
-        sign = -1 if leader == &#39;-&#39; else 1
+        sign = -1 if leader == &#34;-&#34; else 1
         return sign, int(hrs), int(mins)</code></pre>
 </details>
 <h3>Methods</h3>
@@ -788,8 +784,8 @@ requestline: GET /images/puce.gif HTTP/1.1
     &#34;&#34;&#34;
     lp_str = []
     for label in LogParser._labels:
-        lp_str.append(f&#39;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#39;)
-    return &#39;\n&#39;.join(lp_str)</code></pre>
+        lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)
+    return &#34;\n&#34;.join(lp_str)</code></pre>
 </details>
 </dd>
 </dl>
