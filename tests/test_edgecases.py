@@ -21,7 +21,7 @@ def test_mangled_field1():
     """
     logline = '198.0.200.105 -- [14/Jan/2014:09:36:50 -0800] "GET /svds.com/ '
     logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
-    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+    logline += "Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) "
     logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
     lp = LogParser(logline)
     test_result = lp.ipaddress
@@ -36,9 +36,9 @@ def test_mangled_field2():
     In this case, I removed a quote mark from the beginning of the
     request line.
     """
-    logline = '198.0.200.105 -- [14/Jan/2014:09:36:50 -0800] GET /svds.com/ '
+    logline = "198.0.200.105 -- [14/Jan/2014:09:36:50 -0800] GET /svds.com/ "
     logline += 'rockandroll HTTP/1.1" 301 241 "-" "Mozilla/5.0 (Macintosh; '
-    logline += 'Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) '
+    logline += "Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) "
     logline += 'Chrome/ 31.0.1650.63 Safari/537.36"'
     lp = LogParser(logline)
     test_result = lp.ipaddress
@@ -49,36 +49,36 @@ def test_mangled_field2():
 def test_assign_ip():
     """Test assignment of an ipaddress."""
     lp = LogParser(42)
-    lp.ipaddress = '192.168.1.1'
-    assert lp.ipaddress == '192.168.1.1'
+    lp.ipaddress = "192.168.1.1"
+    assert lp.ipaddress == "192.168.1.1"
 
 
 def test_assign_uid():
     """Test assignment of a userid."""
     lp = LogParser(42)
-    lp.userid = 'user@test.com'
-    assert lp.userid == 'user@test.com'
+    lp.userid = "user@test.com"
+    assert lp.userid == "user@test.com"
 
 
 def test_assign_uname():
     """Test assignment of a username."""
     lp = LogParser(42)
-    lp.username = 'StarLord'
-    assert lp.username == 'StarLord'
+    lp.username = "StarLord"
+    assert lp.username == "StarLord"
 
 
 def test_assign_tstamp():
     """Test assignment of a timestamp."""
     lp = LogParser(42)
-    lp.timestamp = '24/Mar/2009:18:07:16 +0100'
-    assert lp.timestamp == '24/Mar/2009:18:07:16 +0100'
+    lp.timestamp = "24/Mar/2009:18:07:16 +0100"
+    assert lp.timestamp == "24/Mar/2009:18:07:16 +0100"
 
 
 def test_assign_req_line():
     """Test assignment of a request line."""
     lp = LogParser(42)
-    lp.requestline = 'GET /images/puce.gif HTTP/1.1'
-    assert lp.requestline == 'GET /images/puce.gif HTTP/1.1'
+    lp.requestline = "GET /images/puce.gif HTTP/1.1"
+    assert lp.requestline == "GET /images/puce.gif HTTP/1.1"
 
 
 def test_assign_stat_code():
@@ -98,15 +98,15 @@ def test_assign_data_size():
 def test_assign_referrer():
     """Test assignment of a referrer."""
     lp = LogParser(42)
-    lp.referrer = '-'
-    assert lp.referrer == '-'
+    lp.referrer = "-"
+    assert lp.referrer == "-"
 
 
 def test_assign_uagent():
     """Test assignment of a useragent."""
     lp = LogParser(42)
-    lp.useragent = 'Mozilla/4.0'
-    assert lp.useragent == 'Mozilla/4.0'
+    lp.useragent = "Mozilla/4.0"
+    assert lp.useragent == "Mozilla/4.0"
 
 
 def test_property_quantity():
@@ -116,5 +116,5 @@ def test_property_quantity():
     number of properties in a LogParser object. This is just a sanity
     check if I start adding or deleting properties in the class.
     """
-    lp = LogParser('dummy')
+    lp = LogParser("dummy")
     assert len(vars(lp)) == len(LogParser._labels)

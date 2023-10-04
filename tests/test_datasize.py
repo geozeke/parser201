@@ -4,12 +4,11 @@
 import lzma
 import pickle
 from pathlib import Path
-from typing import Type
 
 from parser201.classes import LogParser
 
 p = Path(__file__).resolve().parent
-TESTDATA = p/'data_parser201.bin'
+TESTDATA = p / "data_parser201.bin"
 
 
 def pytest_generate_tests(metafunc):
@@ -20,9 +19,9 @@ def pytest_generate_tests(metafunc):
     metafunc : obj
         The python object that facilitates parametrization.
     """
-    with lzma.open(TESTDATA, 'rb') as f:
+    with lzma.open(TESTDATA, "rb") as f:
         test_cases = pickle.load(f)
-    metafunc.parametrize('node', test_cases)
+    metafunc.parametrize("node", test_cases)
 
 
 def test_datasize(node):
@@ -34,13 +33,13 @@ def test_datasize(node):
         A dictionary object containing a test string and expected
         results for various tests.
     """
-    lp = LogParser(node['linein'],
-                   timezone=node['timezone'],
-                   dts_format=node['dts_format'])
+    lp = LogParser(
+        node["linein"], timezone=node["timezone"], dts_format=node["dts_format"]
+    )
     test_result = lp.datasize
     try:
-        benchmark = int(node['datasize'])
+        benchmark = int(node["datasize"])
     except (TypeError, ValueError):
-        benchmark = node['datasize']
+        benchmark = node["datasize"]
     assert test_result == benchmark
     print(lp)
