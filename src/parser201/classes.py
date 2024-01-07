@@ -2,7 +2,6 @@
 
 import datetime as dt
 import re
-import time
 from enum import Enum
 from enum import auto
 
@@ -15,10 +14,9 @@ class TZ(Enum):
     """
 
     original = auto()
-    local = auto()
     utc = auto()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Compare the values of two TZ Enums.
 
         Parameters
@@ -44,7 +42,7 @@ class FMT(Enum):
     string = auto()
     date_obj = auto()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Compare the values of two FMT Enums.
 
         Parameters
@@ -74,9 +72,7 @@ class LogParser:
     timezone : TZ, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
-        adjustment). *TZ.local* adjusts the timestamp to the timezone
-        currently selected on the machine running the code. *TZ.utc*
-        adjusts the timestamp to [UTC](https:\
+        adjustment). *TZ.utc* adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time), default is
         TZ.original.
     dts_format : FMT, optional
@@ -131,12 +127,12 @@ class LogParser:
     >>> lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timestamp
-    attribute will be adjusted to the timezone on the local machine and
-    will be stored as a Python [datetime object](https:\
+    attribute will be adjusted to UTC and will be stored as a Python
+    [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     >>> from parser201 import LogParser, TZ, FMT
     >>> line = # a line from an Apache access log
-    >>> lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
+    >>> lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)
     """
 
     # Class variables
@@ -175,7 +171,7 @@ class LogParser:
     ]
     _pad = len(max(_labels, key=len))
 
-    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
+    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string) -> None:
         # Initialize data fields
         self.ipaddress: str = ""
         self.userid: str = ""
@@ -217,25 +213,8 @@ class LogParser:
             self.__none_fields()
             return
 
-        # Process date/time stamp and adjust timezone/dts_format as indicated
-        sign, hh, mm = self.__decomposeTZ(self.timestamp)
-        if timezone == TZ.original:
-            if dts_format == FMT.string:
-                return
-        elif timezone == TZ.local:
-            zone_str = time.strftime("%z")
-            # First convert to GMT
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            # Now convert to local time and replace tzinfo
-            sign, hh, mm = self.__decomposeTZ(zone_str)
-            zone_obj = dt.timezone(dt.timedelta(hours=hh * sign, minutes=mm))
-            date_obj = date_obj + (sign * dt.timedelta(hours=hh, minutes=mm))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
-        else:  # TZ == utc
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            sign, hh, mm = self.__decomposeTZ("+0000")
-            zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
+        if timezone == TZ.utc:
+            date_obj = date_obj.astimezone(dt.timezone.utc)
 
         if dts_format == FMT.string:
             self.timestamp = date_obj.strftime("%d/%b/%Y:%H:%M:%S %z")
@@ -244,13 +223,13 @@ class LogParser:
 
         return
 
-    def __none_fields(self):
+    def __none_fields(self) -> None:
         """Set all properties to None."""
         for key in vars(self):
             setattr(self, key, None)
         return
 
-    def __str__(self):
+    def __str__(self) -> str:
         """`LogParser` class str method.
 
         The class provides a `__str__` method which renders a
@@ -282,7 +261,7 @@ class LogParser:
             lp_str.append(f"{label:>{LogParser._pad}}: {getattr(self, label)}")  # noqa
         return "\n".join(lp_str)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Determine if two `LogParser` objects are equal.
 
         The class provides a `__eq__` method to test for equality
@@ -301,12 +280,6 @@ class LogParser:
         if type(self) != type(other):
             return False
         return vars(self) == vars(other)
-
-    def __decomposeTZ(self, zone):
-        """Decompose a time zone into +/-, hrs, and mins."""
-        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
-        sign = -1 if leader == "-" else 1
-        return sign, int(hrs), int(mins)
 
 
 if __name__ == "__main__":  # pragma no cover

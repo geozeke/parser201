@@ -31,7 +31,6 @@
 
 import datetime as dt
 import re
-import time
 from enum import Enum
 from enum import auto
 
@@ -44,10 +43,9 @@ class TZ(Enum):
     &#34;&#34;&#34;
 
     original = auto()
-    local = auto()
     utc = auto()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Compare the values of two TZ Enums.
 
         Parameters
@@ -73,7 +71,7 @@ class FMT(Enum):
     string = auto()
     date_obj = auto()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Compare the values of two FMT Enums.
 
         Parameters
@@ -103,9 +101,7 @@ class LogParser:
     timezone : TZ, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
-        adjustment). *TZ.local* adjusts the timestamp to the timezone
-        currently selected on the machine running the code. *TZ.utc*
-        adjusts the timestamp to [UTC](https:\
+        adjustment). *TZ.utc* adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time), default is
         TZ.original.
     dts_format : FMT, optional
@@ -160,12 +156,12 @@ class LogParser:
     &gt;&gt;&gt; lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timestamp
-    attribute will be adjusted to the timezone on the local machine and
-    will be stored as a Python [datetime object](https:\
+    attribute will be adjusted to UTC and will be stored as a Python
+    [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
-    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
+    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)
     &#34;&#34;&#34;
 
     # Class variables
@@ -204,7 +200,7 @@ class LogParser:
     ]
     _pad = len(max(_labels, key=len))
 
-    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
+    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string) -&gt; None:
         # Initialize data fields
         self.ipaddress: str = &#34;&#34;
         self.userid: str = &#34;&#34;
@@ -246,25 +242,8 @@ class LogParser:
             self.__none_fields()
             return
 
-        # Process date/time stamp and adjust timezone/dts_format as indicated
-        sign, hh, mm = self.__decomposeTZ(self.timestamp)
-        if timezone == TZ.original:
-            if dts_format == FMT.string:
-                return
-        elif timezone == TZ.local:
-            zone_str = time.strftime(&#34;%z&#34;)
-            # First convert to GMT
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            # Now convert to local time and replace tzinfo
-            sign, hh, mm = self.__decomposeTZ(zone_str)
-            zone_obj = dt.timezone(dt.timedelta(hours=hh * sign, minutes=mm))
-            date_obj = date_obj + (sign * dt.timedelta(hours=hh, minutes=mm))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
-        else:  # TZ == utc
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            sign, hh, mm = self.__decomposeTZ(&#34;+0000&#34;)
-            zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
+        if timezone == TZ.utc:
+            date_obj = date_obj.astimezone(dt.timezone.utc)
 
         if dts_format == FMT.string:
             self.timestamp = date_obj.strftime(&#34;%d/%b/%Y:%H:%M:%S %z&#34;)
@@ -273,13 +252,13 @@ class LogParser:
 
         return
 
-    def __none_fields(self):
+    def __none_fields(self) -&gt; None:
         &#34;&#34;&#34;Set all properties to None.&#34;&#34;&#34;
         for key in vars(self):
             setattr(self, key, None)
         return
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;`LogParser` class str method.
 
         The class provides a `__str__` method which renders a
@@ -311,7 +290,7 @@ class LogParser:
             lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)  # noqa
         return &#34;\n&#34;.join(lp_str)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
 
         The class provides a `__eq__` method to test for equality
@@ -330,12 +309,6 @@ class LogParser:
         if type(self) != type(other):
             return False
         return vars(self) == vars(other)
-
-    def __decomposeTZ(self, zone):
-        &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
-        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
-        sign = -1 if leader == &#34;-&#34; else 1
-        return sign, int(hrs), int(mins)
 
 
 if __name__ == &#34;__main__&#34;:  # pragma no cover
@@ -367,9 +340,7 @@ attributes within an object.</p>
 <dt><strong><code>timezone</code></strong> :&ensp;<code>TZ</code>, optional</dt>
 <dd>During parsing, adjust the timestamp of the <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object
 to match a particular timezone. Default is <em>TZ.original</em> (no
-adjustment). <em>TZ.local</em> adjusts the timestamp to the timezone
-currently selected on the machine running the code. <em>TZ.utc</em>
-adjusts the timestamp to <a href="https:
+adjustment). <em>TZ.utc</em> adjusts the timestamp to <a href="https:
 //en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>, default is
 TZ.original.</dd>
 <dt><strong><code>dts_format</code></strong> :&ensp;<code>FMT</code>, optional</dt>
@@ -423,12 +394,12 @@ attribute will not be adjusted and will be stored as a string.</p>
 &gt;&gt;&gt; lp = LogParser(line)
 </code></pre>
 <p>Creating a <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> object with custom options. The timestamp
-attribute will be adjusted to the timezone on the local machine and
-will be stored as a Python <a href="https:
+attribute will be adjusted to UTC and will be stored as a Python
+<a href="https:
 //docs.python.org/3/library/datetime.html">datetime object</a>.</p>
 <pre><code class="language-python-repl">&gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
 &gt;&gt;&gt; line = # a line from an Apache access log
-&gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
+&gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)
 </code></pre></div>
 <details class="source">
 <summary>
@@ -448,9 +419,7 @@ will be stored as a Python <a href="https:
     timezone : TZ, optional
         During parsing, adjust the timestamp of the `LogParser` object
         to match a particular timezone. Default is *TZ.original* (no
-        adjustment). *TZ.local* adjusts the timestamp to the timezone
-        currently selected on the machine running the code. *TZ.utc*
-        adjusts the timestamp to [UTC](https:\
+        adjustment). *TZ.utc* adjusts the timestamp to [UTC](https:\
         //en.wikipedia.org/wiki/Coordinated_Universal_Time), default is
         TZ.original.
     dts_format : FMT, optional
@@ -505,12 +474,12 @@ will be stored as a Python <a href="https:
     &gt;&gt;&gt; lp = LogParser(line)
 
     Creating a `LogParser` object with custom options. The timestamp
-    attribute will be adjusted to the timezone on the local machine and
-    will be stored as a Python [datetime object](https:\
+    attribute will be adjusted to UTC and will be stored as a Python
+    [datetime object](https:\
     //docs.python.org/3/library/datetime.html).
     &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT
     &gt;&gt;&gt; line = # a line from an Apache access log
-    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.local, dts_format=FMT.date_obj)
+    &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)
     &#34;&#34;&#34;
 
     # Class variables
@@ -549,7 +518,7 @@ will be stored as a Python <a href="https:
     ]
     _pad = len(max(_labels, key=len))
 
-    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string):
+    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string) -&gt; None:
         # Initialize data fields
         self.ipaddress: str = &#34;&#34;
         self.userid: str = &#34;&#34;
@@ -591,25 +560,8 @@ will be stored as a Python <a href="https:
             self.__none_fields()
             return
 
-        # Process date/time stamp and adjust timezone/dts_format as indicated
-        sign, hh, mm = self.__decomposeTZ(self.timestamp)
-        if timezone == TZ.original:
-            if dts_format == FMT.string:
-                return
-        elif timezone == TZ.local:
-            zone_str = time.strftime(&#34;%z&#34;)
-            # First convert to GMT
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            # Now convert to local time and replace tzinfo
-            sign, hh, mm = self.__decomposeTZ(zone_str)
-            zone_obj = dt.timezone(dt.timedelta(hours=hh * sign, minutes=mm))
-            date_obj = date_obj + (sign * dt.timedelta(hours=hh, minutes=mm))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
-        else:  # TZ == utc
-            date_obj = date_obj + (-1 * sign * dt.timedelta(hours=hh, minutes=mm))
-            sign, hh, mm = self.__decomposeTZ(&#34;+0000&#34;)
-            zone_obj = dt.timezone(dt.timedelta(hours=0, minutes=0))
-            date_obj = date_obj.replace(tzinfo=zone_obj)
+        if timezone == TZ.utc:
+            date_obj = date_obj.astimezone(dt.timezone.utc)
 
         if dts_format == FMT.string:
             self.timestamp = date_obj.strftime(&#34;%d/%b/%Y:%H:%M:%S %z&#34;)
@@ -618,13 +570,13 @@ will be stored as a Python <a href="https:
 
         return
 
-    def __none_fields(self):
+    def __none_fields(self) -&gt; None:
         &#34;&#34;&#34;Set all properties to None.&#34;&#34;&#34;
         for key in vars(self):
             setattr(self, key, None)
         return
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;`LogParser` class str method.
 
         The class provides a `__str__` method which renders a
@@ -656,7 +608,7 @@ will be stored as a Python <a href="https:
             lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)  # noqa
         return &#34;\n&#34;.join(lp_str)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
 
         The class provides a `__eq__` method to test for equality
@@ -674,18 +626,12 @@ will be stored as a Python <a href="https:
         &#34;&#34;&#34;
         if type(self) != type(other):
             return False
-        return vars(self) == vars(other)
-
-    def __decomposeTZ(self, zone):
-        &#34;&#34;&#34;Decompose a time zone into +/-, hrs, and mins.&#34;&#34;&#34;
-        leader, hrs, mins = zone[-5], zone[-4:-2], zone[-2:]
-        sign = -1 if leader == &#34;-&#34; else 1
-        return sign, int(hrs), int(mins)</code></pre>
+        return vars(self) == vars(other)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="parser201.classes.LogParser.__eq__"><code class="name flex">
-<span>def <span class="ident">__eq__</span></span>(<span>self, other)</span>
+<span>def <span class="ident">__eq__</span></span>(<span>self, other) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Determine if two <code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> objects are equal.</p>
@@ -705,7 +651,7 @@ between two <code><a title="parser201.classes.LogParser" href="#parser201.classe
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def __eq__(self, other):
+<pre><code class="python">def __eq__(self, other) -&gt; bool:
     &#34;&#34;&#34;Determine if two `LogParser` objects are equal.
 
     The class provides a `__eq__` method to test for equality
@@ -727,7 +673,7 @@ between two <code><a title="parser201.classes.LogParser" href="#parser201.classe
 </details>
 </dd>
 <dt id="parser201.classes.LogParser.__str__"><code class="name flex">
-<span>def <span class="ident">__str__</span></span>(<span>self)</span>
+<span>def <span class="ident">__str__</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p><code><a title="parser201.classes.LogParser" href="#parser201.classes.LogParser">LogParser</a></code> class str method.</p>
@@ -755,7 +701,7 @@ requestline: GET /images/puce.gif HTTP/1.1
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def __str__(self):
+<pre><code class="python">def __str__(self) -&gt; str:
     &#34;&#34;&#34;`LogParser` class str method.
 
     The class provides a `__str__` method which renders a
