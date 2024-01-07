@@ -33,6 +33,7 @@ import datetime as dt
 import re
 from enum import Enum
 from enum import auto
+from typing import Union
 
 
 class TZ(Enum):
@@ -205,7 +206,7 @@ class LogParser:
         self.ipaddress: str = &#34;&#34;
         self.userid: str = &#34;&#34;
         self.username: str = &#34;&#34;
-        self.timestamp: str | dt.datetime = &#34;&#34;
+        self.timestamp: Union[str, dt.datetime] = &#34;&#34;
         self.requestline: str = &#34;&#34;
         self.statuscode: int = 0
         self.datasize: int = 0
@@ -523,7 +524,7 @@ attribute will be adjusted to UTC and will be stored as a Python
         self.ipaddress: str = &#34;&#34;
         self.userid: str = &#34;&#34;
         self.username: str = &#34;&#34;
-        self.timestamp: str | dt.datetime = &#34;&#34;
+        self.timestamp: Union[str, dt.datetime] = &#34;&#34;
         self.requestline: str = &#34;&#34;
         self.statuscode: int = 0
         self.datasize: int = 0
