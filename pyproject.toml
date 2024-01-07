@@ -53,6 +53,7 @@ flake8-docstrings = "^1.6.0"
 mypy = "^0.982"
 pdoc3 = "^0.10.0"
 black = "^23.3.0"
+setuptools = "^69.0.3"
 
 [tool.pytest.ini_options]
 pythonpath = [".", "./src", "./src/parser201"]

@@ -180,7 +180,7 @@ class LogParser:
         self.ipaddress: str = ""
         self.userid: str = ""
         self.username: str = ""
-        self.timestamp: str = ""
+        self.timestamp: str | dt.datetime = ""
         self.requestline: str = ""
         self.statuscode: int = 0
         self.datasize: int = 0
@@ -279,7 +279,7 @@ class LogParser:
         """
         lp_str = []
         for label in LogParser._labels:
-            lp_str.append(f"{label:>{LogParser._pad}}: {getattr(self, label)}")
+            lp_str.append(f"{label:>{LogParser._pad}}: {getattr(self, label)}")  # noqa
         return "\n".join(lp_str)
 
     def __eq__(self, other):

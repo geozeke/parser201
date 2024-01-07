@@ -12,12 +12,12 @@ p = Path(__file__).resolve().parents
 sys.path.append(f"{p[1]}/src/parser201")
 TESTDATA = p[0] / "data_parser201.bin"
 
-from classes import FMT  # type: ignore # noqa
-from classes import TZ  # type: ignore # noqa
-from classes import LogParser  # type: ignore # noqa
+from parser201.classes import FMT  # noqa
+from parser201.classes import TZ  # noqa
+from parser201.classes import LogParser  # noqa
 
-ZONES = tuple(TZ)
-FORMATS = tuple(FMT)
+ZONES = list(TZ)
+FORMATS = list(FMT)
 
 
 def make_dict(data_in, options):

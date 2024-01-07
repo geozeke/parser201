@@ -44,6 +44,6 @@ def test_str(node):
         benchmark = node["str"]
     print(f"timezone: {node['timezone']}")
     print(f"  dts_format: {node['dts_format']}\n")
-    print(f"received:\n{test_result}\n")
-    print(f"expected:\n{node['str']}")
+    print(f"received:\n{test_result}\n")  # noqa
+    print(f"expected:\n{node['str']}")  # noqa
     assert test_result == benchmark
