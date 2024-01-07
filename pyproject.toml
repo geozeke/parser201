@@ -43,7 +43,7 @@ classifiers = [
 "Documentation" = "https://geozeke.github.io/parser201"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^6.5.0"

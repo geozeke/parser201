@@ -4,6 +4,7 @@ import datetime as dt
 import re
 from enum import Enum
 from enum import auto
+from typing import Union
 
 
 class TZ(Enum):
@@ -176,7 +177,7 @@ class LogParser:
         self.ipaddress: str = ""
         self.userid: str = ""
         self.username: str = ""
-        self.timestamp: str | dt.datetime = ""
+        self.timestamp: Union[str, dt.datetime] = ""
         self.requestline: str = ""
         self.statuscode: int = 0
         self.datasize: int = 0
