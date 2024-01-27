@@ -45,7 +45,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
-* 1.5.0 (2024-01-XX)
+* 1.5.0 (2024-01-27)
   * Cleaned up packaging for better [PEP
   561](https://peps.python.org/pep-0561/) compliance.
   * Cleaned up type hints.
