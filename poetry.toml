@@ -4,4 +4,4 @@ in-project = true
 # of python. If so, uncomment this to create a virtual environment based on the
 # currently active python version.
 
-# prefer-active-python = true
+prefer-active-python = true

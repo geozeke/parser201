@@ -9,7 +9,9 @@
 
 <br>
 
-<img src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=true" width="120"/>
+<img
+src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=true"
+alt="Dinobox Logo" width="120"/>
 
 ## Features
 
@@ -43,6 +45,18 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 
 ## Version History
 
+* 1.5.0 (2024-01-27)
+  * Cleaned up packaging for better [PEP
+  561](https://peps.python.org/pep-0561/) compliance.
+  * Cleaned up type hints.
+  * Dropped support for converting timestamps to local machine time.
+    Processing local timezones across multiple architectures and
+    operating systems is a bit of a hot mess in Python right now.
+    There's just too much variability with regard to OS Settings,
+    location, daylight savings time, etc. The performance of this
+    feature was spotty at best. There is still support for the
+    *original* timezone and converstion to
+    [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).<br><br>
 * 1.4.1 (2023-06-22)
   * Migrated code formatter to *black*.<br><br>
 * 1.4.0 (2023-04-30)
@@ -77,7 +91,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Documentation cleanup.
   * Added site logo to README.md.<br><br>
 * 1.1.0 (2021-11-13)
-  * Implemented selectable timestamp conversion options {*original*, *local*,
+  * Implemented selectable timestamp conversion options {*original*,
+    *local*,
     [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
   * Implemented selectable formatting options for timestamp attribute
     {*string*, *date_obj*}.

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "parser201"
-version = "1.4.1"
+version = "1.5.0"
 description = "Extract individual fields from lines in Apache access logs"
 authors = ["Peter Nardi <pete@nardi.com>"]
 maintainers = ["Peter Nardi <pete@nardi.com>"]
@@ -43,7 +43,7 @@ classifiers = [
 "Documentation" = "https://geozeke.github.io/parser201"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^6.5.0"
