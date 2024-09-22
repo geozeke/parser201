@@ -15,9 +15,9 @@ alt="Dinobox Logo" width="120"/>
 
 ## Features
 
-The centerpiece of the parser201 module is the LogParser class. The class
-initializer takes a single line from an Apache access log file and extracts the
-individual fields into attributes within an object.
+The centerpiece of the parser201 module is the LogParser class. The
+class initializer takes a single line from an Apache access log file and
+extracts the individual fields into attributes within an object.
 
 ## Installation
 
@@ -27,8 +27,9 @@ pip3 install parser201
 
 ## Usage
 
-The most common use-case for parser201 is importing individual lines from an
-Apache access log file and creating LogParser objects, like this:
+The most common use-case for parser201 is importing individual lines
+from an Apache access log file and creating LogParser objects, like
+this:
 
 ```python
 from parser201 import LogParser
@@ -41,13 +42,15 @@ with open('access.log', 'r') as f:
 
 ## Documentation
 
-See: [parser201 Documentation](https://geozeke.github.io/parser201).
+See: [parser201 Documentation][def].
 
 ## Version History
 
+* 1.5.1 (2024-09-22)
+  * Migrated packaging and build system to [uv][def2], and code linting
+    to [ruff][def3]. No change in functionality.<br><br>
 * 1.5.0 (2024-01-27)
-  * Cleaned up packaging for better [PEP
-  561](https://peps.python.org/pep-0561/) compliance.
+  * Cleaned up packaging for better [PEP561][def4] compliance.
   * Cleaned up type hints.
   * Dropped support for converting timestamps to local machine time.
     Processing local timezones across multiple architectures and
@@ -55,8 +58,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
     There's just too much variability with regard to OS Settings,
     location, daylight savings time, etc. The performance of this
     feature was spotty at best. There is still support for the
-    *original* timezone and converstion to
-    [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).<br><br>
+    *original* timezone and converstion to [*UTC*][def5].<br><br>
 * 1.4.1 (2023-06-22)
   * Migrated code formatter to *black*.<br><br>
 * 1.4.0 (2023-04-30)
@@ -67,11 +69,10 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Minimum supported Python version is now 3.8 (^3.8).
   * Miscellaneous optimizations.<br><br>
 * 1.3.1 (2022-10-22)
-  * Migrated dependency/build management to
-    [poetry](https://python-poetry.org/).<br><br>
+  * Migrated dependency/build management to [poetry][def6].<br><br>
 * 1.3.0 (2022-08-13)
-  * Implemented `__eq__` magic method for the `LogParser` class. You can now
-    perform equality checks on two `LogParser` objects.
+  * Implemented `__eq__` magic method for the `LogParser` class. You can
+    now perform equality checks on two `LogParser` objects.
   * Added test cases for `__eq__`
   * Migrated task runner to `make`
   * Documentation cleanup
@@ -79,8 +80,8 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 * 1.2.0 (2022-07-17)
   * Implemented `__eq__` magic methods in the `FMT` and `TZ` classes.
   * Documentation cleanup.
-  * Testing improvements and pyproject.toml adjustments for better pytest
-    compatability.
+  * Testing improvements and pyproject.toml adjustments for better
+    pytest compatability.
   * Code linting and cleanup.<br><br>
 * 1.1.5 (2022-01-17)
   * Code linting and cleanup.<br><br>
@@ -93,7 +94,7 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
 * 1.1.0 (2021-11-13)
   * Implemented selectable timestamp conversion options {*original*,
     *local*,
-    [*UTC*](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)}.
+    [*UTC*][def5]}.
   * Implemented selectable formatting options for timestamp attribute
     {*string*, *date_obj*}.
   * Migrated API reference to GitHub pages.
@@ -106,26 +107,26 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Implemented more robust and compartmentalized test cases.
   * Code tuning.<br><br>
 * 0.2.0 (2021-10-31)
-  * Changed behavior to gracefully fail for any malformed input line. If an
-    input line cannot be successfully parsed, all attributes of the returned
-    object are set to `None` and no messages are printed.
+  * Changed behavior to gracefully fail for any malformed input line. If
+    an input line cannot be successfully parsed, all attributes of the
+    returned object are set to `None` and no messages are printed.
   * Added additional pytest cases to verify failure behavior.<br><br>
 * 0.1.9 (2021-09-15)
   * Code cleanup for pep8 compliance.
-  * Cleaned up Makefiles and scripts to remove references to python (meaning
-    python2) and replace it with python3.<br><br>
+  * Cleaned up Makefiles and scripts to remove references to python
+    (meaning python2) and replace it with python3.<br><br>
 * 0.1.7 (2021-06-05)
-  * Re-tooled testing scripts to use parameterized test data, and conduct more
-    robust testing.<br><br>
+  * Re-tooled testing scripts to use parameterized test data, and
+    conduct more robust testing.<br><br>
 * 0.1.6 (2020-12-19)
-  * Addressed exception handling for initializer input not being a valid string
-    data type.
+  * Addressed exception handling for initializer input not being a valid
+    string data type.
   * Documentation cleanup.<br><br>
 * 0.1.5 (2020-10-26)
-  * Enabled automatic deployment of tagged releases to pypi from travis using
-    encrypted token.
-  * Converted references to the master branch in the git repository to main
-    across the documentation set.
+  * Enabled automatic deployment of tagged releases to pypi from travis
+    using encrypted token.
+  * Converted references to the master branch in the git repository to
+    main across the documentation set.
   * Documentation cleanup.<br><br>
 * 0.1.4 (2020-10-24)
   * Initial pypi release.
@@ -135,3 +136,10 @@ See: [parser201 Documentation](https://geozeke.github.io/parser201).
   * Follow-on testing on test.pypi.org.<br><br>
 * 0.1.0 (2020-10-18)
   * Initial testing on test.pypi.org.
+
+[def]: https://geozeke.github.io/parser201
+[def2]: https://docs.astral.sh/uv/
+[def3]: https://docs.astral.sh/ruff/
+[def4]: https://peps.python.org/pep-0561/
+[def5]: https://en.wikipedia.org/wiki/Coordinated_Universal_Time
+[def6]: https://python-poetry.org/
