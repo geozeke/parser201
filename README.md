@@ -47,8 +47,10 @@ See: [parser201 Documentation][def].
 ## Version History
 
 * 1.5.1 (2024-09-22)
-  * Migrated packaging and build system to [uv][def2], and code linting
-    to [ruff][def3]. No change in functionality.<br><br>
+  * Migrated packaging and build system to [uv][def2], and code
+    formatting and linting to [ruff][def3]. No change in functionality.
+  * Improved exception handling for invalid date-time objects.
+  * Code and documentation linting.<br><br>
 * 1.5.0 (2024-01-27)
   * Cleaned up packaging for better [PEP561][def4] compliance.
   * Cleaned up type hints.

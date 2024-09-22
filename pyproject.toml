@@ -1,6 +1,6 @@
 [project]
 name = "parser201"
-version = "1.5.0"
+version = "1.5.1"
 description = "Extract individual fields from lines in Apache access logs"
 authors = [
     {name = "Peter Nardi", email = "pete@nardi.com"},
@@ -39,6 +39,9 @@ classifiers = [
 	"Programming Language :: Python :: 3.9",
 	"Programming Language :: Python :: 3.10",
 	"Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "parser201",
 ]
 
 [project.urls]
@@ -83,3 +86,6 @@ dev-dependencies = [
     "pytest>=8.3.3",
     "ruff>=0.6.7",
 ]
+
+[tool.uv.sources]
+parser201 = { workspace = true }

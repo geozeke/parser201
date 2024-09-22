@@ -196,13 +196,14 @@ attribute will be adjusted to UTC and will be stored as a Python
 
     # Class variables
 
-    # Behold the power of generative AI. I provided the following query to
-    # ChatGPT: &#34;Write a regular expression that recognizes a line from an
-    # apache access log&#34;. I had to have a &#34;conversation&#34; with ChatGPT to refine
-    # the regex with a few examples, but after a brief exchange, it produced
-    # what you see below. This regex cleaned up my previous solution and
-    # replace several lines of code. I split the regex into individual match
-    # groups here to make it easier to follow.
+    # Behold the power of generative AI. I provided the following query
+    # to ChatGPT: &#34;Write a regular expression that recognizes a line
+    # from an apache access log&#34;. I had to have a &#34;conversation&#34; with
+    # ChatGPT to refine the regex with a few examples, but after a brief
+    # exchange, it produced what you see below. This regex cleaned up my
+    # previous solution and replace several lines of code. I split the
+    # regex into individual match groups here to make it easier to
+    # follow.
     _ip = r&#34;^([^ ]+)&#34;
     _ui = r&#34;(\S+)&#34;
     _un = r&#34;(\S+)&#34;
@@ -215,8 +216,9 @@ attribute will be adjusted to UTC and will be stored as a Python
     _regex = rf&#34;{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}&#34;
 
     # A list of labels (in the correct order) used to render string
-    # representations of LogParser objects. Also calculate the length of the
-    # longest label so we can use f-strings to right-justify all the labels.
+    # representations of LogParser objects. Also calculate the length of
+    # the longest label so we can use f-strings to right-justify all the
+    # labels.
     _labels = [
         &#34;ipaddress&#34;,
         &#34;userid&#34;,
@@ -230,7 +232,12 @@ attribute will be adjusted to UTC and will be stored as a Python
     ]
     _pad = len(max(_labels, key=len))
 
-    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string) -&gt; None:
+    def __init__(
+        self,
+        line,
+        timezone=TZ.original,
+        dts_format=FMT.string,
+    ) -&gt; None:
         # Initialize data fields
         self.ipaddress: str = &#34;&#34;
         self.userid: str = &#34;&#34;
@@ -242,7 +249,7 @@ attribute will be adjusted to UTC and will be stored as a Python
         self.referrer: str = &#34;&#34;
         self.useragent: str = &#34;&#34;
 
-        if type(line) != str:
+        if type(line) is not str:
             self.__none_fields()
             return
 
@@ -263,11 +270,14 @@ attribute will be adjusted to UTC and will be stored as a Python
             self.__none_fields()
             return
 
-        # This takes the work of ensuring valid date-time stamps from the regex
-        # and guarantees things like &#34;Feb 31&#34; will be handled as an invalid
-        # date.
+        # This takes the work of ensuring valid date-time stamps from
+        # the regex and guarantees things like &#34;Feb 31&#34; will be handled
+        # as an invalid date.
         try:
-            date_obj = dt.datetime.strptime(self.timestamp, &#34;%d/%b/%Y:%H:%M:%S %z&#34;)
+            date_obj = dt.datetime.strptime(
+                str(self.timestamp),
+                &#34;%d/%b/%Y:%H:%M:%S %z&#34;,
+            )
         except ValueError:
             self.__none_fields()
             return
@@ -317,7 +327,7 @@ attribute will be adjusted to UTC and will be stored as a Python
         &#34;&#34;&#34;
         lp_str = []
         for label in LogParser._labels:
-            lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)  # noqa
+            lp_str.append(f&#34;{label:&gt;{LogParser._pad}}: {getattr(self, label)}&#34;)
         return &#34;\n&#34;.join(lp_str)
 
     def __eq__(self, other) -&gt; bool:
@@ -336,7 +346,7 @@ attribute will be adjusted to UTC and will be stored as a Python
         bool
             True it two `LogParser` objects are equal, False otherwise.
         &#34;&#34;&#34;
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         return vars(self) == vars(other)</code></pre>
 </details>

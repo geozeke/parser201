@@ -260,7 +260,7 @@ wheels = [
 
 [[package]]
 name = "parser201"
-version = "1.5.0"
+version = "1.5.1"
 source = { editable = "." }
 
 [package.dev-dependencies]
@@ -273,6 +273,7 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "parser201", editable = "." }]
 
 [package.metadata.requires-dev]
 dev = [

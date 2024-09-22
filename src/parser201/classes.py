@@ -138,13 +138,14 @@ class LogParser:
 
     # Class variables
 
-    # Behold the power of generative AI. I provided the following query to
-    # ChatGPT: "Write a regular expression that recognizes a line from an
-    # apache access log". I had to have a "conversation" with ChatGPT to refine
-    # the regex with a few examples, but after a brief exchange, it produced
-    # what you see below. This regex cleaned up my previous solution and
-    # replace several lines of code. I split the regex into individual match
-    # groups here to make it easier to follow.
+    # Behold the power of generative AI. I provided the following query
+    # to ChatGPT: "Write a regular expression that recognizes a line
+    # from an apache access log". I had to have a "conversation" with
+    # ChatGPT to refine the regex with a few examples, but after a brief
+    # exchange, it produced what you see below. This regex cleaned up my
+    # previous solution and replace several lines of code. I split the
+    # regex into individual match groups here to make it easier to
+    # follow.
     _ip = r"^([^ ]+)"
     _ui = r"(\S+)"
     _un = r"(\S+)"
@@ -157,8 +158,9 @@ class LogParser:
     _regex = rf"{_ip} {_ui} {_un} {_ts} {_rl} {_sc} {_ds} {_re} {_ua}"
 
     # A list of labels (in the correct order) used to render string
-    # representations of LogParser objects. Also calculate the length of the
-    # longest label so we can use f-strings to right-justify all the labels.
+    # representations of LogParser objects. Also calculate the length of
+    # the longest label so we can use f-strings to right-justify all the
+    # labels.
     _labels = [
         "ipaddress",
         "userid",
@@ -172,7 +174,12 @@ class LogParser:
     ]
     _pad = len(max(_labels, key=len))
 
-    def __init__(self, line, timezone=TZ.original, dts_format=FMT.string) -> None:
+    def __init__(
+        self,
+        line,
+        timezone=TZ.original,
+        dts_format=FMT.string,
+    ) -> None:
         # Initialize data fields
         self.ipaddress: str = ""
         self.userid: str = ""
@@ -184,7 +191,7 @@ class LogParser:
         self.referrer: str = ""
         self.useragent: str = ""
 
-        if type(line) != str:
+        if type(line) is not str:
             self.__none_fields()
             return
 
@@ -205,11 +212,14 @@ class LogParser:
             self.__none_fields()
             return
 
-        # This takes the work of ensuring valid date-time stamps from the regex
-        # and guarantees things like "Feb 31" will be handled as an invalid
-        # date.
+        # This takes the work of ensuring valid date-time stamps from
+        # the regex and guarantees things like "Feb 31" will be handled
+        # as an invalid date.
         try:
-            date_obj = dt.datetime.strptime(self.timestamp, "%d/%b/%Y:%H:%M:%S %z")
+            date_obj = dt.datetime.strptime(
+                str(self.timestamp),
+                "%d/%b/%Y:%H:%M:%S %z",
+            )
         except ValueError:
             self.__none_fields()
             return
@@ -259,7 +269,7 @@ class LogParser:
         """
         lp_str = []
         for label in LogParser._labels:
-            lp_str.append(f"{label:>{LogParser._pad}}: {getattr(self, label)}")  # noqa
+            lp_str.append(f"{label:>{LogParser._pad}}: {getattr(self, label)}")
         return "\n".join(lp_str)
 
     def __eq__(self, other) -> bool:
@@ -278,10 +288,10 @@ class LogParser:
         bool
             True it two `LogParser` objects are equal, False otherwise.
         """
-        if type(self) != type(other):
+        if type(self) is not type(other):
             return False
         return vars(self) == vars(other)
 
 
-if __name__ == "__main__":  # pragma no cover
+if __name__ == "__main__":
     pass
