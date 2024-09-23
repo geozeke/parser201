@@ -55,12 +55,13 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build]
 exclude = [
+	"docs/**",
 	"global-gitignore.txt",
 	"Makefile",
+	"templates/**",
 	"tests/**",
     ".gitignore",
     "uv.lock",
-	"docs/**"
 ]
 
 [tool.pytest.ini_options]
