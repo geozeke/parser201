@@ -9,7 +9,7 @@ PHPBB, SQL Injection, etc.
 parser201 is lightweight, with no third party dependencies.
 
 ```text
-pip3 install parser201
+pip install parser201
 ```
 
 ## Usage Example

@@ -11,8 +11,8 @@ from .classes import LogParser  # noqa
 
 # pdoc will look here to determine which members to leave out of the
 # documentation.
-__pdoc__ = {}
-__pdoc__["classes.FMT"] = False
-__pdoc__["classes.TZ"] = False
-__pdoc__["classes.LogParser.__str__"] = True
-__pdoc__["classes.LogParser.__eq__"] = True
+# __pdoc__ = {}
+# __pdoc__["classes.FMT"] = False
+# __pdoc__["classes.TZ"] = False
+# __pdoc__["classes.LogParser.__str__"] = True
+# __pdoc__["classes.LogParser.__eq__"] = True

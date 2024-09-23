@@ -1,4 +1,5 @@
 PROJNAME=parser201
+LOGOURL=https://lh3.googleusercontent.com/d/1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc
 
 ifeq (${MAKECMDGOALS},docs)
 	WEBPATH=docs/index.html
@@ -101,7 +102,8 @@ coverage: ## Generate an html code coverage report
 
 .PHONY: docs
 docs: ## Generate project documentation
-	pdoc3 --html --template-dir=docs -o docs src/${PROJNAME} --force
+	pdoc -o docs -t templates -d numpy --no-include-undocumented \
+		--logo ${LOGOURL} src/*
 	${BROWSER}
 
 # --------------------------------------------
