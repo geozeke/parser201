@@ -82,7 +82,7 @@ exclude_also = [
 dev-dependencies = [
     "coverage>=7.6.1",
     "mypy>=1.11.2",
-    "pdoc3>=0.11.0",
+    "pdoc>=14.7.0",
     "pytest>=8.3.3",
     "ruff>=0.6.7",
 ]

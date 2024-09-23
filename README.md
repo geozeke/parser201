@@ -50,6 +50,7 @@ See: [parser201 Documentation][def].
   * Migrated packaging and build system to [uv][def2], and code
     formatting and linting to [ruff][def3]. No change in functionality.
   * Improved exception handling for invalid date-time objects.
+  * Migrated documentation generation to [pdoc][def7].
   * Code and documentation linting.<br><br>
 * 1.5.0 (2024-01-27)
   * Cleaned up packaging for better [PEP561][def4] compliance.
@@ -145,3 +146,4 @@ See: [parser201 Documentation][def].
 [def4]: https://peps.python.org/pep-0561/
 [def5]: https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 [def6]: https://python-poetry.org/
+[def7]: https://github.com/mitmproxy/pdoc
