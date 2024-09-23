@@ -118,9 +118,8 @@ class LogParser:
 
         The class initializer takes a single line (as a string) from an
         Apache access log file and extracts the individual fields into
-        attributes within an object. Optional parameters (discussed
-        below) allow for customizing the timezone and format for storing
-        dates and times.
+        attributes within an object. Parameters to the initializer are
+        discussed below.
 
         Parameters
         ---------

@@ -213,196 +213,195 @@
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>
 </span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        The class initializer takes a single line (as a string) from an</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        Apache access log file and extracts the individual fields into</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        attributes within an object. Optional parameters (discussed</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        below) allow for customizing the timezone and format for storing</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        dates and times.</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">        Parameters</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        ---------</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">        line : str</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">            A single line from an Apache access log.</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">        timezone : TZ, optional</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">            object to match a particular timezone. Default is</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">            timestamp to [UTC](https:\</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">            is TZ.original.</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a><span class="sd">        dts_format : FMT, optional</span>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="sd">            Python [datetime object](https:\</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="sd">            FMT.string.</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="sd">        Attributes</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="sd">        ----------</span>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="sd">        datasize : int</span>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="sd">        ipaddress : str</span>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">            The remote host (the client IP).</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">        referrer : str</span>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="sd">        requestline : str</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="sd">        statuscode : int</span>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="sd">            `404`, etc.).</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a><span class="sd">        timestamp : str | dt.datetime</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="sd">            The date and time of the request in the following format:</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="sd">            are east of Greenwich.</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="sd">        useragent : str</span>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="sd">            otherwise.</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="sd">        userid : str</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="sd">            attribute is set to `-`.</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="sd">        username : str</span>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">        Examples</span>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="sd">        --------</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="sd">        string.</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="sd">        [datetime object](https:\</span>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>        <span class="c1"># Initialize data fields</span>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>
-</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>            <span class="k">return</span>
-</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>
-</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
-</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>            <span class="k">try</span><span class="p">:</span>
-</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
-</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
-</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>            <span class="k">return</span>
-</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>
-</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
-</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
-</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>        <span class="c1"># as an invalid date.</span>
-</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
-</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
-</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
-</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>            <span class="p">)</span>
-</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>            <span class="k">return</span>
-</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>
-</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
-</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>
-</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
-</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
-</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
-</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
-</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>
-</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>        <span class="k">return</span>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>
-</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>        <span class="k">return</span>
-</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
-</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>
-</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
-</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a><span class="sd">        `LogParser` object as string suitable for display.</span>
-</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a>
-</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="sd">        Examples</span>
-</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="sd">        --------</span>
-</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a><span class="sd">        Create a `LogParser` object like this:</span>
-</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>
-</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
-</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
-</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a>
-</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a><span class="sd">        When you print it, the following is displayed:</span>
-</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>
-</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a><span class="sd">        &gt;&gt;&gt; print(lp)</span>
-</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="sd">          ipaddress: 81.48.51.130</span>
-</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a><span class="sd">             userid: -</span>
-</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a><span class="sd">           username: -</span>
-</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a><span class="sd">          timestamp: 24/Mar/2009:18:07:16 +0100</span>
-</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a><span class="sd">        requestline: GET /images/puce.gif HTTP/1.1</span>
-</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a><span class="sd">         statuscode: 304</span>
-</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a><span class="sd">           datasize: 2454</span>
-</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a><span class="sd">           referrer: -</span>
-</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a><span class="sd">          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;</span>
-</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="n">lp_str</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">LogParser</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
-</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
-</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>
-</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
-</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a>
-</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
-</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a><span class="sd">        between two `LogParser` objects.</span>
-</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a>
-</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a><span class="sd">        Parameters</span>
-</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a><span class="sd">        ----------</span>
-</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a><span class="sd">        other : Any</span>
-</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a><span class="sd">            An object used for comparison (the right-hand side of ==).</span>
-</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>
-</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a><span class="sd">        Returns</span>
-</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a><span class="sd">        -------</span>
-</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a><span class="sd">        bool</span>
-</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a><span class="sd">            True it two `LogParser` objects are equal, False otherwise.</span>
-</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>            <span class="k">return</span> <span class="kc">False</span>
-</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">vars</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        attributes within an object. Parameters to the initializer are</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        discussed below.</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">        Parameters</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">        ---------</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        line : str</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">            A single line from an Apache access log.</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">        timezone : TZ, optional</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">            object to match a particular timezone. Default is</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">            timestamp to [UTC](https:\</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">            is TZ.original.</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a><span class="sd">        dts_format : FMT, optional</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a><span class="sd">            Python [datetime object](https:\</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="sd">            FMT.string.</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="sd">        Attributes</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="sd">        ----------</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="sd">        datasize : int</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="sd">        ipaddress : str</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="sd">            The remote host (the client IP).</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">        referrer : str</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="sd">        requestline : str</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="sd">        statuscode : int</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="sd">            `404`, etc.).</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="sd">        timestamp : str | dt.datetime</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a><span class="sd">            The date and time of the request in the following format:</span>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a><span class="sd">            are east of Greenwich.</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a><span class="sd">        useragent : str</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="sd">            otherwise.</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="sd">        userid : str</span>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a><span class="sd">            attribute is set to `-`.</span>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="sd">        username : str</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="sd">        Examples</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="sd">        --------</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="sd">        string.</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a><span class="sd">        [datetime object](https:\</span>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>        <span class="c1"># Initialize data fields</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>            <span class="k">return</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>            <span class="k">try</span><span class="p">:</span>
+</span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a>            <span class="k">return</span>
+</span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>
+</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
+</span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>        <span class="c1"># as an invalid date.</span>
+</span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
+</span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
+</span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>            <span class="p">)</span>
+</span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>            <span class="k">return</span>
+</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>
+</span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
+</span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
+</span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
+</span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
+</span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
+</span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>        <span class="k">return</span>
+</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
+</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="k">return</span>
+</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>
+</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
+</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>
+</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
+</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a><span class="sd">        `LogParser` object as string suitable for display.</span>
+</span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="sd">        Examples</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="sd">        --------</span>
+</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="sd">        Create a `LogParser` object like this:</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>
+</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
+</span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">        When you print it, the following is displayed:</span>
+</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>
+</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a><span class="sd">        &gt;&gt;&gt; print(lp)</span>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a><span class="sd">          ipaddress: 81.48.51.130</span>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="sd">             userid: -</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a><span class="sd">           username: -</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a><span class="sd">          timestamp: 24/Mar/2009:18:07:16 +0100</span>
+</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a><span class="sd">        requestline: GET /images/puce.gif HTTP/1.1</span>
+</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a><span class="sd">         statuscode: 304</span>
+</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a><span class="sd">           datasize: 2454</span>
+</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a><span class="sd">           referrer: -</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a><span class="sd">          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;</span>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>        <span class="n">lp_str</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">LogParser</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
+</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
+</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>
+</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
+</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a><span class="sd">        between two `LogParser` objects.</span>
+</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>
+</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a><span class="sd">        Parameters</span>
+</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a><span class="sd">        ----------</span>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a><span class="sd">        other : Any</span>
+</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a><span class="sd">            An object used for comparison (the right-hand side of ==).</span>
+</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>
+</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a><span class="sd">        Returns</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a><span class="sd">        -------</span>
+</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a><span class="sd">        bool</span>
+</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a><span class="sd">            True it two `LogParser` objects are equal, False otherwise.</span>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>            <span class="k">return</span> <span class="kc">False</span>
+</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">vars</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>
 </span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a>
-</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a>
-</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a>    <span class="k">pass</span>
+</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
@@ -645,192 +644,191 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 </span><span id="LogParser-119"><a href="#LogParser-119"><span class="linenos">119</span></a>
 </span><span id="LogParser-120"><a href="#LogParser-120"><span class="linenos">120</span></a><span class="sd">        The class initializer takes a single line (as a string) from an</span>
 </span><span id="LogParser-121"><a href="#LogParser-121"><span class="linenos">121</span></a><span class="sd">        Apache access log file and extracts the individual fields into</span>
-</span><span id="LogParser-122"><a href="#LogParser-122"><span class="linenos">122</span></a><span class="sd">        attributes within an object. Optional parameters (discussed</span>
-</span><span id="LogParser-123"><a href="#LogParser-123"><span class="linenos">123</span></a><span class="sd">        below) allow for customizing the timezone and format for storing</span>
-</span><span id="LogParser-124"><a href="#LogParser-124"><span class="linenos">124</span></a><span class="sd">        dates and times.</span>
-</span><span id="LogParser-125"><a href="#LogParser-125"><span class="linenos">125</span></a>
-</span><span id="LogParser-126"><a href="#LogParser-126"><span class="linenos">126</span></a><span class="sd">        Parameters</span>
-</span><span id="LogParser-127"><a href="#LogParser-127"><span class="linenos">127</span></a><span class="sd">        ---------</span>
-</span><span id="LogParser-128"><a href="#LogParser-128"><span class="linenos">128</span></a><span class="sd">        line : str</span>
-</span><span id="LogParser-129"><a href="#LogParser-129"><span class="linenos">129</span></a><span class="sd">            A single line from an Apache access log.</span>
-</span><span id="LogParser-130"><a href="#LogParser-130"><span class="linenos">130</span></a><span class="sd">        timezone : TZ, optional</span>
-</span><span id="LogParser-131"><a href="#LogParser-131"><span class="linenos">131</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
-</span><span id="LogParser-132"><a href="#LogParser-132"><span class="linenos">132</span></a><span class="sd">            object to match a particular timezone. Default is</span>
-</span><span id="LogParser-133"><a href="#LogParser-133"><span class="linenos">133</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
-</span><span id="LogParser-134"><a href="#LogParser-134"><span class="linenos">134</span></a><span class="sd">            timestamp to [UTC](https:\</span>
-</span><span id="LogParser-135"><a href="#LogParser-135"><span class="linenos">135</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
-</span><span id="LogParser-136"><a href="#LogParser-136"><span class="linenos">136</span></a><span class="sd">            is TZ.original.</span>
-</span><span id="LogParser-137"><a href="#LogParser-137"><span class="linenos">137</span></a><span class="sd">        dts_format : FMT, optional</span>
-</span><span id="LogParser-138"><a href="#LogParser-138"><span class="linenos">138</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
-</span><span id="LogParser-139"><a href="#LogParser-139"><span class="linenos">139</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
-</span><span id="LogParser-140"><a href="#LogParser-140"><span class="linenos">140</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
-</span><span id="LogParser-141"><a href="#LogParser-141"><span class="linenos">141</span></a><span class="sd">            Python [datetime object](https:\</span>
-</span><span id="LogParser-142"><a href="#LogParser-142"><span class="linenos">142</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
-</span><span id="LogParser-143"><a href="#LogParser-143"><span class="linenos">143</span></a><span class="sd">            FMT.string.</span>
-</span><span id="LogParser-144"><a href="#LogParser-144"><span class="linenos">144</span></a>
-</span><span id="LogParser-145"><a href="#LogParser-145"><span class="linenos">145</span></a><span class="sd">        Attributes</span>
-</span><span id="LogParser-146"><a href="#LogParser-146"><span class="linenos">146</span></a><span class="sd">        ----------</span>
-</span><span id="LogParser-147"><a href="#LogParser-147"><span class="linenos">147</span></a><span class="sd">        datasize : int</span>
-</span><span id="LogParser-148"><a href="#LogParser-148"><span class="linenos">148</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
-</span><span id="LogParser-149"><a href="#LogParser-149"><span class="linenos">149</span></a><span class="sd">        ipaddress : str</span>
-</span><span id="LogParser-150"><a href="#LogParser-150"><span class="linenos">150</span></a><span class="sd">            The remote host (the client IP).</span>
-</span><span id="LogParser-151"><a href="#LogParser-151"><span class="linenos">151</span></a><span class="sd">        referrer : str</span>
-</span><span id="LogParser-152"><a href="#LogParser-152"><span class="linenos">152</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
-</span><span id="LogParser-153"><a href="#LogParser-153"><span class="linenos">153</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
-</span><span id="LogParser-154"><a href="#LogParser-154"><span class="linenos">154</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
-</span><span id="LogParser-155"><a href="#LogParser-155"><span class="linenos">155</span></a><span class="sd">        requestline : str</span>
-</span><span id="LogParser-156"><a href="#LogParser-156"><span class="linenos">156</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
-</span><span id="LogParser-157"><a href="#LogParser-157"><span class="linenos">157</span></a><span class="sd">        statuscode : int</span>
-</span><span id="LogParser-158"><a href="#LogParser-158"><span class="linenos">158</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
-</span><span id="LogParser-159"><a href="#LogParser-159"><span class="linenos">159</span></a><span class="sd">            `404`, etc.).</span>
-</span><span id="LogParser-160"><a href="#LogParser-160"><span class="linenos">160</span></a><span class="sd">        timestamp : str | dt.datetime</span>
-</span><span id="LogParser-161"><a href="#LogParser-161"><span class="linenos">161</span></a><span class="sd">            The date and time of the request in the following format:</span>
-</span><span id="LogParser-162"><a href="#LogParser-162"><span class="linenos">162</span></a>
-</span><span id="LogParser-163"><a href="#LogParser-163"><span class="linenos">163</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
-</span><span id="LogParser-164"><a href="#LogParser-164"><span class="linenos">164</span></a>
-</span><span id="LogParser-165"><a href="#LogParser-165"><span class="linenos">165</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
-</span><span id="LogParser-166"><a href="#LogParser-166"><span class="linenos">166</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
-</span><span id="LogParser-167"><a href="#LogParser-167"><span class="linenos">167</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
-</span><span id="LogParser-168"><a href="#LogParser-168"><span class="linenos">168</span></a><span class="sd">            are east of Greenwich.</span>
-</span><span id="LogParser-169"><a href="#LogParser-169"><span class="linenos">169</span></a><span class="sd">        useragent : str</span>
-</span><span id="LogParser-170"><a href="#LogParser-170"><span class="linenos">170</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
-</span><span id="LogParser-171"><a href="#LogParser-171"><span class="linenos">171</span></a><span class="sd">            otherwise.</span>
-</span><span id="LogParser-172"><a href="#LogParser-172"><span class="linenos">172</span></a><span class="sd">        userid : str</span>
-</span><span id="LogParser-173"><a href="#LogParser-173"><span class="linenos">173</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
-</span><span id="LogParser-174"><a href="#LogParser-174"><span class="linenos">174</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
-</span><span id="LogParser-175"><a href="#LogParser-175"><span class="linenos">175</span></a><span class="sd">            attribute is set to `-`.</span>
-</span><span id="LogParser-176"><a href="#LogParser-176"><span class="linenos">176</span></a><span class="sd">        username : str</span>
-</span><span id="LogParser-177"><a href="#LogParser-177"><span class="linenos">177</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
-</span><span id="LogParser-178"><a href="#LogParser-178"><span class="linenos">178</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
-</span><span id="LogParser-179"><a href="#LogParser-179"><span class="linenos">179</span></a>
-</span><span id="LogParser-180"><a href="#LogParser-180"><span class="linenos">180</span></a><span class="sd">        Examples</span>
-</span><span id="LogParser-181"><a href="#LogParser-181"><span class="linenos">181</span></a><span class="sd">        --------</span>
-</span><span id="LogParser-182"><a href="#LogParser-182"><span class="linenos">182</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
-</span><span id="LogParser-183"><a href="#LogParser-183"><span class="linenos">183</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
-</span><span id="LogParser-184"><a href="#LogParser-184"><span class="linenos">184</span></a><span class="sd">        string.</span>
-</span><span id="LogParser-185"><a href="#LogParser-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
-</span><span id="LogParser-186"><a href="#LogParser-186"><span class="linenos">186</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="LogParser-187"><a href="#LogParser-187"><span class="linenos">187</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
-</span><span id="LogParser-188"><a href="#LogParser-188"><span class="linenos">188</span></a>
-</span><span id="LogParser-189"><a href="#LogParser-189"><span class="linenos">189</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
-</span><span id="LogParser-190"><a href="#LogParser-190"><span class="linenos">190</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
-</span><span id="LogParser-191"><a href="#LogParser-191"><span class="linenos">191</span></a><span class="sd">        [datetime object](https:\</span>
-</span><span id="LogParser-192"><a href="#LogParser-192"><span class="linenos">192</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
-</span><span id="LogParser-193"><a href="#LogParser-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
-</span><span id="LogParser-194"><a href="#LogParser-194"><span class="linenos">194</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="LogParser-195"><a href="#LogParser-195"><span class="linenos">195</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
-</span><span id="LogParser-196"><a href="#LogParser-196"><span class="linenos">196</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="LogParser-197"><a href="#LogParser-197"><span class="linenos">197</span></a>        <span class="c1"># Initialize data fields</span>
-</span><span id="LogParser-198"><a href="#LogParser-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-199"><a href="#LogParser-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-200"><a href="#LogParser-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-201"><a href="#LogParser-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-202"><a href="#LogParser-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-203"><a href="#LogParser-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser-204"><a href="#LogParser-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser-205"><a href="#LogParser-205"><span class="linenos">205</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-206"><a href="#LogParser-206"><span class="linenos">206</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser-207"><a href="#LogParser-207"><span class="linenos">207</span></a>
-</span><span id="LogParser-208"><a href="#LogParser-208"><span class="linenos">208</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="LogParser-209"><a href="#LogParser-209"><span class="linenos">209</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser-210"><a href="#LogParser-210"><span class="linenos">210</span></a>            <span class="k">return</span>
-</span><span id="LogParser-211"><a href="#LogParser-211"><span class="linenos">211</span></a>
-</span><span id="LogParser-212"><a href="#LogParser-212"><span class="linenos">212</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-</span><span id="LogParser-213"><a href="#LogParser-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="LogParser-214"><a href="#LogParser-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="LogParser-215"><a href="#LogParser-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span id="LogParser-216"><a href="#LogParser-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="LogParser-217"><a href="#LogParser-217"><span class="linenos">217</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span id="LogParser-218"><a href="#LogParser-218"><span class="linenos">218</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
-</span><span id="LogParser-219"><a href="#LogParser-219"><span class="linenos">219</span></a>            <span class="k">try</span><span class="p">:</span>
-</span><span id="LogParser-220"><a href="#LogParser-220"><span class="linenos">220</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
-</span><span id="LogParser-221"><a href="#LogParser-221"><span class="linenos">221</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="LogParser-222"><a href="#LogParser-222"><span class="linenos">222</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser-223"><a href="#LogParser-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span><span id="LogParser-224"><a href="#LogParser-224"><span class="linenos">224</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
-</span><span id="LogParser-225"><a href="#LogParser-225"><span class="linenos">225</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="LogParser-226"><a href="#LogParser-226"><span class="linenos">226</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser-227"><a href="#LogParser-227"><span class="linenos">227</span></a>            <span class="k">return</span>
-</span><span id="LogParser-228"><a href="#LogParser-228"><span class="linenos">228</span></a>
-</span><span id="LogParser-229"><a href="#LogParser-229"><span class="linenos">229</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
-</span><span id="LogParser-230"><a href="#LogParser-230"><span class="linenos">230</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
-</span><span id="LogParser-231"><a href="#LogParser-231"><span class="linenos">231</span></a>        <span class="c1"># as an invalid date.</span>
-</span><span id="LogParser-232"><a href="#LogParser-232"><span class="linenos">232</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="LogParser-233"><a href="#LogParser-233"><span class="linenos">233</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
-</span><span id="LogParser-234"><a href="#LogParser-234"><span class="linenos">234</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
-</span><span id="LogParser-235"><a href="#LogParser-235"><span class="linenos">235</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
-</span><span id="LogParser-236"><a href="#LogParser-236"><span class="linenos">236</span></a>            <span class="p">)</span>
-</span><span id="LogParser-237"><a href="#LogParser-237"><span class="linenos">237</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="LogParser-238"><a href="#LogParser-238"><span class="linenos">238</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser-239"><a href="#LogParser-239"><span class="linenos">239</span></a>            <span class="k">return</span>
-</span><span id="LogParser-240"><a href="#LogParser-240"><span class="linenos">240</span></a>
-</span><span id="LogParser-241"><a href="#LogParser-241"><span class="linenos">241</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
-</span><span id="LogParser-242"><a href="#LogParser-242"><span class="linenos">242</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-</span><span id="LogParser-243"><a href="#LogParser-243"><span class="linenos">243</span></a>
-</span><span id="LogParser-244"><a href="#LogParser-244"><span class="linenos">244</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
-</span><span id="LogParser-245"><a href="#LogParser-245"><span class="linenos">245</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
-</span><span id="LogParser-246"><a href="#LogParser-246"><span class="linenos">246</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
-</span><span id="LogParser-247"><a href="#LogParser-247"><span class="linenos">247</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
-</span><span id="LogParser-248"><a href="#LogParser-248"><span class="linenos">248</span></a>
-</span><span id="LogParser-249"><a href="#LogParser-249"><span class="linenos">249</span></a>        <span class="k">return</span>
-</span><span id="LogParser-250"><a href="#LogParser-250"><span class="linenos">250</span></a>
-</span><span id="LogParser-251"><a href="#LogParser-251"><span class="linenos">251</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="LogParser-252"><a href="#LogParser-252"><span class="linenos">252</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
-</span><span id="LogParser-253"><a href="#LogParser-253"><span class="linenos">253</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="LogParser-254"><a href="#LogParser-254"><span class="linenos">254</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="LogParser-255"><a href="#LogParser-255"><span class="linenos">255</span></a>        <span class="k">return</span>
-</span><span id="LogParser-256"><a href="#LogParser-256"><span class="linenos">256</span></a>
-</span><span id="LogParser-257"><a href="#LogParser-257"><span class="linenos">257</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="LogParser-258"><a href="#LogParser-258"><span class="linenos">258</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
-</span><span id="LogParser-259"><a href="#LogParser-259"><span class="linenos">259</span></a>
-</span><span id="LogParser-260"><a href="#LogParser-260"><span class="linenos">260</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
-</span><span id="LogParser-261"><a href="#LogParser-261"><span class="linenos">261</span></a><span class="sd">        `LogParser` object as string suitable for display.</span>
-</span><span id="LogParser-262"><a href="#LogParser-262"><span class="linenos">262</span></a>
-</span><span id="LogParser-263"><a href="#LogParser-263"><span class="linenos">263</span></a><span class="sd">        Examples</span>
-</span><span id="LogParser-264"><a href="#LogParser-264"><span class="linenos">264</span></a><span class="sd">        --------</span>
-</span><span id="LogParser-265"><a href="#LogParser-265"><span class="linenos">265</span></a><span class="sd">        Create a `LogParser` object like this:</span>
-</span><span id="LogParser-266"><a href="#LogParser-266"><span class="linenos">266</span></a>
-</span><span id="LogParser-267"><a href="#LogParser-267"><span class="linenos">267</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
-</span><span id="LogParser-268"><a href="#LogParser-268"><span class="linenos">268</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="LogParser-269"><a href="#LogParser-269"><span class="linenos">269</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
-</span><span id="LogParser-270"><a href="#LogParser-270"><span class="linenos">270</span></a>
-</span><span id="LogParser-271"><a href="#LogParser-271"><span class="linenos">271</span></a><span class="sd">        When you print it, the following is displayed:</span>
-</span><span id="LogParser-272"><a href="#LogParser-272"><span class="linenos">272</span></a>
-</span><span id="LogParser-273"><a href="#LogParser-273"><span class="linenos">273</span></a><span class="sd">        &gt;&gt;&gt; print(lp)</span>
-</span><span id="LogParser-274"><a href="#LogParser-274"><span class="linenos">274</span></a><span class="sd">          ipaddress: 81.48.51.130</span>
-</span><span id="LogParser-275"><a href="#LogParser-275"><span class="linenos">275</span></a><span class="sd">             userid: -</span>
-</span><span id="LogParser-276"><a href="#LogParser-276"><span class="linenos">276</span></a><span class="sd">           username: -</span>
-</span><span id="LogParser-277"><a href="#LogParser-277"><span class="linenos">277</span></a><span class="sd">          timestamp: 24/Mar/2009:18:07:16 +0100</span>
-</span><span id="LogParser-278"><a href="#LogParser-278"><span class="linenos">278</span></a><span class="sd">        requestline: GET /images/puce.gif HTTP/1.1</span>
-</span><span id="LogParser-279"><a href="#LogParser-279"><span class="linenos">279</span></a><span class="sd">         statuscode: 304</span>
-</span><span id="LogParser-280"><a href="#LogParser-280"><span class="linenos">280</span></a><span class="sd">           datasize: 2454</span>
-</span><span id="LogParser-281"><a href="#LogParser-281"><span class="linenos">281</span></a><span class="sd">           referrer: -</span>
-</span><span id="LogParser-282"><a href="#LogParser-282"><span class="linenos">282</span></a><span class="sd">          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;</span>
-</span><span id="LogParser-283"><a href="#LogParser-283"><span class="linenos">283</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="LogParser-284"><a href="#LogParser-284"><span class="linenos">284</span></a>        <span class="n">lp_str</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="LogParser-285"><a href="#LogParser-285"><span class="linenos">285</span></a>        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">LogParser</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
-</span><span id="LogParser-286"><a href="#LogParser-286"><span class="linenos">286</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="LogParser-287"><a href="#LogParser-287"><span class="linenos">287</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
-</span><span id="LogParser-288"><a href="#LogParser-288"><span class="linenos">288</span></a>
-</span><span id="LogParser-289"><a href="#LogParser-289"><span class="linenos">289</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="LogParser-290"><a href="#LogParser-290"><span class="linenos">290</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
-</span><span id="LogParser-291"><a href="#LogParser-291"><span class="linenos">291</span></a>
-</span><span id="LogParser-292"><a href="#LogParser-292"><span class="linenos">292</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
-</span><span id="LogParser-293"><a href="#LogParser-293"><span class="linenos">293</span></a><span class="sd">        between two `LogParser` objects.</span>
-</span><span id="LogParser-294"><a href="#LogParser-294"><span class="linenos">294</span></a>
-</span><span id="LogParser-295"><a href="#LogParser-295"><span class="linenos">295</span></a><span class="sd">        Parameters</span>
-</span><span id="LogParser-296"><a href="#LogParser-296"><span class="linenos">296</span></a><span class="sd">        ----------</span>
-</span><span id="LogParser-297"><a href="#LogParser-297"><span class="linenos">297</span></a><span class="sd">        other : Any</span>
-</span><span id="LogParser-298"><a href="#LogParser-298"><span class="linenos">298</span></a><span class="sd">            An object used for comparison (the right-hand side of ==).</span>
-</span><span id="LogParser-299"><a href="#LogParser-299"><span class="linenos">299</span></a>
-</span><span id="LogParser-300"><a href="#LogParser-300"><span class="linenos">300</span></a><span class="sd">        Returns</span>
-</span><span id="LogParser-301"><a href="#LogParser-301"><span class="linenos">301</span></a><span class="sd">        -------</span>
-</span><span id="LogParser-302"><a href="#LogParser-302"><span class="linenos">302</span></a><span class="sd">        bool</span>
-</span><span id="LogParser-303"><a href="#LogParser-303"><span class="linenos">303</span></a><span class="sd">            True it two `LogParser` objects are equal, False otherwise.</span>
-</span><span id="LogParser-304"><a href="#LogParser-304"><span class="linenos">304</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="LogParser-305"><a href="#LogParser-305"><span class="linenos">305</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-</span><span id="LogParser-306"><a href="#LogParser-306"><span class="linenos">306</span></a>            <span class="k">return</span> <span class="kc">False</span>
-</span><span id="LogParser-307"><a href="#LogParser-307"><span class="linenos">307</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">vars</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+</span><span id="LogParser-122"><a href="#LogParser-122"><span class="linenos">122</span></a><span class="sd">        attributes within an object. Parameters to the initializer are</span>
+</span><span id="LogParser-123"><a href="#LogParser-123"><span class="linenos">123</span></a><span class="sd">        discussed below.</span>
+</span><span id="LogParser-124"><a href="#LogParser-124"><span class="linenos">124</span></a>
+</span><span id="LogParser-125"><a href="#LogParser-125"><span class="linenos">125</span></a><span class="sd">        Parameters</span>
+</span><span id="LogParser-126"><a href="#LogParser-126"><span class="linenos">126</span></a><span class="sd">        ---------</span>
+</span><span id="LogParser-127"><a href="#LogParser-127"><span class="linenos">127</span></a><span class="sd">        line : str</span>
+</span><span id="LogParser-128"><a href="#LogParser-128"><span class="linenos">128</span></a><span class="sd">            A single line from an Apache access log.</span>
+</span><span id="LogParser-129"><a href="#LogParser-129"><span class="linenos">129</span></a><span class="sd">        timezone : TZ, optional</span>
+</span><span id="LogParser-130"><a href="#LogParser-130"><span class="linenos">130</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
+</span><span id="LogParser-131"><a href="#LogParser-131"><span class="linenos">131</span></a><span class="sd">            object to match a particular timezone. Default is</span>
+</span><span id="LogParser-132"><a href="#LogParser-132"><span class="linenos">132</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
+</span><span id="LogParser-133"><a href="#LogParser-133"><span class="linenos">133</span></a><span class="sd">            timestamp to [UTC](https:\</span>
+</span><span id="LogParser-134"><a href="#LogParser-134"><span class="linenos">134</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
+</span><span id="LogParser-135"><a href="#LogParser-135"><span class="linenos">135</span></a><span class="sd">            is TZ.original.</span>
+</span><span id="LogParser-136"><a href="#LogParser-136"><span class="linenos">136</span></a><span class="sd">        dts_format : FMT, optional</span>
+</span><span id="LogParser-137"><a href="#LogParser-137"><span class="linenos">137</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
+</span><span id="LogParser-138"><a href="#LogParser-138"><span class="linenos">138</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
+</span><span id="LogParser-139"><a href="#LogParser-139"><span class="linenos">139</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
+</span><span id="LogParser-140"><a href="#LogParser-140"><span class="linenos">140</span></a><span class="sd">            Python [datetime object](https:\</span>
+</span><span id="LogParser-141"><a href="#LogParser-141"><span class="linenos">141</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
+</span><span id="LogParser-142"><a href="#LogParser-142"><span class="linenos">142</span></a><span class="sd">            FMT.string.</span>
+</span><span id="LogParser-143"><a href="#LogParser-143"><span class="linenos">143</span></a>
+</span><span id="LogParser-144"><a href="#LogParser-144"><span class="linenos">144</span></a><span class="sd">        Attributes</span>
+</span><span id="LogParser-145"><a href="#LogParser-145"><span class="linenos">145</span></a><span class="sd">        ----------</span>
+</span><span id="LogParser-146"><a href="#LogParser-146"><span class="linenos">146</span></a><span class="sd">        datasize : int</span>
+</span><span id="LogParser-147"><a href="#LogParser-147"><span class="linenos">147</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
+</span><span id="LogParser-148"><a href="#LogParser-148"><span class="linenos">148</span></a><span class="sd">        ipaddress : str</span>
+</span><span id="LogParser-149"><a href="#LogParser-149"><span class="linenos">149</span></a><span class="sd">            The remote host (the client IP).</span>
+</span><span id="LogParser-150"><a href="#LogParser-150"><span class="linenos">150</span></a><span class="sd">        referrer : str</span>
+</span><span id="LogParser-151"><a href="#LogParser-151"><span class="linenos">151</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
+</span><span id="LogParser-152"><a href="#LogParser-152"><span class="linenos">152</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
+</span><span id="LogParser-153"><a href="#LogParser-153"><span class="linenos">153</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
+</span><span id="LogParser-154"><a href="#LogParser-154"><span class="linenos">154</span></a><span class="sd">        requestline : str</span>
+</span><span id="LogParser-155"><a href="#LogParser-155"><span class="linenos">155</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
+</span><span id="LogParser-156"><a href="#LogParser-156"><span class="linenos">156</span></a><span class="sd">        statuscode : int</span>
+</span><span id="LogParser-157"><a href="#LogParser-157"><span class="linenos">157</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
+</span><span id="LogParser-158"><a href="#LogParser-158"><span class="linenos">158</span></a><span class="sd">            `404`, etc.).</span>
+</span><span id="LogParser-159"><a href="#LogParser-159"><span class="linenos">159</span></a><span class="sd">        timestamp : str | dt.datetime</span>
+</span><span id="LogParser-160"><a href="#LogParser-160"><span class="linenos">160</span></a><span class="sd">            The date and time of the request in the following format:</span>
+</span><span id="LogParser-161"><a href="#LogParser-161"><span class="linenos">161</span></a>
+</span><span id="LogParser-162"><a href="#LogParser-162"><span class="linenos">162</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
+</span><span id="LogParser-163"><a href="#LogParser-163"><span class="linenos">163</span></a>
+</span><span id="LogParser-164"><a href="#LogParser-164"><span class="linenos">164</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
+</span><span id="LogParser-165"><a href="#LogParser-165"><span class="linenos">165</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
+</span><span id="LogParser-166"><a href="#LogParser-166"><span class="linenos">166</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
+</span><span id="LogParser-167"><a href="#LogParser-167"><span class="linenos">167</span></a><span class="sd">            are east of Greenwich.</span>
+</span><span id="LogParser-168"><a href="#LogParser-168"><span class="linenos">168</span></a><span class="sd">        useragent : str</span>
+</span><span id="LogParser-169"><a href="#LogParser-169"><span class="linenos">169</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
+</span><span id="LogParser-170"><a href="#LogParser-170"><span class="linenos">170</span></a><span class="sd">            otherwise.</span>
+</span><span id="LogParser-171"><a href="#LogParser-171"><span class="linenos">171</span></a><span class="sd">        userid : str</span>
+</span><span id="LogParser-172"><a href="#LogParser-172"><span class="linenos">172</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
+</span><span id="LogParser-173"><a href="#LogParser-173"><span class="linenos">173</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
+</span><span id="LogParser-174"><a href="#LogParser-174"><span class="linenos">174</span></a><span class="sd">            attribute is set to `-`.</span>
+</span><span id="LogParser-175"><a href="#LogParser-175"><span class="linenos">175</span></a><span class="sd">        username : str</span>
+</span><span id="LogParser-176"><a href="#LogParser-176"><span class="linenos">176</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
+</span><span id="LogParser-177"><a href="#LogParser-177"><span class="linenos">177</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
+</span><span id="LogParser-178"><a href="#LogParser-178"><span class="linenos">178</span></a>
+</span><span id="LogParser-179"><a href="#LogParser-179"><span class="linenos">179</span></a><span class="sd">        Examples</span>
+</span><span id="LogParser-180"><a href="#LogParser-180"><span class="linenos">180</span></a><span class="sd">        --------</span>
+</span><span id="LogParser-181"><a href="#LogParser-181"><span class="linenos">181</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
+</span><span id="LogParser-182"><a href="#LogParser-182"><span class="linenos">182</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
+</span><span id="LogParser-183"><a href="#LogParser-183"><span class="linenos">183</span></a><span class="sd">        string.</span>
+</span><span id="LogParser-184"><a href="#LogParser-184"><span class="linenos">184</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
+</span><span id="LogParser-185"><a href="#LogParser-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="LogParser-186"><a href="#LogParser-186"><span class="linenos">186</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
+</span><span id="LogParser-187"><a href="#LogParser-187"><span class="linenos">187</span></a>
+</span><span id="LogParser-188"><a href="#LogParser-188"><span class="linenos">188</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
+</span><span id="LogParser-189"><a href="#LogParser-189"><span class="linenos">189</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
+</span><span id="LogParser-190"><a href="#LogParser-190"><span class="linenos">190</span></a><span class="sd">        [datetime object](https:\</span>
+</span><span id="LogParser-191"><a href="#LogParser-191"><span class="linenos">191</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
+</span><span id="LogParser-192"><a href="#LogParser-192"><span class="linenos">192</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
+</span><span id="LogParser-193"><a href="#LogParser-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="LogParser-194"><a href="#LogParser-194"><span class="linenos">194</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
+</span><span id="LogParser-195"><a href="#LogParser-195"><span class="linenos">195</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="LogParser-196"><a href="#LogParser-196"><span class="linenos">196</span></a>        <span class="c1"># Initialize data fields</span>
+</span><span id="LogParser-197"><a href="#LogParser-197"><span class="linenos">197</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-198"><a href="#LogParser-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-199"><a href="#LogParser-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-200"><a href="#LogParser-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-201"><a href="#LogParser-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-202"><a href="#LogParser-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser-203"><a href="#LogParser-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser-204"><a href="#LogParser-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-205"><a href="#LogParser-205"><span class="linenos">205</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser-206"><a href="#LogParser-206"><span class="linenos">206</span></a>
+</span><span id="LogParser-207"><a href="#LogParser-207"><span class="linenos">207</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="LogParser-208"><a href="#LogParser-208"><span class="linenos">208</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser-209"><a href="#LogParser-209"><span class="linenos">209</span></a>            <span class="k">return</span>
+</span><span id="LogParser-210"><a href="#LogParser-210"><span class="linenos">210</span></a>
+</span><span id="LogParser-211"><a href="#LogParser-211"><span class="linenos">211</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+</span><span id="LogParser-212"><a href="#LogParser-212"><span class="linenos">212</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="LogParser-213"><a href="#LogParser-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="LogParser-214"><a href="#LogParser-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="LogParser-215"><a href="#LogParser-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="LogParser-216"><a href="#LogParser-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="LogParser-217"><a href="#LogParser-217"><span class="linenos">217</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</span><span id="LogParser-218"><a href="#LogParser-218"><span class="linenos">218</span></a>            <span class="k">try</span><span class="p">:</span>
+</span><span id="LogParser-219"><a href="#LogParser-219"><span class="linenos">219</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</span><span id="LogParser-220"><a href="#LogParser-220"><span class="linenos">220</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="LogParser-221"><a href="#LogParser-221"><span class="linenos">221</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser-222"><a href="#LogParser-222"><span class="linenos">222</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="LogParser-223"><a href="#LogParser-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span id="LogParser-224"><a href="#LogParser-224"><span class="linenos">224</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="LogParser-225"><a href="#LogParser-225"><span class="linenos">225</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser-226"><a href="#LogParser-226"><span class="linenos">226</span></a>            <span class="k">return</span>
+</span><span id="LogParser-227"><a href="#LogParser-227"><span class="linenos">227</span></a>
+</span><span id="LogParser-228"><a href="#LogParser-228"><span class="linenos">228</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
+</span><span id="LogParser-229"><a href="#LogParser-229"><span class="linenos">229</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
+</span><span id="LogParser-230"><a href="#LogParser-230"><span class="linenos">230</span></a>        <span class="c1"># as an invalid date.</span>
+</span><span id="LogParser-231"><a href="#LogParser-231"><span class="linenos">231</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="LogParser-232"><a href="#LogParser-232"><span class="linenos">232</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+</span><span id="LogParser-233"><a href="#LogParser-233"><span class="linenos">233</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
+</span><span id="LogParser-234"><a href="#LogParser-234"><span class="linenos">234</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
+</span><span id="LogParser-235"><a href="#LogParser-235"><span class="linenos">235</span></a>            <span class="p">)</span>
+</span><span id="LogParser-236"><a href="#LogParser-236"><span class="linenos">236</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="LogParser-237"><a href="#LogParser-237"><span class="linenos">237</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser-238"><a href="#LogParser-238"><span class="linenos">238</span></a>            <span class="k">return</span>
+</span><span id="LogParser-239"><a href="#LogParser-239"><span class="linenos">239</span></a>
+</span><span id="LogParser-240"><a href="#LogParser-240"><span class="linenos">240</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
+</span><span id="LogParser-241"><a href="#LogParser-241"><span class="linenos">241</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="LogParser-242"><a href="#LogParser-242"><span class="linenos">242</span></a>
+</span><span id="LogParser-243"><a href="#LogParser-243"><span class="linenos">243</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
+</span><span id="LogParser-244"><a href="#LogParser-244"><span class="linenos">244</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
+</span><span id="LogParser-245"><a href="#LogParser-245"><span class="linenos">245</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
+</span><span id="LogParser-246"><a href="#LogParser-246"><span class="linenos">246</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
+</span><span id="LogParser-247"><a href="#LogParser-247"><span class="linenos">247</span></a>
+</span><span id="LogParser-248"><a href="#LogParser-248"><span class="linenos">248</span></a>        <span class="k">return</span>
+</span><span id="LogParser-249"><a href="#LogParser-249"><span class="linenos">249</span></a>
+</span><span id="LogParser-250"><a href="#LogParser-250"><span class="linenos">250</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="LogParser-251"><a href="#LogParser-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
+</span><span id="LogParser-252"><a href="#LogParser-252"><span class="linenos">252</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="LogParser-253"><a href="#LogParser-253"><span class="linenos">253</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="LogParser-254"><a href="#LogParser-254"><span class="linenos">254</span></a>        <span class="k">return</span>
+</span><span id="LogParser-255"><a href="#LogParser-255"><span class="linenos">255</span></a>
+</span><span id="LogParser-256"><a href="#LogParser-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="LogParser-257"><a href="#LogParser-257"><span class="linenos">257</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
+</span><span id="LogParser-258"><a href="#LogParser-258"><span class="linenos">258</span></a>
+</span><span id="LogParser-259"><a href="#LogParser-259"><span class="linenos">259</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
+</span><span id="LogParser-260"><a href="#LogParser-260"><span class="linenos">260</span></a><span class="sd">        `LogParser` object as string suitable for display.</span>
+</span><span id="LogParser-261"><a href="#LogParser-261"><span class="linenos">261</span></a>
+</span><span id="LogParser-262"><a href="#LogParser-262"><span class="linenos">262</span></a><span class="sd">        Examples</span>
+</span><span id="LogParser-263"><a href="#LogParser-263"><span class="linenos">263</span></a><span class="sd">        --------</span>
+</span><span id="LogParser-264"><a href="#LogParser-264"><span class="linenos">264</span></a><span class="sd">        Create a `LogParser` object like this:</span>
+</span><span id="LogParser-265"><a href="#LogParser-265"><span class="linenos">265</span></a>
+</span><span id="LogParser-266"><a href="#LogParser-266"><span class="linenos">266</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
+</span><span id="LogParser-267"><a href="#LogParser-267"><span class="linenos">267</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="LogParser-268"><a href="#LogParser-268"><span class="linenos">268</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
+</span><span id="LogParser-269"><a href="#LogParser-269"><span class="linenos">269</span></a>
+</span><span id="LogParser-270"><a href="#LogParser-270"><span class="linenos">270</span></a><span class="sd">        When you print it, the following is displayed:</span>
+</span><span id="LogParser-271"><a href="#LogParser-271"><span class="linenos">271</span></a>
+</span><span id="LogParser-272"><a href="#LogParser-272"><span class="linenos">272</span></a><span class="sd">        &gt;&gt;&gt; print(lp)</span>
+</span><span id="LogParser-273"><a href="#LogParser-273"><span class="linenos">273</span></a><span class="sd">          ipaddress: 81.48.51.130</span>
+</span><span id="LogParser-274"><a href="#LogParser-274"><span class="linenos">274</span></a><span class="sd">             userid: -</span>
+</span><span id="LogParser-275"><a href="#LogParser-275"><span class="linenos">275</span></a><span class="sd">           username: -</span>
+</span><span id="LogParser-276"><a href="#LogParser-276"><span class="linenos">276</span></a><span class="sd">          timestamp: 24/Mar/2009:18:07:16 +0100</span>
+</span><span id="LogParser-277"><a href="#LogParser-277"><span class="linenos">277</span></a><span class="sd">        requestline: GET /images/puce.gif HTTP/1.1</span>
+</span><span id="LogParser-278"><a href="#LogParser-278"><span class="linenos">278</span></a><span class="sd">         statuscode: 304</span>
+</span><span id="LogParser-279"><a href="#LogParser-279"><span class="linenos">279</span></a><span class="sd">           datasize: 2454</span>
+</span><span id="LogParser-280"><a href="#LogParser-280"><span class="linenos">280</span></a><span class="sd">           referrer: -</span>
+</span><span id="LogParser-281"><a href="#LogParser-281"><span class="linenos">281</span></a><span class="sd">          useragent: Mozilla/4.0 compatible; MSIE 7.0; Windows NT 5.1;</span>
+</span><span id="LogParser-282"><a href="#LogParser-282"><span class="linenos">282</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="LogParser-283"><a href="#LogParser-283"><span class="linenos">283</span></a>        <span class="n">lp_str</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="LogParser-284"><a href="#LogParser-284"><span class="linenos">284</span></a>        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">LogParser</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
+</span><span id="LogParser-285"><a href="#LogParser-285"><span class="linenos">285</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="LogParser-286"><a href="#LogParser-286"><span class="linenos">286</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
+</span><span id="LogParser-287"><a href="#LogParser-287"><span class="linenos">287</span></a>
+</span><span id="LogParser-288"><a href="#LogParser-288"><span class="linenos">288</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="LogParser-289"><a href="#LogParser-289"><span class="linenos">289</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
+</span><span id="LogParser-290"><a href="#LogParser-290"><span class="linenos">290</span></a>
+</span><span id="LogParser-291"><a href="#LogParser-291"><span class="linenos">291</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
+</span><span id="LogParser-292"><a href="#LogParser-292"><span class="linenos">292</span></a><span class="sd">        between two `LogParser` objects.</span>
+</span><span id="LogParser-293"><a href="#LogParser-293"><span class="linenos">293</span></a>
+</span><span id="LogParser-294"><a href="#LogParser-294"><span class="linenos">294</span></a><span class="sd">        Parameters</span>
+</span><span id="LogParser-295"><a href="#LogParser-295"><span class="linenos">295</span></a><span class="sd">        ----------</span>
+</span><span id="LogParser-296"><a href="#LogParser-296"><span class="linenos">296</span></a><span class="sd">        other : Any</span>
+</span><span id="LogParser-297"><a href="#LogParser-297"><span class="linenos">297</span></a><span class="sd">            An object used for comparison (the right-hand side of ==).</span>
+</span><span id="LogParser-298"><a href="#LogParser-298"><span class="linenos">298</span></a>
+</span><span id="LogParser-299"><a href="#LogParser-299"><span class="linenos">299</span></a><span class="sd">        Returns</span>
+</span><span id="LogParser-300"><a href="#LogParser-300"><span class="linenos">300</span></a><span class="sd">        -------</span>
+</span><span id="LogParser-301"><a href="#LogParser-301"><span class="linenos">301</span></a><span class="sd">        bool</span>
+</span><span id="LogParser-302"><a href="#LogParser-302"><span class="linenos">302</span></a><span class="sd">            True it two `LogParser` objects are equal, False otherwise.</span>
+</span><span id="LogParser-303"><a href="#LogParser-303"><span class="linenos">303</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="LogParser-304"><a href="#LogParser-304"><span class="linenos">304</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+</span><span id="LogParser-305"><a href="#LogParser-305"><span class="linenos">305</span></a>            <span class="k">return</span> <span class="kc">False</span>
+</span><span id="LogParser-306"><a href="#LogParser-306"><span class="linenos">306</span></a>        <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">vars</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -861,134 +859,133 @@ below.</p>
 </span><span id="LogParser.__init__-119"><a href="#LogParser.__init__-119"><span class="linenos">119</span></a>
 </span><span id="LogParser.__init__-120"><a href="#LogParser.__init__-120"><span class="linenos">120</span></a><span class="sd">        The class initializer takes a single line (as a string) from an</span>
 </span><span id="LogParser.__init__-121"><a href="#LogParser.__init__-121"><span class="linenos">121</span></a><span class="sd">        Apache access log file and extracts the individual fields into</span>
-</span><span id="LogParser.__init__-122"><a href="#LogParser.__init__-122"><span class="linenos">122</span></a><span class="sd">        attributes within an object. Optional parameters (discussed</span>
-</span><span id="LogParser.__init__-123"><a href="#LogParser.__init__-123"><span class="linenos">123</span></a><span class="sd">        below) allow for customizing the timezone and format for storing</span>
-</span><span id="LogParser.__init__-124"><a href="#LogParser.__init__-124"><span class="linenos">124</span></a><span class="sd">        dates and times.</span>
-</span><span id="LogParser.__init__-125"><a href="#LogParser.__init__-125"><span class="linenos">125</span></a>
-</span><span id="LogParser.__init__-126"><a href="#LogParser.__init__-126"><span class="linenos">126</span></a><span class="sd">        Parameters</span>
-</span><span id="LogParser.__init__-127"><a href="#LogParser.__init__-127"><span class="linenos">127</span></a><span class="sd">        ---------</span>
-</span><span id="LogParser.__init__-128"><a href="#LogParser.__init__-128"><span class="linenos">128</span></a><span class="sd">        line : str</span>
-</span><span id="LogParser.__init__-129"><a href="#LogParser.__init__-129"><span class="linenos">129</span></a><span class="sd">            A single line from an Apache access log.</span>
-</span><span id="LogParser.__init__-130"><a href="#LogParser.__init__-130"><span class="linenos">130</span></a><span class="sd">        timezone : TZ, optional</span>
-</span><span id="LogParser.__init__-131"><a href="#LogParser.__init__-131"><span class="linenos">131</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
-</span><span id="LogParser.__init__-132"><a href="#LogParser.__init__-132"><span class="linenos">132</span></a><span class="sd">            object to match a particular timezone. Default is</span>
-</span><span id="LogParser.__init__-133"><a href="#LogParser.__init__-133"><span class="linenos">133</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
-</span><span id="LogParser.__init__-134"><a href="#LogParser.__init__-134"><span class="linenos">134</span></a><span class="sd">            timestamp to [UTC](https:\</span>
-</span><span id="LogParser.__init__-135"><a href="#LogParser.__init__-135"><span class="linenos">135</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
-</span><span id="LogParser.__init__-136"><a href="#LogParser.__init__-136"><span class="linenos">136</span></a><span class="sd">            is TZ.original.</span>
-</span><span id="LogParser.__init__-137"><a href="#LogParser.__init__-137"><span class="linenos">137</span></a><span class="sd">        dts_format : FMT, optional</span>
-</span><span id="LogParser.__init__-138"><a href="#LogParser.__init__-138"><span class="linenos">138</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
-</span><span id="LogParser.__init__-139"><a href="#LogParser.__init__-139"><span class="linenos">139</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
-</span><span id="LogParser.__init__-140"><a href="#LogParser.__init__-140"><span class="linenos">140</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
-</span><span id="LogParser.__init__-141"><a href="#LogParser.__init__-141"><span class="linenos">141</span></a><span class="sd">            Python [datetime object](https:\</span>
-</span><span id="LogParser.__init__-142"><a href="#LogParser.__init__-142"><span class="linenos">142</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
-</span><span id="LogParser.__init__-143"><a href="#LogParser.__init__-143"><span class="linenos">143</span></a><span class="sd">            FMT.string.</span>
-</span><span id="LogParser.__init__-144"><a href="#LogParser.__init__-144"><span class="linenos">144</span></a>
-</span><span id="LogParser.__init__-145"><a href="#LogParser.__init__-145"><span class="linenos">145</span></a><span class="sd">        Attributes</span>
-</span><span id="LogParser.__init__-146"><a href="#LogParser.__init__-146"><span class="linenos">146</span></a><span class="sd">        ----------</span>
-</span><span id="LogParser.__init__-147"><a href="#LogParser.__init__-147"><span class="linenos">147</span></a><span class="sd">        datasize : int</span>
-</span><span id="LogParser.__init__-148"><a href="#LogParser.__init__-148"><span class="linenos">148</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
-</span><span id="LogParser.__init__-149"><a href="#LogParser.__init__-149"><span class="linenos">149</span></a><span class="sd">        ipaddress : str</span>
-</span><span id="LogParser.__init__-150"><a href="#LogParser.__init__-150"><span class="linenos">150</span></a><span class="sd">            The remote host (the client IP).</span>
-</span><span id="LogParser.__init__-151"><a href="#LogParser.__init__-151"><span class="linenos">151</span></a><span class="sd">        referrer : str</span>
-</span><span id="LogParser.__init__-152"><a href="#LogParser.__init__-152"><span class="linenos">152</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
-</span><span id="LogParser.__init__-153"><a href="#LogParser.__init__-153"><span class="linenos">153</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
-</span><span id="LogParser.__init__-154"><a href="#LogParser.__init__-154"><span class="linenos">154</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
-</span><span id="LogParser.__init__-155"><a href="#LogParser.__init__-155"><span class="linenos">155</span></a><span class="sd">        requestline : str</span>
-</span><span id="LogParser.__init__-156"><a href="#LogParser.__init__-156"><span class="linenos">156</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
-</span><span id="LogParser.__init__-157"><a href="#LogParser.__init__-157"><span class="linenos">157</span></a><span class="sd">        statuscode : int</span>
-</span><span id="LogParser.__init__-158"><a href="#LogParser.__init__-158"><span class="linenos">158</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
-</span><span id="LogParser.__init__-159"><a href="#LogParser.__init__-159"><span class="linenos">159</span></a><span class="sd">            `404`, etc.).</span>
-</span><span id="LogParser.__init__-160"><a href="#LogParser.__init__-160"><span class="linenos">160</span></a><span class="sd">        timestamp : str | dt.datetime</span>
-</span><span id="LogParser.__init__-161"><a href="#LogParser.__init__-161"><span class="linenos">161</span></a><span class="sd">            The date and time of the request in the following format:</span>
-</span><span id="LogParser.__init__-162"><a href="#LogParser.__init__-162"><span class="linenos">162</span></a>
-</span><span id="LogParser.__init__-163"><a href="#LogParser.__init__-163"><span class="linenos">163</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
-</span><span id="LogParser.__init__-164"><a href="#LogParser.__init__-164"><span class="linenos">164</span></a>
-</span><span id="LogParser.__init__-165"><a href="#LogParser.__init__-165"><span class="linenos">165</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
-</span><span id="LogParser.__init__-166"><a href="#LogParser.__init__-166"><span class="linenos">166</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
-</span><span id="LogParser.__init__-167"><a href="#LogParser.__init__-167"><span class="linenos">167</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
-</span><span id="LogParser.__init__-168"><a href="#LogParser.__init__-168"><span class="linenos">168</span></a><span class="sd">            are east of Greenwich.</span>
-</span><span id="LogParser.__init__-169"><a href="#LogParser.__init__-169"><span class="linenos">169</span></a><span class="sd">        useragent : str</span>
-</span><span id="LogParser.__init__-170"><a href="#LogParser.__init__-170"><span class="linenos">170</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
-</span><span id="LogParser.__init__-171"><a href="#LogParser.__init__-171"><span class="linenos">171</span></a><span class="sd">            otherwise.</span>
-</span><span id="LogParser.__init__-172"><a href="#LogParser.__init__-172"><span class="linenos">172</span></a><span class="sd">        userid : str</span>
-</span><span id="LogParser.__init__-173"><a href="#LogParser.__init__-173"><span class="linenos">173</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
-</span><span id="LogParser.__init__-174"><a href="#LogParser.__init__-174"><span class="linenos">174</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
-</span><span id="LogParser.__init__-175"><a href="#LogParser.__init__-175"><span class="linenos">175</span></a><span class="sd">            attribute is set to `-`.</span>
-</span><span id="LogParser.__init__-176"><a href="#LogParser.__init__-176"><span class="linenos">176</span></a><span class="sd">        username : str</span>
-</span><span id="LogParser.__init__-177"><a href="#LogParser.__init__-177"><span class="linenos">177</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
-</span><span id="LogParser.__init__-178"><a href="#LogParser.__init__-178"><span class="linenos">178</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
-</span><span id="LogParser.__init__-179"><a href="#LogParser.__init__-179"><span class="linenos">179</span></a>
-</span><span id="LogParser.__init__-180"><a href="#LogParser.__init__-180"><span class="linenos">180</span></a><span class="sd">        Examples</span>
-</span><span id="LogParser.__init__-181"><a href="#LogParser.__init__-181"><span class="linenos">181</span></a><span class="sd">        --------</span>
-</span><span id="LogParser.__init__-182"><a href="#LogParser.__init__-182"><span class="linenos">182</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
-</span><span id="LogParser.__init__-183"><a href="#LogParser.__init__-183"><span class="linenos">183</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
-</span><span id="LogParser.__init__-184"><a href="#LogParser.__init__-184"><span class="linenos">184</span></a><span class="sd">        string.</span>
-</span><span id="LogParser.__init__-185"><a href="#LogParser.__init__-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
-</span><span id="LogParser.__init__-186"><a href="#LogParser.__init__-186"><span class="linenos">186</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="LogParser.__init__-187"><a href="#LogParser.__init__-187"><span class="linenos">187</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
-</span><span id="LogParser.__init__-188"><a href="#LogParser.__init__-188"><span class="linenos">188</span></a>
-</span><span id="LogParser.__init__-189"><a href="#LogParser.__init__-189"><span class="linenos">189</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
-</span><span id="LogParser.__init__-190"><a href="#LogParser.__init__-190"><span class="linenos">190</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
-</span><span id="LogParser.__init__-191"><a href="#LogParser.__init__-191"><span class="linenos">191</span></a><span class="sd">        [datetime object](https:\</span>
-</span><span id="LogParser.__init__-192"><a href="#LogParser.__init__-192"><span class="linenos">192</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
-</span><span id="LogParser.__init__-193"><a href="#LogParser.__init__-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
-</span><span id="LogParser.__init__-194"><a href="#LogParser.__init__-194"><span class="linenos">194</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
-</span><span id="LogParser.__init__-195"><a href="#LogParser.__init__-195"><span class="linenos">195</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
-</span><span id="LogParser.__init__-196"><a href="#LogParser.__init__-196"><span class="linenos">196</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="LogParser.__init__-197"><a href="#LogParser.__init__-197"><span class="linenos">197</span></a>        <span class="c1"># Initialize data fields</span>
-</span><span id="LogParser.__init__-198"><a href="#LogParser.__init__-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-199"><a href="#LogParser.__init__-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-200"><a href="#LogParser.__init__-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-201"><a href="#LogParser.__init__-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-202"><a href="#LogParser.__init__-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-203"><a href="#LogParser.__init__-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser.__init__-204"><a href="#LogParser.__init__-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser.__init__-205"><a href="#LogParser.__init__-205"><span class="linenos">205</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-206"><a href="#LogParser.__init__-206"><span class="linenos">206</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="LogParser.__init__-207"><a href="#LogParser.__init__-207"><span class="linenos">207</span></a>
-</span><span id="LogParser.__init__-208"><a href="#LogParser.__init__-208"><span class="linenos">208</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="LogParser.__init__-209"><a href="#LogParser.__init__-209"><span class="linenos">209</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser.__init__-210"><a href="#LogParser.__init__-210"><span class="linenos">210</span></a>            <span class="k">return</span>
-</span><span id="LogParser.__init__-211"><a href="#LogParser.__init__-211"><span class="linenos">211</span></a>
-</span><span id="LogParser.__init__-212"><a href="#LogParser.__init__-212"><span class="linenos">212</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-</span><span id="LogParser.__init__-213"><a href="#LogParser.__init__-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="LogParser.__init__-214"><a href="#LogParser.__init__-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="LogParser.__init__-215"><a href="#LogParser.__init__-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span id="LogParser.__init__-216"><a href="#LogParser.__init__-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="LogParser.__init__-217"><a href="#LogParser.__init__-217"><span class="linenos">217</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span id="LogParser.__init__-218"><a href="#LogParser.__init__-218"><span class="linenos">218</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
-</span><span id="LogParser.__init__-219"><a href="#LogParser.__init__-219"><span class="linenos">219</span></a>            <span class="k">try</span><span class="p">:</span>
-</span><span id="LogParser.__init__-220"><a href="#LogParser.__init__-220"><span class="linenos">220</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
-</span><span id="LogParser.__init__-221"><a href="#LogParser.__init__-221"><span class="linenos">221</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="LogParser.__init__-222"><a href="#LogParser.__init__-222"><span class="linenos">222</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="LogParser.__init__-223"><a href="#LogParser.__init__-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span><span id="LogParser.__init__-224"><a href="#LogParser.__init__-224"><span class="linenos">224</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
-</span><span id="LogParser.__init__-225"><a href="#LogParser.__init__-225"><span class="linenos">225</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="LogParser.__init__-226"><a href="#LogParser.__init__-226"><span class="linenos">226</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser.__init__-227"><a href="#LogParser.__init__-227"><span class="linenos">227</span></a>            <span class="k">return</span>
-</span><span id="LogParser.__init__-228"><a href="#LogParser.__init__-228"><span class="linenos">228</span></a>
-</span><span id="LogParser.__init__-229"><a href="#LogParser.__init__-229"><span class="linenos">229</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
-</span><span id="LogParser.__init__-230"><a href="#LogParser.__init__-230"><span class="linenos">230</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
-</span><span id="LogParser.__init__-231"><a href="#LogParser.__init__-231"><span class="linenos">231</span></a>        <span class="c1"># as an invalid date.</span>
-</span><span id="LogParser.__init__-232"><a href="#LogParser.__init__-232"><span class="linenos">232</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="LogParser.__init__-233"><a href="#LogParser.__init__-233"><span class="linenos">233</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
-</span><span id="LogParser.__init__-234"><a href="#LogParser.__init__-234"><span class="linenos">234</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
-</span><span id="LogParser.__init__-235"><a href="#LogParser.__init__-235"><span class="linenos">235</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
-</span><span id="LogParser.__init__-236"><a href="#LogParser.__init__-236"><span class="linenos">236</span></a>            <span class="p">)</span>
-</span><span id="LogParser.__init__-237"><a href="#LogParser.__init__-237"><span class="linenos">237</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span id="LogParser.__init__-238"><a href="#LogParser.__init__-238"><span class="linenos">238</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
-</span><span id="LogParser.__init__-239"><a href="#LogParser.__init__-239"><span class="linenos">239</span></a>            <span class="k">return</span>
-</span><span id="LogParser.__init__-240"><a href="#LogParser.__init__-240"><span class="linenos">240</span></a>
-</span><span id="LogParser.__init__-241"><a href="#LogParser.__init__-241"><span class="linenos">241</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
-</span><span id="LogParser.__init__-242"><a href="#LogParser.__init__-242"><span class="linenos">242</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-</span><span id="LogParser.__init__-243"><a href="#LogParser.__init__-243"><span class="linenos">243</span></a>
-</span><span id="LogParser.__init__-244"><a href="#LogParser.__init__-244"><span class="linenos">244</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
-</span><span id="LogParser.__init__-245"><a href="#LogParser.__init__-245"><span class="linenos">245</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
-</span><span id="LogParser.__init__-246"><a href="#LogParser.__init__-246"><span class="linenos">246</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
-</span><span id="LogParser.__init__-247"><a href="#LogParser.__init__-247"><span class="linenos">247</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
-</span><span id="LogParser.__init__-248"><a href="#LogParser.__init__-248"><span class="linenos">248</span></a>
-</span><span id="LogParser.__init__-249"><a href="#LogParser.__init__-249"><span class="linenos">249</span></a>        <span class="k">return</span>
+</span><span id="LogParser.__init__-122"><a href="#LogParser.__init__-122"><span class="linenos">122</span></a><span class="sd">        attributes within an object. Parameters to the initializer are</span>
+</span><span id="LogParser.__init__-123"><a href="#LogParser.__init__-123"><span class="linenos">123</span></a><span class="sd">        discussed below.</span>
+</span><span id="LogParser.__init__-124"><a href="#LogParser.__init__-124"><span class="linenos">124</span></a>
+</span><span id="LogParser.__init__-125"><a href="#LogParser.__init__-125"><span class="linenos">125</span></a><span class="sd">        Parameters</span>
+</span><span id="LogParser.__init__-126"><a href="#LogParser.__init__-126"><span class="linenos">126</span></a><span class="sd">        ---------</span>
+</span><span id="LogParser.__init__-127"><a href="#LogParser.__init__-127"><span class="linenos">127</span></a><span class="sd">        line : str</span>
+</span><span id="LogParser.__init__-128"><a href="#LogParser.__init__-128"><span class="linenos">128</span></a><span class="sd">            A single line from an Apache access log.</span>
+</span><span id="LogParser.__init__-129"><a href="#LogParser.__init__-129"><span class="linenos">129</span></a><span class="sd">        timezone : TZ, optional</span>
+</span><span id="LogParser.__init__-130"><a href="#LogParser.__init__-130"><span class="linenos">130</span></a><span class="sd">            During parsing, adjust the timestamp of the `LogParser`</span>
+</span><span id="LogParser.__init__-131"><a href="#LogParser.__init__-131"><span class="linenos">131</span></a><span class="sd">            object to match a particular timezone. Default is</span>
+</span><span id="LogParser.__init__-132"><a href="#LogParser.__init__-132"><span class="linenos">132</span></a><span class="sd">            *TZ.original* (no adjustment). *TZ.utc* adjusts the</span>
+</span><span id="LogParser.__init__-133"><a href="#LogParser.__init__-133"><span class="linenos">133</span></a><span class="sd">            timestamp to [UTC](https:\</span>
+</span><span id="LogParser.__init__-134"><a href="#LogParser.__init__-134"><span class="linenos">134</span></a><span class="sd">            //en.wikipedia.org/wiki/Coordinated_Universal_Time), default</span>
+</span><span id="LogParser.__init__-135"><a href="#LogParser.__init__-135"><span class="linenos">135</span></a><span class="sd">            is TZ.original.</span>
+</span><span id="LogParser.__init__-136"><a href="#LogParser.__init__-136"><span class="linenos">136</span></a><span class="sd">        dts_format : FMT, optional</span>
+</span><span id="LogParser.__init__-137"><a href="#LogParser.__init__-137"><span class="linenos">137</span></a><span class="sd">            Set the format of the date timestamp attribute of the</span>
+</span><span id="LogParser.__init__-138"><a href="#LogParser.__init__-138"><span class="linenos">138</span></a><span class="sd">            `LogParser` object. Default is *FMT.string*. Using</span>
+</span><span id="LogParser.__init__-139"><a href="#LogParser.__init__-139"><span class="linenos">139</span></a><span class="sd">            *FMT.date_obj* will store the timestamp attribute as a</span>
+</span><span id="LogParser.__init__-140"><a href="#LogParser.__init__-140"><span class="linenos">140</span></a><span class="sd">            Python [datetime object](https:\</span>
+</span><span id="LogParser.__init__-141"><a href="#LogParser.__init__-141"><span class="linenos">141</span></a><span class="sd">            //docs.python.org/3/library/datetime.html), default is</span>
+</span><span id="LogParser.__init__-142"><a href="#LogParser.__init__-142"><span class="linenos">142</span></a><span class="sd">            FMT.string.</span>
+</span><span id="LogParser.__init__-143"><a href="#LogParser.__init__-143"><span class="linenos">143</span></a>
+</span><span id="LogParser.__init__-144"><a href="#LogParser.__init__-144"><span class="linenos">144</span></a><span class="sd">        Attributes</span>
+</span><span id="LogParser.__init__-145"><a href="#LogParser.__init__-145"><span class="linenos">145</span></a><span class="sd">        ----------</span>
+</span><span id="LogParser.__init__-146"><a href="#LogParser.__init__-146"><span class="linenos">146</span></a><span class="sd">        datasize : int</span>
+</span><span id="LogParser.__init__-147"><a href="#LogParser.__init__-147"><span class="linenos">147</span></a><span class="sd">            The size of the response to the client (in bytes).</span>
+</span><span id="LogParser.__init__-148"><a href="#LogParser.__init__-148"><span class="linenos">148</span></a><span class="sd">        ipaddress : str</span>
+</span><span id="LogParser.__init__-149"><a href="#LogParser.__init__-149"><span class="linenos">149</span></a><span class="sd">            The remote host (the client IP).</span>
+</span><span id="LogParser.__init__-150"><a href="#LogParser.__init__-150"><span class="linenos">150</span></a><span class="sd">        referrer : str</span>
+</span><span id="LogParser.__init__-151"><a href="#LogParser.__init__-151"><span class="linenos">151</span></a><span class="sd">            The referrer header of the HTTP request containing the URL</span>
+</span><span id="LogParser.__init__-152"><a href="#LogParser.__init__-152"><span class="linenos">152</span></a><span class="sd">            of the page from which this request was initiated. If none</span>
+</span><span id="LogParser.__init__-153"><a href="#LogParser.__init__-153"><span class="linenos">153</span></a><span class="sd">            is present, this attribute is set to `-`.</span>
+</span><span id="LogParser.__init__-154"><a href="#LogParser.__init__-154"><span class="linenos">154</span></a><span class="sd">        requestline : str</span>
+</span><span id="LogParser.__init__-155"><a href="#LogParser.__init__-155"><span class="linenos">155</span></a><span class="sd">            The request line from the client. (e.g. `&quot;GET / HTTP/1.0&quot;`).</span>
+</span><span id="LogParser.__init__-156"><a href="#LogParser.__init__-156"><span class="linenos">156</span></a><span class="sd">        statuscode : int</span>
+</span><span id="LogParser.__init__-157"><a href="#LogParser.__init__-157"><span class="linenos">157</span></a><span class="sd">            The status code sent from the server to the client (`200`,</span>
+</span><span id="LogParser.__init__-158"><a href="#LogParser.__init__-158"><span class="linenos">158</span></a><span class="sd">            `404`, etc.).</span>
+</span><span id="LogParser.__init__-159"><a href="#LogParser.__init__-159"><span class="linenos">159</span></a><span class="sd">        timestamp : str | dt.datetime</span>
+</span><span id="LogParser.__init__-160"><a href="#LogParser.__init__-160"><span class="linenos">160</span></a><span class="sd">            The date and time of the request in the following format:</span>
+</span><span id="LogParser.__init__-161"><a href="#LogParser.__init__-161"><span class="linenos">161</span></a>
+</span><span id="LogParser.__init__-162"><a href="#LogParser.__init__-162"><span class="linenos">162</span></a><span class="sd">            `dd/MMM/YYYY:HH:MM:SS –hhmm`</span>
+</span><span id="LogParser.__init__-163"><a href="#LogParser.__init__-163"><span class="linenos">163</span></a>
+</span><span id="LogParser.__init__-164"><a href="#LogParser.__init__-164"><span class="linenos">164</span></a><span class="sd">            NOTE: `-hhmm` is the time offset from Greenwich Mean Time</span>
+</span><span id="LogParser.__init__-165"><a href="#LogParser.__init__-165"><span class="linenos">165</span></a><span class="sd">            (GMT). Usually (but not always) `mm == 00`. Negative offsets</span>
+</span><span id="LogParser.__init__-166"><a href="#LogParser.__init__-166"><span class="linenos">166</span></a><span class="sd">            (`-hhmm`) are west of Greenwich; positive offsets (`+hhmm`)</span>
+</span><span id="LogParser.__init__-167"><a href="#LogParser.__init__-167"><span class="linenos">167</span></a><span class="sd">            are east of Greenwich.</span>
+</span><span id="LogParser.__init__-168"><a href="#LogParser.__init__-168"><span class="linenos">168</span></a><span class="sd">        useragent : str</span>
+</span><span id="LogParser.__init__-169"><a href="#LogParser.__init__-169"><span class="linenos">169</span></a><span class="sd">            The browser identification string if any is present, and `-`</span>
+</span><span id="LogParser.__init__-170"><a href="#LogParser.__init__-170"><span class="linenos">170</span></a><span class="sd">            otherwise.</span>
+</span><span id="LogParser.__init__-171"><a href="#LogParser.__init__-171"><span class="linenos">171</span></a><span class="sd">        userid : str</span>
+</span><span id="LogParser.__init__-172"><a href="#LogParser.__init__-172"><span class="linenos">172</span></a><span class="sd">            The identity of the user determined by `identd` (not usually</span>
+</span><span id="LogParser.__init__-173"><a href="#LogParser.__init__-173"><span class="linenos">173</span></a><span class="sd">            used since not reliable). If `identd` is not present, this</span>
+</span><span id="LogParser.__init__-174"><a href="#LogParser.__init__-174"><span class="linenos">174</span></a><span class="sd">            attribute is set to `-`.</span>
+</span><span id="LogParser.__init__-175"><a href="#LogParser.__init__-175"><span class="linenos">175</span></a><span class="sd">        username : str</span>
+</span><span id="LogParser.__init__-176"><a href="#LogParser.__init__-176"><span class="linenos">176</span></a><span class="sd">            The user name determined by HTTP authentication. If no</span>
+</span><span id="LogParser.__init__-177"><a href="#LogParser.__init__-177"><span class="linenos">177</span></a><span class="sd">            username is present, this attribute is set to `-`.</span>
+</span><span id="LogParser.__init__-178"><a href="#LogParser.__init__-178"><span class="linenos">178</span></a>
+</span><span id="LogParser.__init__-179"><a href="#LogParser.__init__-179"><span class="linenos">179</span></a><span class="sd">        Examples</span>
+</span><span id="LogParser.__init__-180"><a href="#LogParser.__init__-180"><span class="linenos">180</span></a><span class="sd">        --------</span>
+</span><span id="LogParser.__init__-181"><a href="#LogParser.__init__-181"><span class="linenos">181</span></a><span class="sd">        Creating a `LogParser` object with default options. The</span>
+</span><span id="LogParser.__init__-182"><a href="#LogParser.__init__-182"><span class="linenos">182</span></a><span class="sd">        timestamp attribute will not be adjusted and will be stored as a</span>
+</span><span id="LogParser.__init__-183"><a href="#LogParser.__init__-183"><span class="linenos">183</span></a><span class="sd">        string.</span>
+</span><span id="LogParser.__init__-184"><a href="#LogParser.__init__-184"><span class="linenos">184</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser</span>
+</span><span id="LogParser.__init__-185"><a href="#LogParser.__init__-185"><span class="linenos">185</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="LogParser.__init__-186"><a href="#LogParser.__init__-186"><span class="linenos">186</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line)</span>
+</span><span id="LogParser.__init__-187"><a href="#LogParser.__init__-187"><span class="linenos">187</span></a>
+</span><span id="LogParser.__init__-188"><a href="#LogParser.__init__-188"><span class="linenos">188</span></a><span class="sd">        Creating a `LogParser` object with custom options. The timestamp</span>
+</span><span id="LogParser.__init__-189"><a href="#LogParser.__init__-189"><span class="linenos">189</span></a><span class="sd">        attribute will be adjusted to UTC and will be stored as a Python</span>
+</span><span id="LogParser.__init__-190"><a href="#LogParser.__init__-190"><span class="linenos">190</span></a><span class="sd">        [datetime object](https:\</span>
+</span><span id="LogParser.__init__-191"><a href="#LogParser.__init__-191"><span class="linenos">191</span></a><span class="sd">        //docs.python.org/3/library/datetime.html).</span>
+</span><span id="LogParser.__init__-192"><a href="#LogParser.__init__-192"><span class="linenos">192</span></a><span class="sd">        &gt;&gt;&gt; from parser201 import LogParser, TZ, FMT</span>
+</span><span id="LogParser.__init__-193"><a href="#LogParser.__init__-193"><span class="linenos">193</span></a><span class="sd">        &gt;&gt;&gt; line = # a line from an Apache access log</span>
+</span><span id="LogParser.__init__-194"><a href="#LogParser.__init__-194"><span class="linenos">194</span></a><span class="sd">        &gt;&gt;&gt; lp = LogParser(line, timezone=TZ.utc, dts_format=FMT.date_obj)</span>
+</span><span id="LogParser.__init__-195"><a href="#LogParser.__init__-195"><span class="linenos">195</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="LogParser.__init__-196"><a href="#LogParser.__init__-196"><span class="linenos">196</span></a>        <span class="c1"># Initialize data fields</span>
+</span><span id="LogParser.__init__-197"><a href="#LogParser.__init__-197"><span class="linenos">197</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-198"><a href="#LogParser.__init__-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">userid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-199"><a href="#LogParser.__init__-199"><span class="linenos">199</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-200"><a href="#LogParser.__init__-200"><span class="linenos">200</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-201"><a href="#LogParser.__init__-201"><span class="linenos">201</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-202"><a href="#LogParser.__init__-202"><span class="linenos">202</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser.__init__-203"><a href="#LogParser.__init__-203"><span class="linenos">203</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser.__init__-204"><a href="#LogParser.__init__-204"><span class="linenos">204</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-205"><a href="#LogParser.__init__-205"><span class="linenos">205</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="LogParser.__init__-206"><a href="#LogParser.__init__-206"><span class="linenos">206</span></a>
+</span><span id="LogParser.__init__-207"><a href="#LogParser.__init__-207"><span class="linenos">207</span></a>        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="LogParser.__init__-208"><a href="#LogParser.__init__-208"><span class="linenos">208</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser.__init__-209"><a href="#LogParser.__init__-209"><span class="linenos">209</span></a>            <span class="k">return</span>
+</span><span id="LogParser.__init__-210"><a href="#LogParser.__init__-210"><span class="linenos">210</span></a>
+</span><span id="LogParser.__init__-211"><a href="#LogParser.__init__-211"><span class="linenos">211</span></a>        <span class="k">if</span> <span class="n">groups</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+</span><span id="LogParser.__init__-212"><a href="#LogParser.__init__-212"><span class="linenos">212</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">ipaddress</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="LogParser.__init__-213"><a href="#LogParser.__init__-213"><span class="linenos">213</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">userid</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="LogParser.__init__-214"><a href="#LogParser.__init__-214"><span class="linenos">214</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="LogParser.__init__-215"><a href="#LogParser.__init__-215"><span class="linenos">215</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="LogParser.__init__-216"><a href="#LogParser.__init__-216"><span class="linenos">216</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">requestline</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="LogParser.__init__-217"><a href="#LogParser.__init__-217"><span class="linenos">217</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">statuscode</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</span><span id="LogParser.__init__-218"><a href="#LogParser.__init__-218"><span class="linenos">218</span></a>            <span class="k">try</span><span class="p">:</span>
+</span><span id="LogParser.__init__-219"><a href="#LogParser.__init__-219"><span class="linenos">219</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</span><span id="LogParser.__init__-220"><a href="#LogParser.__init__-220"><span class="linenos">220</span></a>            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="LogParser.__init__-221"><a href="#LogParser.__init__-221"><span class="linenos">221</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">datasize</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="LogParser.__init__-222"><a href="#LogParser.__init__-222"><span class="linenos">222</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">referrer</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="LogParser.__init__-223"><a href="#LogParser.__init__-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">useragent</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+</span><span id="LogParser.__init__-224"><a href="#LogParser.__init__-224"><span class="linenos">224</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="LogParser.__init__-225"><a href="#LogParser.__init__-225"><span class="linenos">225</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser.__init__-226"><a href="#LogParser.__init__-226"><span class="linenos">226</span></a>            <span class="k">return</span>
+</span><span id="LogParser.__init__-227"><a href="#LogParser.__init__-227"><span class="linenos">227</span></a>
+</span><span id="LogParser.__init__-228"><a href="#LogParser.__init__-228"><span class="linenos">228</span></a>        <span class="c1"># This takes the work of ensuring valid date-time stamps from</span>
+</span><span id="LogParser.__init__-229"><a href="#LogParser.__init__-229"><span class="linenos">229</span></a>        <span class="c1"># the regex and guarantees things like &quot;Feb 31&quot; will be handled</span>
+</span><span id="LogParser.__init__-230"><a href="#LogParser.__init__-230"><span class="linenos">230</span></a>        <span class="c1"># as an invalid date.</span>
+</span><span id="LogParser.__init__-231"><a href="#LogParser.__init__-231"><span class="linenos">231</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="LogParser.__init__-232"><a href="#LogParser.__init__-232"><span class="linenos">232</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+</span><span id="LogParser.__init__-233"><a href="#LogParser.__init__-233"><span class="linenos">233</span></a>                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">),</span>
+</span><span id="LogParser.__init__-234"><a href="#LogParser.__init__-234"><span class="linenos">234</span></a>                <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">,</span>
+</span><span id="LogParser.__init__-235"><a href="#LogParser.__init__-235"><span class="linenos">235</span></a>            <span class="p">)</span>
+</span><span id="LogParser.__init__-236"><a href="#LogParser.__init__-236"><span class="linenos">236</span></a>        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span><span id="LogParser.__init__-237"><a href="#LogParser.__init__-237"><span class="linenos">237</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">__none_fields</span><span class="p">()</span>
+</span><span id="LogParser.__init__-238"><a href="#LogParser.__init__-238"><span class="linenos">238</span></a>            <span class="k">return</span>
+</span><span id="LogParser.__init__-239"><a href="#LogParser.__init__-239"><span class="linenos">239</span></a>
+</span><span id="LogParser.__init__-240"><a href="#LogParser.__init__-240"><span class="linenos">240</span></a>        <span class="k">if</span> <span class="n">timezone</span> <span class="o">==</span> <span class="n">TZ</span><span class="o">.</span><span class="n">utc</span><span class="p">:</span>
+</span><span id="LogParser.__init__-241"><a href="#LogParser.__init__-241"><span class="linenos">241</span></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="LogParser.__init__-242"><a href="#LogParser.__init__-242"><span class="linenos">242</span></a>
+</span><span id="LogParser.__init__-243"><a href="#LogParser.__init__-243"><span class="linenos">243</span></a>        <span class="k">if</span> <span class="n">dts_format</span> <span class="o">==</span> <span class="n">FMT</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
+</span><span id="LogParser.__init__-244"><a href="#LogParser.__init__-244"><span class="linenos">244</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%b/%Y:%H:%M:%S %z&quot;</span><span class="p">)</span>
+</span><span id="LogParser.__init__-245"><a href="#LogParser.__init__-245"><span class="linenos">245</span></a>        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dts_format == FMT.date_obj</span>
+</span><span id="LogParser.__init__-246"><a href="#LogParser.__init__-246"><span class="linenos">246</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">date_obj</span>
+</span><span id="LogParser.__init__-247"><a href="#LogParser.__init__-247"><span class="linenos">247</span></a>
+</span><span id="LogParser.__init__-248"><a href="#LogParser.__init__-248"><span class="linenos">248</span></a>        <span class="k">return</span>
 </span></pre></div>
 
 
@@ -996,9 +993,8 @@ below.</p>
 
 <p>The class initializer takes a single line (as a string) from an
 Apache access log file and extracts the individual fields into
-attributes within an object. Optional parameters (discussed
-below) allow for customizing the timezone and format for storing
-dates and times.</p>
+attributes within an object. Parameters to the initializer are
+discussed below.</p>
 
 <h6 id="parameters">Parameters</h6>
 
