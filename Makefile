@@ -55,7 +55,11 @@ endif
 
 .PHONY: upgrade
 upgrade: ## upgrade parser201 dependencies
-	uv lock --upgrade
+ifeq (,$(wildcard .init/dev))
+	uv sync --no-dev --upgrade
+else
+	uv sync --upgrade
+endif
 
 # --------------------------------------------
 
