@@ -10,7 +10,7 @@
 <br>
 
 <img
-src="https://github.com/geozeke/parser201/blob/main/docs/logo.png?raw=true"
+src="https://lh3.googleusercontent.com/d/1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc"
 alt="Dinobox Logo" width="120"/>
 
 ## Features
