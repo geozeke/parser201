@@ -17,12 +17,13 @@
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
         <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
         <div>
-        <img src="https://lh3.googleusercontent.com/d/1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc" class="logo" width="125" alt="project logo"/>
+    <img src=https://lh3.googleusercontent.com/d/1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc class="logo" width="125" alt="project logo"/>
     <i>Everything you need is in the box</i><br><br>
     <p>
-    Streamlined Apache Access Log Parsing<br>
-    Peter Nardi<br>
-    <a href="mailto:pete@nardi.com">pete@nardi.com</a><br>
+        Streamlined Apache Access Log Parsing<br>
+        Peter Nardi<br>
+        <a href="mailto:pete@nardi.com">pete@nardi.com</a>
+    </p>
     <hr>
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -32,7 +33,7 @@
             <ul>
   <li><a href="#installation">Installation</a></li>
   <li><a href="#usage-example">Usage Example</a></li>
-  <li><a href="#api-documentation">API Documentation</a></li>
+  <li><a href="#submodule-documentation">Submodule Documentation</a></li>
   <li><a href="#exception-handling">Exception Handling</a></li>
 </ul>
 
@@ -42,8 +43,7 @@
                     <li><a href="parser201/classes.html">classes</a></li>
             </ul>
 
-            <h2>API Documentation</h2>
-                <ul class="memberlist">
+            <ul class="memberlist">
     </ul>
 
 
@@ -60,11 +60,11 @@
                     <h1 class="modulename">
 parser201    </h1>
 
-                        <div class="docstring"><p>The parser201 module takes a single line from an Apache access log file and
-extracts the individual fields into attributes within an object. parser201 is
-robust, with support for both IPv4 and IPv6 addresses, and well as being able
-handle Apache Access Log lines containing malicious code attacks like: Mambo,
-PHPBB, SQL Injection, etc.</p>
+                        <div class="docstring"><p>The parser201 module takes a single line from an Apache access log file
+and extracts the individual fields into attributes within an object.
+parser201 is robust, with support for both IPv4 and IPv6 addresses, and
+well as being able handle Apache Access Log lines containing malicious
+code attacks like: Mambo, PHPBB, SQL Injection, etc.</p>
 
 <h2 id="installation">Installation</h2>
 
@@ -87,10 +87,10 @@ PHPBB, SQL Injection, etc.</p>
 </code></pre>
 </div>
 
-<h2 id="api-documentation">API Documentation</h2>
+<h2 id="submodule-documentation">Submodule Documentation</h2>
 
-<p>Detailed API information is available by clicking on the <code><a href="parser201/classes.html">parser201.classes</a></code>
-link.</p>
+<p>Detailed API information is available by clicking on the
+<a href="parser201/classes.html">classes</a> link under Submodules on the left.</p>
 
 <p><strong>TL/DR</strong>: Here's an example showing the attributes of a LogParser class
 object:</p>
@@ -111,8 +111,8 @@ requestline: GET /images/puce.gif HTTP/1.1
 <h2 id="exception-handling">Exception Handling</h2>
 
 <p>If a line from an Apache access log file cannot be parsed by the class
-initializer (is corrupted for some reason) the initializer returns an object
-with all the attributes set to <code>None</code>.</p>
+initializer (is corrupted for some reason) the initializer returns an
+object with all the attributes set to <code>None</code>.</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code>  ipaddress: None
