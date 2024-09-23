@@ -1,0 +1,28 @@
+{% extends "default/module.html.jinja2" %}
+{#
+The URL below is the link to render the dinobox log in the
+documentaiton.
+#}
+{% set URL = "https://lh3.googleusercontent.com/d/1H04KVAA3ohH_dLXIrC0bXuJXDn3VutKc" %}
+
+{% block nav_title %}
+    <img src={{ URL }} class="logo" width="125" alt="project logo"/>
+    <i>Everything you need is in the box</i><br><br>
+    <p>
+        Streamlined Apache Access Log Parsing<br>
+        Peter Nardi<br>
+        <a href="mailto:pete@nardi.com">pete@nardi.com</a>
+    </p>
+    <hr>
+{% endblock %}
+
+{# 
+Extending the nav_members block in the html template will suppress the
+"API Documentation" navigation heading, which we're not using.
+#}
+
+{% block nav_members %}
+    {% if module.members %}
+        {{ nav_members(module.members.values()) }}
+    {% endif %}
+{% endblock %}

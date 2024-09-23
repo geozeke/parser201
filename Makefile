@@ -1,5 +1,3 @@
-PROJNAME=parser201
-
 ifeq (${MAKECMDGOALS},docs)
 	WEBPATH=docs/index.html
 endif
@@ -29,11 +27,11 @@ all: help
 .PHONY: setup
 setup: ## setup project with runtime dependencies
 ifeq (,$(wildcard .init/setup))
-	@(which poetry > /dev/null 2>&1) || \
-	(echo "parser201 requires poetry. See README for instructions."; exit 1)
+	@(which uv > /dev/null 2>&1) || \
+	(echo "parser201 requires uv. See README for instructions."; exit 1)
 	mkdir .init
 	touch .init/setup
-	poetry install --only=main
+	uv sync --no-dev
 else
 	@echo "Initial setup is already complete. If you are having issues, run:"
 	@echo
@@ -47,7 +45,7 @@ endif
 .PHONY: dev
 dev: ## add development dependencies (run make setup first)
 ifneq (,$(wildcard .init/setup))
-	poetry install
+	uv sync
 	@touch .init/dev
 else
 	@echo "Please run \"make setup\" first"
@@ -55,13 +53,13 @@ endif
 
 # --------------------------------------------
 
-.PHONY: update
-update: ## update dependencies
-	@echo Updating dependencies
+.PHONY: upgrade
+upgrade: ## upgrade parser201 dependencies
+	@echo Upgrading dependencies
 ifeq (,$(wildcard .init/dev))
-	poetry update --only=main
+	uv sync --no-dev --upgrade
 else
-	poetry update
+	uv sync --upgrade
 endif
 
 # --------------------------------------------
@@ -69,8 +67,7 @@ endif
 .PHONY: reset
 reset: clean ## reinitialize the project
 	@echo Resetting project state
-	@rm -rf .mypy_cache
-	@rm -rf .venv .init
+	rm -rf .init .mypy_cache .ruff_cache .venv
 
 # --------------------------------------------
 
@@ -102,7 +99,7 @@ coverage: ## Generate an html code coverage report
 
 .PHONY: docs
 docs: ## Generate project documentation
-	pdoc3 --html --template-dir=docs -o docs src/${PROJNAME} --force
+	pdoc -o docs -t templates -d numpy --no-include-undocumented src/*
 	${BROWSER}
 
 # --------------------------------------------
