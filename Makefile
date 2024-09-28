@@ -54,7 +54,7 @@ endif
 # --------------------------------------------
 
 .PHONY: upgrade
-upgrade: ## upgrade parser201 dependencies
+upgrade: ## upgrade project dependencies
 ifeq (,$(wildcard .init/dev))
 	uv sync --no-dev --upgrade
 else
