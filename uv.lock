@@ -257,7 +257,7 @@ name = "parser201"
 version = "1.5.2"
 source = { editable = "." }
 
-[package.dev-dependencies]
+[package.dependency-groups]
 dev = [
     { name = "coverage" },
     { name = "mypy" },
@@ -269,13 +269,13 @@ dev = [
 [package.metadata]
 requires-dist = [{ name = "parser201", editable = "." }]
 
-[package.metadata.requires-dev]
+[package.metadata.dependency-groups]
 dev = [
     { name = "coverage", specifier = ">=7.6.1" },
-    { name = "mypy", specifier = ">=1.11.2" },
+    { name = "mypy", specifier = ">=1.13.0" },
     { name = "pdoc", specifier = ">=14.7.0" },
     { name = "pytest", specifier = ">=8.3.3" },
-    { name = "ruff", specifier = ">=0.6.7" },
+    { name = "ruff", specifier = ">=0.7.1" },
 ]
 
 [[package]]
