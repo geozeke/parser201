@@ -46,6 +46,8 @@ See: [parser201 Documentation][def].
 
 ## Version History
 
+* 1.5.2 (2024-11-15)
+  * Dependency updates.<br><br>
 * 1.5.2 (2024-09-23)
   * Migrated packaging and build system to [uv][def2], and code
     formatting and linting to [ruff][def3].
