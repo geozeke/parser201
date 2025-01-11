@@ -10,7 +10,7 @@
 
 ### Fixed
 
-* Fix broken pyproject.toml file.
+* Fix broken pyproject.toml file. ([#38][issue38])
 
 <!--------------------------------------------------------------------->
 
@@ -293,3 +293,4 @@ _Beta release._
 [def6]: https://python-poetry.org/
 [def7]: https://github.com/mitmproxy/pdoc
 [1.5.4]: https://github.com/geozeke/parser201/releases/tag/v1.5.4
+[issue38]: https://github.com/geozeke/parser201/issues/38
