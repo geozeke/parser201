@@ -6,8 +6,6 @@
 
 ### Changed
 
-* Bump version.
-
 ### Added
 
 * Implement proper CHANGELOG.md.
