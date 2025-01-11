@@ -2,6 +2,18 @@
 
 <!--------------------------------------------------------------------->
 
+## [1.5.4][1.5.4] - 2025-01-XX
+
+### Added
+
+* Implement proper CHANGELOG.md.
+
+### Fixed
+
+* Fix broken pyproject.toml file.
+
+<!--------------------------------------------------------------------->
+
 ## 1.5.3 - 2025-11-15
 
 ### Changed
@@ -280,3 +292,4 @@ _Beta release._
 [def5]: https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 [def6]: https://python-poetry.org/
 [def7]: https://github.com/mitmproxy/pdoc
+[1.5.4]: https://github.com/geozeke/parser201/releases/tag/v1.5.4
