@@ -4,9 +4,15 @@
 
 ## [1.5.4][1.5.4] - 2025-01-XX
 
+### Changed
+
+* Bump version.
+
 ### Added
 
 * Implement proper CHANGELOG.md.
+
+### Removed
 
 ### Fixed
 
