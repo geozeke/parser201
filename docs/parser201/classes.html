@@ -95,14 +95,14 @@
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="sd">&quot;&quot;&quot;LogParser Class.&quot;&quot;&quot;</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="kn">import</span> <span class="nn">re</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">auto</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dt</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="k">class</span> <span class="nc">TZ</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TZ</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Timestamp adjustment enum.</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">    Enum to determine the timezone adjustment of the timestamp property</span>
@@ -114,7 +114,7 @@
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>    <span class="n">utc</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the timezone from the log data to UTC.&quot;&quot;&quot;</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare the values of two TZ Enums.</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="sd">        Parameters</span>
@@ -130,7 +130,7 @@
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="k">class</span> <span class="nc">FMT</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FMT</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Timestamp format enum.</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">    Enum to determine the format for the timestamp attribute of a</span>
@@ -142,7 +142,7 @@
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>    <span class="n">date_obj</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Store the timestamp as a python date-time object.&quot;&quot;&quot;</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare the values of two FMT Enums.</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">        Parameters</span>
@@ -158,7 +158,7 @@
 </span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span>
 </span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>
 </span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="k">class</span> <span class="nc">LogParser</span><span class="p">:</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="k">class</span><span class="w"> </span><span class="nc">LogParser</span><span class="p">:</span>
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class of all LogParser objects.</span>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">    LogParser objects are created using the class initializer, discussed</span>
@@ -203,7 +203,7 @@
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    <span class="p">]</span>
 </span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="n">_pad</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">_labels</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
 </span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="n">line</span><span class="p">,</span>
 </span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="n">timezone</span><span class="o">=</span><span class="n">TZ</span><span class="o">.</span><span class="n">original</span><span class="p">,</span>
@@ -341,13 +341,13 @@
 </span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
 </span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>        <span class="k">return</span>
 </span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
 </span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="k">return</span>
 </span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>
-</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
 </span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>
 </span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
@@ -379,7 +379,7 @@
 </span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
 </span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>
-</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
 </span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>
 </span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
@@ -417,7 +417,7 @@
 
     </div>
     <a class="headerlink" href="#TZ"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TZ-11"><a href="#TZ-11"><span class="linenos">11</span></a><span class="k">class</span> <span class="nc">TZ</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TZ-11"><a href="#TZ-11"><span class="linenos">11</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TZ</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 </span><span id="TZ-12"><a href="#TZ-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Timestamp adjustment enum.</span>
 </span><span id="TZ-13"><a href="#TZ-13"><span class="linenos">13</span></a>
 </span><span id="TZ-14"><a href="#TZ-14"><span class="linenos">14</span></a><span class="sd">    Enum to determine the timezone adjustment of the timestamp property</span>
@@ -429,7 +429,7 @@
 </span><span id="TZ-20"><a href="#TZ-20"><span class="linenos">20</span></a>    <span class="n">utc</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 </span><span id="TZ-21"><a href="#TZ-21"><span class="linenos">21</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the timezone from the log data to UTC.&quot;&quot;&quot;</span>
 </span><span id="TZ-22"><a href="#TZ-22"><span class="linenos">22</span></a>
-</span><span id="TZ-23"><a href="#TZ-23"><span class="linenos">23</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="TZ-23"><a href="#TZ-23"><span class="linenos">23</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="TZ-24"><a href="#TZ-24"><span class="linenos">24</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare the values of two TZ Enums.</span>
 </span><span id="TZ-25"><a href="#TZ-25"><span class="linenos">25</span></a>
 </span><span id="TZ-26"><a href="#TZ-26"><span class="linenos">26</span></a><span class="sd">        Parameters</span>
@@ -503,7 +503,7 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 
     </div>
     <a class="headerlink" href="#FMT"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="FMT-39"><a href="#FMT-39"><span class="linenos">39</span></a><span class="k">class</span> <span class="nc">FMT</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FMT-39"><a href="#FMT-39"><span class="linenos">39</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FMT</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 </span><span id="FMT-40"><a href="#FMT-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Timestamp format enum.</span>
 </span><span id="FMT-41"><a href="#FMT-41"><span class="linenos">41</span></a>
 </span><span id="FMT-42"><a href="#FMT-42"><span class="linenos">42</span></a><span class="sd">    Enum to determine the format for the timestamp attribute of a</span>
@@ -515,7 +515,7 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 </span><span id="FMT-48"><a href="#FMT-48"><span class="linenos">48</span></a>    <span class="n">date_obj</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 </span><span id="FMT-49"><a href="#FMT-49"><span class="linenos">49</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Store the timestamp as a python date-time object.&quot;&quot;&quot;</span>
 </span><span id="FMT-50"><a href="#FMT-50"><span class="linenos">50</span></a>
-</span><span id="FMT-51"><a href="#FMT-51"><span class="linenos">51</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="FMT-51"><a href="#FMT-51"><span class="linenos">51</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="FMT-52"><a href="#FMT-52"><span class="linenos">52</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Compare the values of two FMT Enums.</span>
 </span><span id="FMT-53"><a href="#FMT-53"><span class="linenos">53</span></a>
 </span><span id="FMT-54"><a href="#FMT-54"><span class="linenos">54</span></a><span class="sd">        Parameters</span>
@@ -589,7 +589,7 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 
     </div>
     <a class="headerlink" href="#LogParser"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="LogParser-67"><a href="#LogParser-67"><span class="linenos"> 67</span></a><span class="k">class</span> <span class="nc">LogParser</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="LogParser-67"><a href="#LogParser-67"><span class="linenos"> 67</span></a><span class="k">class</span><span class="w"> </span><span class="nc">LogParser</span><span class="p">:</span>
 </span><span id="LogParser-68"><a href="#LogParser-68"><span class="linenos"> 68</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class of all LogParser objects.</span>
 </span><span id="LogParser-69"><a href="#LogParser-69"><span class="linenos"> 69</span></a>
 </span><span id="LogParser-70"><a href="#LogParser-70"><span class="linenos"> 70</span></a><span class="sd">    LogParser objects are created using the class initializer, discussed</span>
@@ -634,7 +634,7 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 </span><span id="LogParser-109"><a href="#LogParser-109"><span class="linenos">109</span></a>    <span class="p">]</span>
 </span><span id="LogParser-110"><a href="#LogParser-110"><span class="linenos">110</span></a>    <span class="n">_pad</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">_labels</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
 </span><span id="LogParser-111"><a href="#LogParser-111"><span class="linenos">111</span></a>
-</span><span id="LogParser-112"><a href="#LogParser-112"><span class="linenos">112</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="LogParser-112"><a href="#LogParser-112"><span class="linenos">112</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="LogParser-113"><a href="#LogParser-113"><span class="linenos">113</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="LogParser-114"><a href="#LogParser-114"><span class="linenos">114</span></a>        <span class="n">line</span><span class="p">,</span>
 </span><span id="LogParser-115"><a href="#LogParser-115"><span class="linenos">115</span></a>        <span class="n">timezone</span><span class="o">=</span><span class="n">TZ</span><span class="o">.</span><span class="n">original</span><span class="p">,</span>
@@ -772,13 +772,13 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 </span><span id="LogParser-247"><a href="#LogParser-247"><span class="linenos">247</span></a>
 </span><span id="LogParser-248"><a href="#LogParser-248"><span class="linenos">248</span></a>        <span class="k">return</span>
 </span><span id="LogParser-249"><a href="#LogParser-249"><span class="linenos">249</span></a>
-</span><span id="LogParser-250"><a href="#LogParser-250"><span class="linenos">250</span></a>    <span class="k">def</span> <span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="LogParser-250"><a href="#LogParser-250"><span class="linenos">250</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__none_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="LogParser-251"><a href="#LogParser-251"><span class="linenos">251</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set all properties to None.&quot;&quot;&quot;</span>
 </span><span id="LogParser-252"><a href="#LogParser-252"><span class="linenos">252</span></a>        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="LogParser-253"><a href="#LogParser-253"><span class="linenos">253</span></a>            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="LogParser-254"><a href="#LogParser-254"><span class="linenos">254</span></a>        <span class="k">return</span>
 </span><span id="LogParser-255"><a href="#LogParser-255"><span class="linenos">255</span></a>
-</span><span id="LogParser-256"><a href="#LogParser-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="LogParser-256"><a href="#LogParser-256"><span class="linenos">256</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="LogParser-257"><a href="#LogParser-257"><span class="linenos">257</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;`LogParser` class str method.</span>
 </span><span id="LogParser-258"><a href="#LogParser-258"><span class="linenos">258</span></a>
 </span><span id="LogParser-259"><a href="#LogParser-259"><span class="linenos">259</span></a><span class="sd">        The class provides a `__str__` method which renders a</span>
@@ -810,7 +810,7 @@ of a <code><a href="#LogParser">LogParser</a></code> object.</p>
 </span><span id="LogParser-285"><a href="#LogParser-285"><span class="linenos">285</span></a>            <span class="n">lp_str</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">LogParser</span><span class="o">.</span><span class="n">_pad</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span id="LogParser-286"><a href="#LogParser-286"><span class="linenos">286</span></a>        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lp_str</span><span class="p">)</span>
 </span><span id="LogParser-287"><a href="#LogParser-287"><span class="linenos">287</span></a>
-</span><span id="LogParser-288"><a href="#LogParser-288"><span class="linenos">288</span></a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="LogParser-288"><a href="#LogParser-288"><span class="linenos">288</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="LogParser-289"><a href="#LogParser-289"><span class="linenos">289</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Determine if two `LogParser` objects are equal.</span>
 </span><span id="LogParser-290"><a href="#LogParser-290"><span class="linenos">290</span></a>
 </span><span id="LogParser-291"><a href="#LogParser-291"><span class="linenos">291</span></a><span class="sd">        The class provides a `__eq__` method to test for equality</span>
@@ -849,7 +849,7 @@ below.</p>
 
     </div>
     <a class="headerlink" href="#LogParser.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="LogParser.__init__-112"><a href="#LogParser.__init__-112"><span class="linenos">112</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="LogParser.__init__-112"><a href="#LogParser.__init__-112"><span class="linenos">112</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="LogParser.__init__-113"><a href="#LogParser.__init__-113"><span class="linenos">113</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="LogParser.__init__-114"><a href="#LogParser.__init__-114"><span class="linenos">114</span></a>        <span class="n">line</span><span class="p">,</span>
 </span><span id="LogParser.__init__-115"><a href="#LogParser.__init__-115"><span class="linenos">115</span></a>        <span class="n">timezone</span><span class="o">=</span><span class="n">TZ</span><span class="o">.</span><span class="n">original</span><span class="p">,</span>
@@ -1059,7 +1059,7 @@ timestamp attribute will not be adjusted and will be stored as a
 string.</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">parser201</span> <span class="kn">import</span> <span class="n">LogParser</span>
+<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">parser201</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogParser</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="c1"># a line from an Apache access log</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lp</span> <span class="o">=</span> <span class="n">LogParser</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 </code></pre>
@@ -1070,7 +1070,7 @@ attribute will be adjusted to UTC and will be stored as a Python
 <a href="https:        //docs.python.org/3/library/datetime.html">datetime object</a>.</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">parser201</span> <span class="kn">import</span> <span class="n">LogParser</span><span class="p">,</span> <span class="n">TZ</span><span class="p">,</span> <span class="n">FMT</span>
+<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">parser201</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogParser</span><span class="p">,</span> <span class="n">TZ</span><span class="p">,</span> <span class="n">FMT</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="c1"># a line from an Apache access log</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lp</span> <span class="o">=</span> <span class="n">LogParser</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">timezone</span><span class="o">=</span><span class="n"><a href="#TZ.utc">TZ.utc</a></span><span class="p">,</span> <span class="n">dts_format</span><span class="o">=</span><span class="n"><a href="#FMT.date_obj">FMT.date_obj</a></span><span class="p">)</span>
 </code></pre>
