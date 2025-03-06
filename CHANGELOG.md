@@ -2,6 +2,14 @@
 
 <!--------------------------------------------------------------------->
 
+## [1.5.5][1.5.5] - 2025-03-06
+
+### Removed
+
+* Drop support for Python 3.8 ([#40][issue40])
+
+<!--------------------------------------------------------------------->
+
 ## [1.5.4][1.5.4] - 2025-01-13
 
 ### Added
@@ -286,11 +294,13 @@ _Stable production release._
 
 _Beta release._
 
+[1.5.4]: https://github.com/geozeke/parser201/releases/tag/v1.5.4
+[1.5.5]: https://github.com/geozeke/parser201/releases/tag/v1.5.5
 [def2]: https://docs.astral.sh/uv/
 [def3]: https://docs.astral.sh/ruff/
 [def4]: https://peps.python.org/pep-0561/
 [def5]: https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 [def6]: https://python-poetry.org/
 [def7]: https://github.com/mitmproxy/pdoc
-[1.5.4]: https://github.com/geozeke/parser201/releases/tag/v1.5.4
 [issue38]: https://github.com/geozeke/parser201/issues/38
+[issue40]: https://github.com/geozeke/parser201/issues/40
