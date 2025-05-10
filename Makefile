@@ -31,7 +31,7 @@ ifeq (,$(wildcard .init/setup))
 	(echo "parser201 requires uv. See README for instructions."; exit 1)
 	mkdir -p .init
 	touch .init/setup
-	uv sync --no-dev --frozen
+	uv sync --frozen --no-dev
 else
 	@echo "Initial setup is already complete. If you are having issues, run:"
 	@echo
@@ -56,9 +56,9 @@ endif
 .PHONY: upgrade
 upgrade: ## upgrade project dependencies
 ifeq (,$(wildcard .init/dev))
-	uv sync --no-dev --upgrade
+	uv sync --upgrade --no-dev
 else
-	uv sync --upgrade
+	uv sync --upgrade --all-groups
 endif
 
 # --------------------------------------------
