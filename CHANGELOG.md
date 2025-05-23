@@ -2,6 +2,14 @@
 
 <!--------------------------------------------------------------------->
 
+## [1.5.6][1.5.6] - 2025-05-23
+
+### Changed
+
+* Maintenance release to synchronize repository tags.
+
+<!--------------------------------------------------------------------->
+
 ## [1.5.5][1.5.5] - 2025-03-06
 
 ### Removed
@@ -294,8 +302,11 @@ _Stable production release._
 
 _Beta release._
 
+<!--------------------------------------------------------------------->
+
 [1.5.4]: https://github.com/geozeke/parser201/releases/tag/v1.5.4
 [1.5.5]: https://github.com/geozeke/parser201/releases/tag/v1.5.5
+[1.5.6]: https://github.com/geozeke/parser201/releases/tag/v1.5.6
 [def2]: https://docs.astral.sh/uv/
 [def3]: https://docs.astral.sh/ruff/
 [def4]: https://peps.python.org/pep-0561/
