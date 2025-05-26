@@ -32,7 +32,7 @@ ifeq (,$(wildcard .init/setup))
 	mkdir -p .init run
 	touch .init/setup
 	cp ./scripts/* ./run
-	find ./run -name '*.sh' -exec chmod 754 {} \;
+	find ./run -name '*.sh' -exec chmod 744 {} \;
 	uv sync --frozen --no-dev
 else
 	@echo "Initial setup is already complete. If you are having issues, run:"
@@ -46,17 +46,21 @@ endif
 
 .PHONY: dev
 dev: ## add development dependencies (run make setup first)
-ifneq (,$(wildcard .init/setup))
-	uv sync --frozen
-	@touch .init/dev
-else
-	@echo "Please run \"make setup\" first"
+ifeq (,$(wildcard .init/setup))
+	@echo "Please run \"make setup\" first" ; exit 1
 endif
+	uv sync --all-groups --frozen
+	@touch .init/dev
 
 # --------------------------------------------
 
 .PHONY: upgrade
-upgrade: ## upgrade project dependencies
+upgrade: ## synchronize helper scripts and upgrade project dependencies
+ifeq (,$(wildcard .init/setup))
+	@echo "Please run \"make setup\" first" ; exit 1
+endif
+	cp -f ./scripts/* ./run
+	find ./run -name '*.sh' -exec chmod 744 {} \;
 ifeq (,$(wildcard .init/dev))
 	uv sync --upgrade --no-dev
 else
@@ -79,13 +83,6 @@ endif
 
 # --------------------------------------------
 
-.PHONY: reset
-reset: clean ## reinitialize the project
-	@echo Resetting project state
-	rm -rf .init .mypy_cache .ruff_cache .venv run
-
-# --------------------------------------------
-
 .PHONY: clean
 clean: ## Purge build artifacts
 	@echo Cleaning project build artifacts
@@ -100,6 +97,19 @@ clean: ## Purge build artifacts
 	@find . -type f -name *.pyc -delete
 	@find . -type f -name *.pyo -delete
 	@find . -type f -name *.coverage -delete
+
+# --------------------------------------------
+
+.PHONY: reset
+reset: clean ## reinitialize the project
+	@echo Resetting project state
+	rm -rf .init .mypy_cache .ruff_cache .venv run
+
+# --------------------------------------------
+
+.PHONY: tags
+tags: ## Update project tags
+	./run/release_tags.sh
 
 # --------------------------------------------
 
@@ -134,28 +144,17 @@ build: ## build package for publishing
 
 .PHONY: publish-production
 publish-production: build ## publish package to pypi.org for production
-	@if [ -z "${PYPITOKEN}" ]; then \
-		echo "❌ Error: PYPITOKEN is not set!"; \
-		exit 1; \
-	fi
-	uv publish --publish-url https://upload.pypi.org/legacy/ --token ${PYPITOKEN}
+	@set -a; eval "$$(grep '^PYPI_' $$HOME/.secrets)"; \
+	uv publish --publish-url https://upload.pypi.org/legacy/ \
+		--token "$$PYPI_PROD"
 
 # --------------------------------------------
 
 .PHONY: publish-test
 publish-test: build ## publish package to test.pypi.org for testing
-	@if [ -z "${TESTPYPITOKEN}" ]; then \
-		echo "❌ Error: TESTPYPITOKEN is not set!"; \
-		exit 1; \
-	fi
+	@set -a; eval "$$(grep '^PYPI_' $$HOME/.secrets)"; \
 	uv publish  --publish-url https://test.pypi.org/legacy/ \
-		--token ${TESTPYPITOKEN}
-
-# --------------------------------------------
-
-.PHONY: tags
-tags: ## Update project tags
-	./run/release_tags.sh
+		--token "$$PYPI_TEST"
 
 # --------------------------------------------
 
