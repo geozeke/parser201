@@ -6,7 +6,8 @@
 
 ### Development Dependency Updates
 
-* Bump ruff from 0.14.2 to 0.14.3 [#43][pull43]
+* Bump ruff from 0.14.3 to 0.14.4 ([#44][pull44])
+* Bump ruff from 0.14.2 to 0.14.3 ([#43][pull43])
 
 ### Runtime Dependency Updates
 
@@ -343,3 +344,4 @@ _Beta release._
 [issue38]: https://github.com/geozeke/parser201/issues/38
 [issue40]: https://github.com/geozeke/parser201/issues/40
 [pull43]: https://github.com/geozeke/parser201/pull/43
+[pull44]: https://github.com/geozeke/parser201/pull/44
