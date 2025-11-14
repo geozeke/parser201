@@ -2,28 +2,7 @@
 
 <!--------------------------------------------------------------------->
 
-## Next update
-
-### Development Dependency Updates
-
-* Bump ruff from 0.14.3 to 0.14.4 ([#44][pull44])
-* Bump ruff from 0.14.2 to 0.14.3 ([#43][pull43])
-
-### Runtime Dependency Updates
-
-### Changed
-
-### Added
-
-* Force uv sync to prefer managed python versions.
-
-### Removed
-
-### Fixed
-
-<!--------------------------------------------------------------------->
-
-## [1.5.7][1.5.7] - 2025-10-04
+## [1.5.7][1.5.7] - 2025-10-04 (latest)
 
 ### Changed
 
@@ -345,5 +324,3 @@ _Beta release._
 [def7]: https://github.com/mitmproxy/pdoc
 [issue38]: https://github.com/geozeke/parser201/issues/38
 [issue40]: https://github.com/geozeke/parser201/issues/40
-[pull43]: https://github.com/geozeke/parser201/pull/43
-[pull44]: https://github.com/geozeke/parser201/pull/44
