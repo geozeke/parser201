@@ -44,4 +44,6 @@ with open('access.log', 'r') as f:
 
 See: [parser201 Documentation][def].
 
+<!--------------------------------------------------------------------->
+
 [def]: https://geozeke.github.io/parser201
