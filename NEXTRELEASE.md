@@ -1,5 +1,6 @@
 ### Development Dependency Updates
 
+* Bump ruff from 0.14.8 to 0.14.9 ([#49][pull49])
 * Bump ruff from 0.14.6 to 0.14.8 ([#47][pull47])
 * Bump mypy from 1.18.2 to 1.19.0 ([#48][pull48])
 * Bump ruff from 0.14.4 to 0.14.5 ([#46][pull46])
@@ -27,3 +28,4 @@
 [pull46]: https://github.com/geozeke/parser201/pull/46
 [pull47]: https://github.com/geozeke/parser201/pull/47
 [pull48]: https://github.com/geozeke/parser201/pull/48
+[pull49]: https://github.com/geozeke/parser201/pull/49
