@@ -2,7 +2,32 @@
 
 <!--------------------------------------------------------------------->
 
-## [1.5.7][1.5.7] - 2025-10-04 (latest)
+## [1.5.8][1.5.8] - 2026-01-09 (latest)
+
+### Development Dependency Updates
+
+* Bump ruff from 0.14.10 to 0.14.11 ([#52][pull52])
+* Bump mypy from 1.19.0 to 1.19.1 ([#50][pull50])
+* Bump ruff from 0.14.9 to 0.14.10 ([#51][pull51])
+* Bump ruff from 0.14.8 to 0.14.9 ([#49][pull49])
+* Bump ruff from 0.14.6 to 0.14.8 ([#47][pull47])
+* Bump mypy from 1.18.2 to 1.19.0 ([#48][pull48])
+* Bump ruff from 0.14.4 to 0.14.5 ([#46][pull46])
+* Bump ruff from 0.14.4 to 0.14.5 ([#45][pull45])
+* Bump ruff from 0.14.3 to 0.14.4 ([#44][pull44])
+* Bump ruff from 0.14.2 to 0.14.3 ([#43][pull43])
+
+### Changed
+
+* Update copyright years on LICENSE.
+
+### Added
+
+* Force uv sync to prefer managed python versions.
+
+<!--------------------------------------------------------------------->
+
+## [1.5.7][1.5.7] - 2025-10-04
 
 ### Changed
 
@@ -316,6 +341,7 @@ _Beta release._
 [1.5.5]: https://github.com/geozeke/parser201/releases/tag/v1.5.5
 [1.5.6]: https://github.com/geozeke/parser201/releases/tag/v1.5.6
 [1.5.7]: https://github.com/geozeke/parser201/releases/tag/v1.5.7
+[1.5.8]: https://github.com/geozeke/parser201/releases/tag/v1.5.8
 [def2]: https://docs.astral.sh/uv/
 [def3]: https://docs.astral.sh/ruff/
 [def4]: https://peps.python.org/pep-0561/
@@ -324,3 +350,13 @@ _Beta release._
 [def7]: https://github.com/mitmproxy/pdoc
 [issue38]: https://github.com/geozeke/parser201/issues/38
 [issue40]: https://github.com/geozeke/parser201/issues/40
+[pull43]: https://github.com/geozeke/parser201/pull/43
+[pull44]: https://github.com/geozeke/parser201/pull/44
+[pull45]: https://github.com/geozeke/parser201/pull/45
+[pull46]: https://github.com/geozeke/parser201/pull/46
+[pull47]: https://github.com/geozeke/parser201/pull/47
+[pull48]: https://github.com/geozeke/parser201/pull/48
+[pull49]: https://github.com/geozeke/parser201/pull/49
+[pull50]: https://github.com/geozeke/parser201/pull/50
+[pull51]: https://github.com/geozeke/parser201/pull/51
+[pull52]: https://github.com/geozeke/parser201/pull/52
