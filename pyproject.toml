@@ -1,6 +1,6 @@
 [project]
 name = "parser201"
-version = "1.5.8"
+version = "1.5.9"
 description = "Extract individual fields from lines in Apache access logs"
 authors = [{ name = "Peter Nardi", email = "pete@nardi.com" }]
 maintainers = [{ name = "Peter Nardi", email = "pete@nardi.com" }]
