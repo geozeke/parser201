@@ -2,7 +2,15 @@
 
 <!--------------------------------------------------------------------->
 
-## [1.5.8][1.5.8] - 2026-01-09 (latest)
+## 1.5.9 (2026-01-11) - latest
+
+### 🚀 New Features
+
+* Add release.yml for formatted release messages by @geozeke in <https://github.com/geozeke/parser201/pull/53>
+
+<!--------------------------------------------------------------------->
+
+## [1.5.8][1.5.8] - 2026-01-09
 
 ### Development Dependency Updates
 
