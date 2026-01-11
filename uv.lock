@@ -530,7 +530,7 @@ wheels = [
 
 [[package]]
 name = "parser201"
-version = "1.5.8"
+version = "1.5.9"
 source = { editable = "." }
 
 [package.dev-dependencies]
