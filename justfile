@@ -1,5 +1,5 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
-project_name := "glinkfix"
+project_name := "parser201"
 
 # Show help
 default: help
