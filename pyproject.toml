@@ -45,7 +45,7 @@ dependencies = ["parser201"]
 "Documentation" = "https://geozeke.github.io/parser201"
 
 [build-system]
-requires = ["uv-build>=0.1.0"]
+requires = ["uv-build>=0.10,<0.11"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
