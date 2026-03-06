@@ -2,7 +2,40 @@
 
 <!--------------------------------------------------------------------->
 
-## 1.5.9 (2026-01-11) - latest
+## 1.6.0 (2026-03-06) - latest
+
+## ⛓️‍💥 BREAKING
+
+This release drops support for python v3.9.
+
+### 🚀 New Features
+
+* Add docs label to release.yml by @geozeke in <https://github.com/geozeke/parser201/pull/54>
+
+### 🐛 Bug Fixes
+
+* Pin upper bound to uv-build by @geozeke in <https://github.com/geozeke/parser201/pull/62>
+
+### 👋 Deprecated
+
+* Set min python version to 3.10 by @geozeke in <https://github.com/geozeke/parser201/pull/61>
+
+### 📦 Dependency Updates
+
+* Bump ruff from 0.14.11 to 0.14.13 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/55>
+* Bump ruff from 0.14.13 to 0.14.14 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/56>
+* Bump ruff from 0.14.14 to 0.15.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/57>
+* Bump ruff from 0.15.0 to 0.15.1 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/58>
+* Bump ruff from 0.15.1 to 0.15.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/59>
+* Bump ruff from 0.15.2 to 0.15.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/60>
+* Bump ruff from 0.15.4 to 0.15.5 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/66>
+* Bump pdoc from 15.0.4 to 16.0.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/65>
+* Bump pytest from 8.4.2 to 9.0.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/64>
+* Bump coverage from 7.11.0 to 7.13.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/63>
+
+<!--------------------------------------------------------------------->
+
+## 1.5.9 (2026-01-11)
 
 ### 🚀 New Features
 
