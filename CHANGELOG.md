@@ -10,28 +10,28 @@ This release drops support for python v3.9.
 
 ### 🚀 New Features
 
-* Add docs label to release.yml by @geozeke in <https://github.com/geozeke/parser201/pull/54>
+- Add docs label to release.yml by @geozeke in <https://github.com/geozeke/parser201/pull/54>
 
 ### 🐛 Bug Fixes
 
-* Pin upper bound to uv-build by @geozeke in <https://github.com/geozeke/parser201/pull/62>
+- Pin upper bound to uv-build by @geozeke in <https://github.com/geozeke/parser201/pull/62>
 
 ### 👋 Deprecated
 
-* Set min python version to 3.10 by @geozeke in <https://github.com/geozeke/parser201/pull/61>
+- Set min python version to 3.10 by @geozeke in <https://github.com/geozeke/parser201/pull/61>
 
 ### 📦 Dependency Updates
 
-* Bump ruff from 0.14.11 to 0.14.13 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/55>
-* Bump ruff from 0.14.13 to 0.14.14 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/56>
-* Bump ruff from 0.14.14 to 0.15.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/57>
-* Bump ruff from 0.15.0 to 0.15.1 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/58>
-* Bump ruff from 0.15.1 to 0.15.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/59>
-* Bump ruff from 0.15.2 to 0.15.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/60>
-* Bump ruff from 0.15.4 to 0.15.5 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/66>
-* Bump pdoc from 15.0.4 to 16.0.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/65>
-* Bump pytest from 8.4.2 to 9.0.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/64>
-* Bump coverage from 7.11.0 to 7.13.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/63>
+- Bump ruff from 0.14.11 to 0.14.13 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/55>
+- Bump ruff from 0.14.13 to 0.14.14 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/56>
+- Bump ruff from 0.14.14 to 0.15.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/57>
+- Bump ruff from 0.15.0 to 0.15.1 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/58>
+- Bump ruff from 0.15.1 to 0.15.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/59>
+- Bump ruff from 0.15.2 to 0.15.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/60>
+- Bump ruff from 0.15.4 to 0.15.5 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/66>
+- Bump pdoc from 15.0.4 to 16.0.0 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/65>
+- Bump pytest from 8.4.2 to 9.0.2 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/64>
+- Bump coverage from 7.11.0 to 7.13.4 by @dependabot[bot] in <https://github.com/geozeke/parser201/pull/63>
 
 <!--------------------------------------------------------------------->
 
@@ -39,7 +39,7 @@ This release drops support for python v3.9.
 
 ### 🚀 New Features
 
-* Add release.yml for formatted release messages by @geozeke in <https://github.com/geozeke/parser201/pull/53>
+- Add release.yml for formatted release messages by @geozeke in <https://github.com/geozeke/parser201/pull/53>
 
 <!--------------------------------------------------------------------->
 
@@ -47,24 +47,24 @@ This release drops support for python v3.9.
 
 ### Development Dependency Updates
 
-* Bump ruff from 0.14.10 to 0.14.11 ([#52][pull52])
-* Bump mypy from 1.19.0 to 1.19.1 ([#50][pull50])
-* Bump ruff from 0.14.9 to 0.14.10 ([#51][pull51])
-* Bump ruff from 0.14.8 to 0.14.9 ([#49][pull49])
-* Bump ruff from 0.14.6 to 0.14.8 ([#47][pull47])
-* Bump mypy from 1.18.2 to 1.19.0 ([#48][pull48])
-* Bump ruff from 0.14.4 to 0.14.5 ([#46][pull46])
-* Bump ruff from 0.14.4 to 0.14.5 ([#45][pull45])
-* Bump ruff from 0.14.3 to 0.14.4 ([#44][pull44])
-* Bump ruff from 0.14.2 to 0.14.3 ([#43][pull43])
+- Bump ruff from 0.14.10 to 0.14.11 ([#52][pull52])
+- Bump mypy from 1.19.0 to 1.19.1 ([#50][pull50])
+- Bump ruff from 0.14.9 to 0.14.10 ([#51][pull51])
+- Bump ruff from 0.14.8 to 0.14.9 ([#49][pull49])
+- Bump ruff from 0.14.6 to 0.14.8 ([#47][pull47])
+- Bump mypy from 1.18.2 to 1.19.0 ([#48][pull48])
+- Bump ruff from 0.14.4 to 0.14.5 ([#46][pull46])
+- Bump ruff from 0.14.4 to 0.14.5 ([#45][pull45])
+- Bump ruff from 0.14.3 to 0.14.4 ([#44][pull44])
+- Bump ruff from 0.14.2 to 0.14.3 ([#43][pull43])
 
 ### Changed
 
-* Update copyright years on LICENSE.
+- Update copyright years on LICENSE.
 
 ### Added
 
-* Force uv sync to prefer managed python versions.
+- Force uv sync to prefer managed python versions.
 
 <!--------------------------------------------------------------------->
 
@@ -72,7 +72,7 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Upgrade build backend from hatchling to uv_build.
+- Upgrade build backend from hatchling to uv_build.
 
 <!--------------------------------------------------------------------->
 
@@ -80,7 +80,7 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Maintenance release to synchronize repository tags.
+- Maintenance release to synchronize repository tags.
 
 <!--------------------------------------------------------------------->
 
@@ -88,7 +88,7 @@ This release drops support for python v3.9.
 
 ### Removed
 
-* Drop support for Python 3.8 ([#40][issue40])
+- Drop support for Python 3.8 ([#40][issue40])
 
 <!--------------------------------------------------------------------->
 
@@ -96,11 +96,11 @@ This release drops support for python v3.9.
 
 ### Added
 
-* Implement proper CHANGELOG.md.
+- Implement proper CHANGELOG.md.
 
 ### Fixed
 
-* Fix broken pyproject.toml file. ([#38][issue38])
+- Fix broken pyproject.toml file. ([#38][issue38])
 
 <!--------------------------------------------------------------------->
 
@@ -108,7 +108,7 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Update dependencies
+- Update dependencies
 
 <!--------------------------------------------------------------------->
 
@@ -116,14 +116,14 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Migrate packaging and build system to [uv][def2].
-* Migrate packaging and build system to [ruff][def3].
-* Improve exception handling for invalid date-time objects.
-* Migrate documentation generation to [pdoc][def7].
+- Migrate packaging and build system to [uv][def2].
+- Migrate packaging and build system to [ruff][def3].
+- Improve exception handling for invalid date-time objects.
+- Migrate documentation generation to [pdoc][def7].
 
 ### Fixed
 
-* Code and documentation linting.
+- Code and documentation linting.
 
 <!--------------------------------------------------------------------->
 
@@ -131,7 +131,7 @@ This release drops support for python v3.9.
 
 ### Removed
 
-* Drop support for converting timestamps to local machine time.
+- Drop support for converting timestamps to local machine time.
   Processing local timezones across multiple architectures and operating
   systems is a bit of a hot mess in Python right now. There's just too
   much variability with regard to OS Settings, location, daylight
@@ -141,8 +141,8 @@ This release drops support for python v3.9.
 
 ### Fixed
 
-* Clean up packaging for better [PEP561][def4] compliance.
-* Clean up type hints.
+- Clean up packaging for better [PEP561][def4] compliance.
+- Clean up type hints.
 
 <!--------------------------------------------------------------------->
 
@@ -150,7 +150,7 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Migrate code formatter to _black_.
+- Migrate code formatter to _black_.
 
 <!--------------------------------------------------------------------->
 
@@ -160,17 +160,17 @@ This release drops support for python v3.9.
 
 ### Added
 
-* Add support for access logs that contain both IPv4 and IPv6 addresses.
+- Add support for access logs that contain both IPv4 and IPv6 addresses.
 
 ### Removed
 
-* Dropped support for Python <= 3.7.
+- Dropped support for Python <= 3.7.
 
 ### Fixed
 
-* Strengthen regular expression parsing to handle log lines that contain
+- Strengthen regular expression parsing to handle log lines that contain
   a wider array of malicious attacks.
-* Code linting and refactoring.
+- Code linting and refactoring.
 
 <!--------------------------------------------------------------------->
 
@@ -178,7 +178,7 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Migrate dependency/build management to [poetry][def6].
+- Migrate dependency/build management to [poetry][def6].
 
 <!--------------------------------------------------------------------->
 
@@ -186,18 +186,18 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Migrated task runner to `make`.
+- Migrated task runner to `make`.
 
 ### Added
 
-* Implement `__eq__` magic method for the `LogParser` class. You can
+- Implement `__eq__` magic method for the `LogParser` class. You can
   now perform equality checks on two `LogParser` objects.
-* Added test cases for `__eq__`.
+- Added test cases for `__eq__`.
 
 ### Fixed
 
-* Lint documentation.
-* Lint code.
+- Lint documentation.
+- Lint code.
 
 <!--------------------------------------------------------------------->
 
@@ -205,17 +205,17 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Testing improvements and `pyproject.toml` adjustments for better
+- Testing improvements and `pyproject.toml` adjustments for better
   pytest compatability.
 
 ### Added
 
-* Implement `__eq__` magic methods in the `FMT` and `TZ` classes.
+- Implement `__eq__` magic methods in the `FMT` and `TZ` classes.
 
 ### Fixed
 
-* Lint documentation.
-* Lint code.
+- Lint documentation.
+- Lint code.
 
 <!--------------------------------------------------------------------->
 
@@ -223,7 +223,7 @@ This release drops support for python v3.9.
 
 ### Fixed
 
-* Lint code.
+- Lint code.
 
 <!--------------------------------------------------------------------->
 
@@ -231,7 +231,7 @@ This release drops support for python v3.9.
 
 ### Fixed
 
-* Lint documentation.
+- Lint documentation.
 
 <!--------------------------------------------------------------------->
 
@@ -239,12 +239,12 @@ This release drops support for python v3.9.
 
 ### Added
 
-* Add site logo to README.md.
+- Add site logo to README.md.
 
 ### Fixed
 
-* Make file tuning.
-* Lint documentation.
+- Make file tuning.
+- Lint documentation.
 
 <!--------------------------------------------------------------------->
 
@@ -252,18 +252,18 @@ This release drops support for python v3.9.
 
 ### Changed
 
-* Migrate API reference to GitHub pages.
+- Migrate API reference to GitHub pages.
 
 ### Added
 
-* Implement selectable timestamp conversion options {_original_,
+- Implement selectable timestamp conversion options {_original_,
   _local_, [_UTC_][def5]}.
-* Implement selectable formatting options for timestamp attribute
+- Implement selectable formatting options for timestamp attribute
   {_string_, _date\_obj_}.
 
 ### Fixed
 
-* Lint code.
+- Lint code.
 
 <!--------------------------------------------------------------------->
 
@@ -271,7 +271,7 @@ This release drops support for python v3.9.
 
 ### Fixed
 
-* Lint documentation.
+- Lint documentation.
 
 <!--------------------------------------------------------------------->
 
@@ -281,12 +281,12 @@ _Stable production release._
 
 ### Changed
 
-* Migrate to a new development framework.
+- Migrate to a new development framework.
 
 ### Fixed
 
-* Use more robust and compartmentalized test cases.
-* Lint code.
+- Use more robust and compartmentalized test cases.
+- Lint code.
 
 <!--------------------------------------------------------------------->
 
@@ -294,13 +294,13 @@ _Stable production release._
 
 ### Changed
 
-* Change behavior to gracefully fail for any malformed input line. If an
+- Change behavior to gracefully fail for any malformed input line. If an
   input line cannot be successfully parsed, all attributes of the
   returned object are set to `None` and no messages are printed.
 
 ### Added
 
-* Add additional pytest cases to verify failure behavior.
+- Add additional pytest cases to verify failure behavior.
 
 <!--------------------------------------------------------------------->
 
@@ -308,8 +308,8 @@ _Stable production release._
 
 ### Fixed
 
-* Lint code for pep8 compliance.
-* Clean up Makefiles and task scripts.
+- Lint code for pep8 compliance.
+- Clean up Makefiles and task scripts.
 
 <!--------------------------------------------------------------------->
 
@@ -317,7 +317,7 @@ _Stable production release._
 
 ### Changed
 
-* Re-tooled testing scripts to use parameterized test data, and conduct
+- Re-tooled testing scripts to use parameterized test data, and conduct
   more robust testing.
 
 <!--------------------------------------------------------------------->
@@ -326,9 +326,9 @@ _Stable production release._
 
 ### Fixed
 
-* Address exception handling for initializer input not being a valid
+- Address exception handling for initializer input not being a valid
   string data type.
-* Lint documentation.
+- Lint documentation.
 
 <!--------------------------------------------------------------------->
 
@@ -336,9 +336,9 @@ _Stable production release._
 
 ### Changed
 
-* Enabled automatic deployment of tagged releases to pypi from travis
+- Enabled automatic deployment of tagged releases to pypi from travis
   using encrypted token.
-* Convert references to the master branch in the git repository to main
+- Convert references to the master branch in the git repository to main
   across the documentation set.
 
 ### Added
@@ -347,7 +347,7 @@ _Stable production release._
 
 ### Fixed
 
-* Lint documentation.
+- Lint documentation.
 
 <!--------------------------------------------------------------------->
 
@@ -355,12 +355,12 @@ _Stable production release._
 
 ### Added
 
-* Initial pypi release.
+- Initial pypi release.
 
 ### Fixed
 
-* Fix test file filtering issue in `.gitignore`.
-* Fix dependencies for travis tests.
+- Fix test file filtering issue in `.gitignore`.
+- Fix dependencies for travis tests.
 
 <!--------------------------------------------------------------------->
 
@@ -368,7 +368,7 @@ _Stable production release._
 
 ### Changed
 
-* Conduct follow-on testing on test.pypi.org.
+- Conduct follow-on testing on test.pypi.org.
 
 <!--------------------------------------------------------------------->
 
